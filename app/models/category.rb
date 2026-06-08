@@ -8,6 +8,8 @@ class Category
 
   property :name
   property :description
+  property :created_at, type: DateTime
+  property :updated_at, type: DateTime
 
   validates :name, presence: true
   validates_uniqueness_of :name, scope: :dimension
@@ -15,6 +17,7 @@ class Category
   belongs_to :dimension
   has_many :out, :coded_experiences, rel_class: :Contains
   has_many :in, :themes, rel_class: :EmergesFrom
+  has_many :out, :memos
 
   # Generates a hash with the unique category name as the key and the count of its associated coded experiences as a value.
   def self.histogram(dimension)

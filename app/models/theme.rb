@@ -5,14 +5,17 @@ class Theme
   property :name
   property :description
   property :notes
-  
+  property :created_at, type: DateTime
+  property :updated_at, type: DateTime
+
   before_validation :sanitize
 
   validates :name, presence: true
   validates_uniqueness_of :name
 
   has_many :out, :categories, rel_class: :EmergesFrom
-
+  has_many :out, :memos
+  
   private
 
   def sanitize

@@ -13,7 +13,9 @@ class Persona
   has_many :out, :identities, rel_class: :IdentifiesWith
   has_many :out, :reflections, rel_class: :ReflectsOn
   has_many :out, :survey_responses, rel_class: :RespondsWith
-
+  has_many :out, :memos
+  has_many :out, :events
+  
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query
     {

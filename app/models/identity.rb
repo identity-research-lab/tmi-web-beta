@@ -3,6 +3,8 @@ class Identity
   include ActiveGraph::Node
 
   property :name
+  property :created_at, type: DateTime
+  property :updated_at, type: DateTime
 
   before_validation :sanitize
 
@@ -11,6 +13,7 @@ class Identity
   
   belongs_to :dimension
   has_many :in, :personas, rel_class: :IdentifiesWith
+  has_many :out, :events
 
   private
 

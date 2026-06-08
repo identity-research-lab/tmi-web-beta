@@ -7,6 +7,8 @@ class Keyword
   include ActiveGraph::Node
 
   property :name
+  property :created_at, type: DateTime
+  property :updated_at, type: DateTime
 
   validates :name, presence: true
   validates :name, uniqueness: true

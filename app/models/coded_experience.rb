@@ -14,6 +14,7 @@ class CodedExperiences
   belongs_to :dimension
   has_many :in, :personas, rel_class: :Experiences
   has_many :in, :categories, rel_class: :Contains
+  has_many :out, :events
 
   # Given a dimension, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(dimension)

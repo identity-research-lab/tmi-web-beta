@@ -1,0 +1,41 @@
+	<header class="top-header">
+	<div class="brand">
+		<a href="/" class="logo" aria-label="TMI-WEB home">
+			<%= image_tag "tmi-logo.svg", alt: "TMI-WEB", class: "logo-image" %>
+		</a>
+
+		<div class="tagline">
+			Real people.<br>
+			Complex identities.<br>
+			Situated experiences.<br>
+			<span class="tagline-emphasis">Intersectional Data Analysis</span>
+		</div>
+	</div>
+
+	<nav class="top-nav" id="top-nav" aria-label="Utility navigation">
+		<a href="#" class="button">TMI-WEB Instructional Guides</a>
+	</nav>
+	<button class="mobile-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">☰</button>
+</header>
+
+<nav class="content-nav" aria-label="Active project navigation">
+	<ul>
+		<li><span class="tabs-label">Active Project → </span></li>
+		<li id="dashboard-nav" class="<%= @nav_context == 'dashboard' ? 'active' : '' %>"><%= link_to "Dashboard", "#" %></li>
+		<li id="cases-nav" class="<%= @nav_context == 'cases' ? 'active' : '' %>"><%= link_to "Cases", "#" %></li>
+		<li id="responses-nav" class="<%= @nav_context == 'responses' ? 'active' : '' %>"><%= link_to "Survey Items", "#" %></li>
+		<li id="codebooks-nav" class="<%= @nav_context == 'codebooks' ? 'active' : '' %>"><%= link_to "Code Metrics", "#" %></li>
+		<li id="codebooks-nav" class="<%= @nav_context == 'codebooks' ? 'active' : '' %>"><%= link_to "Codes", "#" %></li>
+		<li id="categories-nav" class="<%= @nav_context == 'categories' ? 'active' : '' %>"><%= link_to "Categories", "#" %></li>
+		<li id="themes-nav" class="<%= @nav_context == 'themes' ? 'active' : '' %>"><%= link_to "Themes", "#" %></li>
+		<li id="themes-nav" class="<%= @nav_context == 'themes' ? 'active' : '' %>"><%= link_to "Graph", "#" %></li>
+		<li id="search" class="<%= @nav_context == 'search' ? 'active' : '' %>"><%= link_to "Search", "#" %></li>
+	</ul>
+</nav>
+
+<%- if content_for?(:title_label) %>
+	<section class="subpage-header">
+		<div class="subpage-label"><%= content_for?(:title_label) ? content_for(:title_label) : "" %></div>
+		<h2 class="subpage-title"><%= content_for?(:title_headline) ? content_for(:title_headline) : content_for(:title) %></h2>
+	</section>
+<%- end %>

@@ -14,6 +14,8 @@ require "action_view/railtie"
 # require "action_cable/engine"
 require "rails/test_unit/railtie"
 
+require "active_graph/railtie"
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -29,7 +31,8 @@ module TmiWebBeta
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Configuration for the application, engines, and railties goes here.
-    #
+    config.generators { |g| g.orm :active_graph }
+
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #

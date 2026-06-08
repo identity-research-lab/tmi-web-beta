@@ -40,6 +40,10 @@ a {
   text-decoration: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .page {
   max-width: var(--max-width);
   min-height: 100vh;
@@ -112,10 +116,8 @@ a {
   cursor: pointer;
 }
 
-.mobile-divider,
-.mobile-project-label,
-.mobile-project-link {
-  display: none;
+.mobile-menu ul {
+  list-style-type: none;
 }
 
 /* BUTTONS */
@@ -295,6 +297,50 @@ h1 {
 
 .column-small {
   min-width: 0;
+}
+
+  #copy-to-clipboard:after {
+   content: "";
+   width: 1.5rem;
+   height: 1.5rem;
+   margin: 0 -0.25rem 0 0.1em;
+   background: var(--icon-copy-to-clipboard) no-repeat;
+   background-size: contain;
+   display: inline-block;
+   vertical-align: baseline;
+}
+
+#copy-to-clipboard {
+  text-decoration: none;
+}
+
+.confirmable {
+  position: relative;
+}
+
+#confirmation {
+  position: absolute;
+  top: 0rem;
+  right: -1.5rem;
+  width: 1rem;
+  height: 1rem;
+  padding: 1rem;
+  vertical-align: baseline;
+  background: var(--icon-copy-confirm) no-repeat;
+  background-size: contain;
+}
+
+.appear-disappear {
+  opacity: 1;
+  animation-name: appear-disappear;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes appear-disappear {
+  0% { opacity:0; }
+  50% { opacity:1;}
+  100% { opacity:0; }
 }
 
 .info-card {
@@ -2121,23 +2167,23 @@ ul.dashboard-upload-actions {
   .app-header {
     gap: 2rem;
   }
-  
+
   .app-stats-grid,
   .code-metrics-grid,
   .app-meta-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .case-table,
   .response-table {
     min-width: 760px;
   }
-  
+
   .table-pagination {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .pagination-controls {
     flex-wrap: wrap;
   }
@@ -2180,5 +2226,5 @@ ul.dashboard-upload-actions {
   .app-title {
     font-size: 2.5rem;
   }
-  
+
 }

@@ -1,7 +1,9 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import "@hotwired/turbo-rails"
 
-import { openModal, closeModal } from "./features/modal"
+import { copyToClipboard } from "copy_to_clipboard"
 
-window.openModal = openModal
-window.closeModal = closeModal
+document.addEventListener("turbo:load", () => {
+})
+
+window.copyToClipboard = copyToClipboard

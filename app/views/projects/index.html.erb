@@ -1,0 +1,255 @@
+<%- title "Project Dashboard" %>
+
+<section class="app-header dashboard-hero">
+
+<div class="app-header-copy">
+
+<div class="app-label">
+<%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+</div>
+
+<h1 class="app-title">Project Dashboard</h1>
+
+<p class="app-description">
+Welcome to your TMI-WEB project dashboard. 
+All TMI-WEB projects begin with the <a href="">TMI-WEB Survey Template</a>. The template can be used with survey platforms such as Google Forms, Qualtrics, or custom survey systems, and supports intersectional analysis by organizing identity dimensions, experiences, and contextual research data into a shared project structure.</p>
+<p class="app-description">
+Use this dashboard to start a new project by uploading a TMI-WEB Survey Template (csv), merge updated project data into an active project, review the current state of analysis, enter the dataset through <a href="">participant-centered coding workflows</a> or <a href="">question-centered coding workflows</a>, or continue developing interpretive elements such as codes, categories, themes, and analytical memos.
+</p>
+
+</div>
+
+<div>
+
+<a href="#" class="button small secondary dashboard-template-button">
+Download TMI-WEB Survey Template
+</a>
+
+<aside class="app-header-panel" aria-label="Project status summary">
+
+<div class="app-panel-title">Active Project Status</div>
+
+<div class="app-stats-grid">
+
+  <div class="app-stat">
+    <span class="app-stat-value"><%= @case_count %></span>
+    <span class="app-stat-label">Cases</span>
+  </div>
+
+  <div class="app-stat">
+    <span class="app-stat-value">77</span>
+    <span class="app-stat-label">Survey Items</span>
+  </div>
+
+  <div class="app-stat">
+    <span class="app-stat-value">5555</span>
+    <span class="app-stat-label">Applied Codes</span>
+  </div>
+
+  <div class="app-stat">
+    <span class="app-stat-value">66</span>
+    <span class="app-stat-label">Unique Codes</span>
+  </div>
+
+</div>
+
+</aside>
+</div>
+
+</section>
+
+<section class="dashboard-upload">
+  <div>
+    <div class="app-label">Project Data</div>
+    <h2 class="workspace-title">Upload or Update Spreadsheet</h2>
+    <p class="workspace-note">
+      Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv). 
+      Return here anytime to merge updated survey responses, cases, or project data into the active dataset.
+    </p>
+    
+    <ul class="dashboard-upload-actions">
+      <% if @case_count > 0 %>
+      <li><button class="button small secondary">Merge Updated Project Data</button></li>
+    <% else %>
+      <li><button class="button small secondary">Upload New Project Spreadsheet</button></li>
+    <% end %>
+    </ul>
+    
+    <%= form_with model: @project do |f| %>
+      <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
+      <%= f.submit "Upload", style: "button small" %>
+    <% end  %>
+    
+  </div>
+</section>
+
+<section class="app-section">
+  
+  <div class="section-label">Thematic Coding Pathways</div>
+  
+  <div class="dashboard-pathway-grid">
+    <article class="dashboard-pathway-card">
+      <div class="dashboard-pathway-label">Participant-Centered Thematic Analysis</div>
+      <h2 class="dashboard-pathway-title">Code Cases Pathway</h2>
+  
+      <p class="dashboard-pathway-text">
+        Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+      </p>
+  
+      <div class="dashboard-pathway-meta">
+        <span class="tag dark">### cases</span>
+        <span class="tag">### uncoded</span>
+      </div>
+    
+      <a href="#" class="button small">Enter Cases Pathway</a>
+    </article>
+  
+    <article class="dashboard-pathway-card">
+      <div class="dashboard-pathway-label">Question-Centered Thematic Analysis</div>
+      <h2 class="dashboard-pathway-title">Code Survey Items Pathway</h2>
+      
+      <p class="dashboard-pathway-text">
+        Enter the dataset through individual survey items/questions. Review and code all participant responses associated with a single question, supporting cross-case comparison, thematic pattern recognition, frequency analysis, and emergent interpretive synthesis.
+      </p>
+      
+      <div class="dashboard-pathway-meta">
+        <span class="tag dark">## survey items</span>
+        <span class="tag">## in progress</span>
+      </div>
+      
+      <a href="03code-survey-items.html" class="button small">Enter Survey Items Pathway</a>
+    </article>
+  
+  </div>
+</section>
+
+<section class="app-section bordered-top">
+
+  <div class="section-label">Current Analysis State</div>
+
+  <div class="dashboard-state-grid">
+
+    <article class="overview-card">
+
+      <h2 class="workspace-title">Coding Progress</h2>
+      <div class="dashboard-metric-list">
+        <div class="dashboard-metric-row">
+          <span>Cases coded</span>
+          <strong>176 / 214</strong>
+        </div>
+
+        <div class="frequency-bar-track">
+          <div class="frequency-bar" style="width:82%;"></div>
+        </div>
+
+        <div class="dashboard-metric-row">
+          <span>Survey items reviewed</span>
+          <strong>23 / 29</strong>
+        </div>
+
+        <div class="frequency-bar-track">
+          <div class="frequency-bar" style="width:79%;"></div>
+        </div>
+
+        <div class="dashboard-metric-row">
+          <span>Responses coded</span>
+          <strong>1,846 / 2,104</strong>
+        </div>
+
+        <div class="frequency-bar-track">
+          <div class="frequency-bar" style="width:88%;"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="overview-card">
+
+      <h2 class="workspace-title">Interpretive Elements</h2>
+
+      <div class="dashboard-metric-list">
+
+        <div class="dashboard-metric-row">
+          <span>Unique codes</span>
+          <strong>66</strong>
+        </div>
+
+        <div class="dashboard-metric-row">
+          <span>Categories</span>
+          <strong>14</strong>
+        </div>
+
+        <div class="dashboard-metric-row">
+          <span>Themes</span>
+          <strong>4</strong>
+        </div>
+
+        <div class="dashboard-metric-row">
+          <span>Researcher memos</span>
+          <strong>31</strong>
+        </div>
+      
+      </div>
+
+    </article>
+</div>
+</section>
+
+<!-------------------------------------------------->
+<!-- ANALYSIS STATE ZONE RIGHT SIDE MODULES -->
+<section class="app-layout">
+  <div class="app-main">
+  
+  <div class="workspace-title-row">
+  <div>
+    <h2 class="workspace-title">
+    Recent Activity
+    </h2>
+    <p class="workspace-note">
+    Track recent coding, memoing, imports, exports, and pathway activity.
+    </p>
+  </div>
+  </div>
+  
+  <div class="overview-card">
+  <ul class="activity-list">
+  <li>
+  <strong>Q05 · Class</strong><br>
+  Code frequencies reviewed · May 14, 2026 · 4:22 PM
+  </li>
+  <li>
+  <strong>Persona_001</strong><br>
+  Researcher codes edited · May 14, 2026 · 2:22 PM
+  </li>
+  <li>
+  <strong>Spreadsheet Merge</strong><br>
+  Updated response set imported · May 13, 2026 · 11:06 AM
+  </li>
+  <li>
+  <strong>Q08 · Gender Experience</strong><br>
+  New memo added · May 12, 2026 · 3:14 PM
+  </li>
+  </ul>
+  </div>
+  
+  </div>
+  
+  <aside class="app-sidebar" aria-label="Dashboard sidebar">
+  <section class="sidebar-card white">
+  <div class="sidebar-card-title">
+  Recent Memos
+  </div>
+  <div class="memo-entry">
+  <div class="memo-date">May 14, 2026 · 5:01 PM</div>
+  <p class="memo-text">
+  Frequency alone does not capture interpretive weight. Some lower-frequency codes may carry strong analytical significance.
+  </p>
+  </div>
+  <div class="memo-entry">
+  <div class="memo-date">May 14, 2026 · 4:35 PM</div>
+  <p class="memo-text">Consider how participant-centered and survey-item-centered coding pathways reveal different patterns.</p>
+  </div>
+  <a href="#" class="button small secondary" style="margin-top:1rem;">View All Memos</a>
+  </section>
+  </aside>
+
+</section>

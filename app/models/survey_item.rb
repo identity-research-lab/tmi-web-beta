@@ -10,6 +10,7 @@ class SurveyItem
   property :updated_at, type: DateTime
 
   belongs_to :dimension
+  belongs_to :project
   has_many :survey_responses
     
 end

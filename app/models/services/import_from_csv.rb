@@ -18,10 +18,9 @@ module Services
 			@record = record
 		end
 
-		# Hydrates a sufficiently complete Case object and associated Response objects from a row in the imported CSV data file.
 		def perform
 			return unless record_valid?
-			kase = Case.find_or_create_by(response_id: record['ResponseId'] || record['source_record_id'])
+			kase = Persona.find_or_create_by(response_id: record['ResponseId'] || record['source_record_id'])
 			row_hash = Question.all.map(&:key).inject({}) { |accumulator, key| accumulator[key] = record[key]; accumulator }
 		  PopulateCaseJob.perform_async(kase.id, row_hash)
 		end

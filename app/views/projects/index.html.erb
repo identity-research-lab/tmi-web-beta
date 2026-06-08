@@ -69,16 +69,11 @@ Download TMI-WEB Survey Template
     
     <ul class="dashboard-upload-actions">
       <% if @case_count > 0 %>
-      <li><button class="button small secondary">Merge Updated Project Data</button></li>
+      <li><%= link_to "Merge Updated Project Data", edit_project_path(@project), class: "button small secondary" %></li>
     <% else %>
-      <li><button class="button small secondary">Upload New Project Spreadsheet</button></li>
+      <li><%= link_to "Upload New Project Spreadsheet", edit_project_path(@project), class: "button small secondary" %></li>
     <% end %>
     </ul>
-    
-    <%= form_with model: @project do |f| %>
-      <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
-      <%= f.submit "Upload", style: "button small" %>
-    <% end  %>
     
   </div>
 </section>

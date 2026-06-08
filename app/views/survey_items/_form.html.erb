@@ -1,0 +1,29 @@
+<%= turbo_frame_tag "survey_item_#{survey_item.id}" do %>
+  <%= form_with model: survey_item, data: { turbo_frame: "survey_item_#{ survey_item.id }" } do |f| %>
+    <tr>
+      <td><%= survey_item.csv_header %></td>
+      <td><%= f.text_field :label, value: survey_item.label %></td>
+      <td>
+        <%= f.select :dimension, options_from_collection_for_select(Dimension.all, 'id', 'name'), include_blank: true %>
+      </td>
+      <td><%= f.text_area :prompt, value: survey_item.prompt %></td>
+      <td>
+        <div class="radio-row">
+          <%= f.radio_button :item_kind, "participant_identifier", checked: survey_item.is_participant_identifier %><%= f.label :item_kind_participant_identifier, "Participant ID" %>
+        </div>
+        <div class="radio-row">
+          <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>
+        </div>
+        <div class="radio-row">
+          <%= f.radio_button :item_kind, "identity", checked: survey_item.is_identity %><%= f.label :item_kind_identity, "identity" %>
+        </div>
+        <div class="radio-row">
+          <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
+        </div>
+      </td>
+      <td><%= f.checkbox :is_ignored, checked: survey_item.is_ignored %></td>
+      <td><%= f.submit "Save", class: "button small" %>
+  <% end %>
+
+<% end %>
+

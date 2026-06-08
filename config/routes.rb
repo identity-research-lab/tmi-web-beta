@@ -13,5 +13,6 @@ Rails.application.routes.draw do
   get "about" => "static_pages#about"
   
   resources :projects
+  resources :survey_items, only: [:update] 
   
 end

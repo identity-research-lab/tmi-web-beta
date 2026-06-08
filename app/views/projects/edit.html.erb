@@ -1,0 +1,50 @@
+<%- title "Edit Project" %>
+
+<section class="app-header dashboard-hero">
+
+<div class="app-header-copy">
+  <div class="app-label">
+    <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+  </div>
+  
+  <h1 class="app-title">Project Details</h1>
+  
+  <p class="app-description">
+    CONTEXT
+  </p>
+  <p class="app-description">
+    INSTRUCTIONS
+  </p>
+  
+</div>
+</section>
+
+<section class="dashboard-section">
+  <div>
+    <div class="app-label">Survey Fields</div>
+    <h2 class="workspace-title">Review Survey Fields</h2>
+    <p class="workspace-note">
+      SET UP INSTRUCTIONS
+    </p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>CSV Header</th>
+          <th>Label</th>
+          <th>Dimension</th>
+          <th>Prompt</th>
+          <th>Type</th>
+          <th>Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @project.survey_items.each do |survey_item| %>
+          <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
+        <% end %>
+      </tbody>
+    </table>
+    
+  </div>
+
+</section>

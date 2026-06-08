@@ -16,6 +16,10 @@ class Project
   
   has_many :in, :survey_items, type: :HasProject
   
+  def active_fields
+    @active_fields ||= self.survey_items.where(is_ignored: false)
+  end
+  
   def survey_fields  
     CSV.parse(self.csv_data, headers: true).headers
   end

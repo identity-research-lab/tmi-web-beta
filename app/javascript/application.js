@@ -2,8 +2,10 @@
 import "@hotwired/turbo-rails"
 
 import { copyToClipboard } from "copy_to_clipboard"
+import { setupMobileNav } from "mobile_navigation"
 
 document.addEventListener("turbo:load", () => {
+  setupMobileNav()
 })
 
 window.copyToClipboard = copyToClipboard

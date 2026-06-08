@@ -13,10 +13,9 @@ gem "importmap-rails"
 gem "turbo-rails"
 
 # neo4j
-gem "activegraph", "11.5.0.beta.3"
+gem "activegraph", "12.0.0.beta.7"
 gem "neo4j-ruby-driver"
 gem "benchmark"
-gem 'connection_pool', '~> 2.4'
 
 group :development, :test do
   gem "dotenv", groups: [:development, :test]

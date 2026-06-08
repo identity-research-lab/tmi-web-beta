@@ -1,4 +1,4 @@
-class CreateCase < ActiveGraph::Migrations::Base
+class CreateReflection < ActiveGraph::Migrations::Base
   def up
     
   end

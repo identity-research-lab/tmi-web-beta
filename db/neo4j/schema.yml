@@ -1,0 +1,51 @@
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Node to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.yml definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using neo4j:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+---
+:constraints:
+- 'CREATE CONSTRAINT `constraint_2e9488d8` FOR (n:`Identity`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_302a3d92` FOR (n:`Category`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_651783b9` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_6beeaf37` FOR (n:`Code`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_6e98d5ab` FOR (n:`Keyword`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_b3f651ab` FOR (n:`Tag`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
+  REQUIRE (n.`migration_id`) IS UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_dd2c112` FOR (n:`Theme`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+:indexes:
+- CREATE RANGE INDEX `index_1b3228ee` FOR (n:`Code`) ON (n.`context`)
+- CREATE RANGE INDEX `index_2a91af07` FOR (n:`Identity`) ON (n.`name`)
+- CREATE RANGE INDEX `index_2f2d7a20` FOR (n:`Category`) ON (n.`dimension`)
+- CREATE RANGE INDEX `index_32e8f300` FOR (n:`Category`) ON (n.`context`)
+- CREATE RANGE INDEX `index_4bd64d5` FOR (n:`Code`) ON (n.`name`)
+- CREATE RANGE INDEX `index_5cb729d1` FOR (n:`Identity`) ON (n.`context`)
+- CREATE RANGE INDEX `index_61584458` FOR (n:`Category`) ON (n.`name`)
+- CREATE RANGE INDEX `index_aabeed83` FOR (n:`Theme`) ON (n.`name`)
+- CREATE RANGE INDEX `index_ca770182` FOR (n:`Code`) ON (n.`dimension`)
+- CREATE RANGE INDEX `index_f240f960` FOR (n:`Identity`) ON (n.`dimension`)
+:versions:
+- '20240323194853'
+- '20240323195422'
+- '20240325234413'
+- '20240522013044'
+- '20240607210627'
+- '20240615023034'
+- '20240615212620'
+- '20241030222630'
+- '20250331222630'

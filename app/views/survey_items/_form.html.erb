@@ -1,4 +1,3 @@
-<%= turbo_frame_tag "survey_item_#{survey_item.id}" do %>
   <%= form_with model: survey_item, data: { turbo_frame: "survey_item_#{ survey_item.id }" } do |f| %>
     <tr>
       <td><%= survey_item.csv_header %></td>
@@ -23,8 +22,9 @@
           <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
         </div>
       </td>
-      <td><%= f.checkbox :is_ignored, checked: survey_item.is_ignored %></td>
+      <td>
+        <%= f.checkbox :is_ignored, checked: survey_item.is_ignored %><br />
+        <%= f.submit "Save" %>
+      </td>
+    </tr>
   <% end %>
-
-<% end %>
-

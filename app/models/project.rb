@@ -7,7 +7,7 @@ class Project
   property :name, default: "Untitled Project"
   property :researcher, default: "Unspecified Researcher"
   property :csv_data
-  property :participant_id_field
+  property :participant_id_field, default: "participant_id"
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
   property :refreshed_at, type: DateTime

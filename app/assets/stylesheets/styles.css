@@ -982,7 +982,8 @@ th {
 }
 
 .dashboard-section table td {
-  padding: 1rem;
+  padding: 1rem 2rem 1rem 0rem;
+  text-align: left;
 }
 
 .case-table-wrap,
@@ -998,6 +999,8 @@ th {
   background: var(--surface);
 }
 
+.survey-table th,
+.survey-table td,
 .case-table th,
 .case-table td,
 .response-table th,

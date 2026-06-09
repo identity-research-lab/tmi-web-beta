@@ -59,8 +59,4 @@ class SurveyItem
     end
   end
   
-  def clear_kind
-    
-  end
-  
 end

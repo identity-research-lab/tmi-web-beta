@@ -33,6 +33,7 @@ class ProjectsController < ApplicationController
       @project.create_survey_items_from_csv
     end
     @project.update!(project_params)
+    redirect_to edit_project_path(@project)
   end
   
   private

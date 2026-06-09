@@ -1,5 +1,6 @@
-  <%= form_with model: survey_item, class: "survey-item-form", 
-  data: { turbo_frame: "survey_item_#{ survey_item.id }" } do |f| %>
+<%= turbo_frame_tag "frame-survey-item-#{survey_item.id}" do %>
+  <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+  data: { turbo_stream: true, turbo_frame: "frame-survey-item-#{ survey_item.id }" } do |f| %>
     <tr>
       <td><%= survey_item.csv_header %></td>
       <td>
@@ -24,7 +25,8 @@
         </div>
       </td>
       <td><%= f.checkbox :is_ignored, checked: survey_item.is_ignored %></td>
-      <td><%= f.submit "Save", class: "button small hidden" %>
+      <td><%= f.submit "Save", class: "button small save-button hidden" %>
       </td>
     </tr>
   <% end %>
+<% end %>

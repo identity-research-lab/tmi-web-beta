@@ -1,32 +1,39 @@
-<%= turbo_frame_tag "frame-survey-item-#{survey_item.id}" do %>
-  <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
-  data: { turbo_stream: true, turbo_frame: "frame-survey-item-#{ survey_item.id }" } do |f| %>
-    <tr>
-      <td><%= survey_item.csv_header %></td>
-      <td>
-        <div class="form-group"><%= f.text_field :label, value: survey_item.label %></div>
-      </td>
-      <td>
-        <div class="form-group"><%= f.text_area :prompt, value: survey_item.prompt %></div>
-      </td>
-      <td>
-        <div class="form-group">
-          <label for="dimension">Dimension</label>
-          <%= f.select :dimension, options_from_collection_for_select(Dimension.all, 'id', 'name'), include_blank: true %>
-        </div>
-        <div class="radio-row">
-          <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>
-        </div>
-        <div class="radio-row">
-          <%= f.radio_button :item_kind, "identity", checked: survey_item.is_identity %><%= f.label :item_kind_identity, "identity" %>
-        </div>
-        <div class="radio-row">
-          <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
-        </div>
-      </td>
-      <td><%= f.checkbox :is_ignored, checked: survey_item.is_ignored %></td>
-      <td><%= f.submit "Save", class: "button small save-button hidden" %>
-      </td>
-    </tr>
-  <% end %>
+<%= turbo_frame_tag id: "frame-survey-item-#{survey_item.id}" do %>
+  <td><%= survey_item.csv_header %></td>
+  <td>
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+    data: { turbo_stream: true, turbo_frame: "frame-survey-item-#{ survey_item.id }" } do |f| %>
+      <div class="form-group"><%= f.text_field :label, value: survey_item.label %></div>
+    <% end %>
+  </td>
+  <td>
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+    data: { turbo_stream: true, turbo_frame: "frame-survey-item-#{ survey_item.id }" } do |f| %>
+
+      <div class="form-group"><%= f.text_area :prompt, value: survey_item.prompt %></div>
+    <% end %>
+  </td>
+  <td>
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+    data: { turbo_stream: true, turbo_frame: "frame-survey-item-#{ survey_item.id }" } do |f| %>
+      <div class="form-group">
+        <label for="dimension">Dimension</label>
+        <%= f.select :dimension, options_from_collection_for_select(Dimension.all, 'id', 'name'), include_blank: true %>
+      </div>
+      <div class="radio-row">
+        <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>
+      </div>
+      <div class="radio-row">
+        <%= f.radio_button :item_kind, "identity", checked: survey_item.is_identity %><%= f.label :item_kind_identity, "identity" %>
+      </div>
+      <div class="radio-row">
+        <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
+      </div>
+    <% end %>
+  </td>
+  <td>
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", data: { turbo_stream: true, turbo_frame: "frame-survey-item-#{ survey_item.id }" } do |f| %>
+      <%= f.checkbox :is_ignored, checked: survey_item.is_ignored %>
+    <% end %>
+  </td>
 <% end %>

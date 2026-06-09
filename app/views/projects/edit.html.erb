@@ -52,7 +52,9 @@
       </thead>
       <tbody>
         <% @project.survey_items.order(:csv_header).each do |survey_item| %>
-          <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
+          <tr>
+            <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
+          </tr>
         <% end %>
       </tbody>
     </table>

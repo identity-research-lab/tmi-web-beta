@@ -12,7 +12,11 @@
 
 ---
 :constraints:
+- 'CREATE CONSTRAINT `NODE_Dimension#uuid_key` FOR (n:`Dimension`) REQUIRE (n.`uuid`)
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Project#uuid_key` FOR (n:`Project`) REQUIRE (n.`uuid`)
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `NODE_SurveyItem#uuid_key` FOR (n:`SurveyItem`) REQUIRE (n.`uuid`)
   IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_2e9488d8` FOR (n:`Identity`) REQUIRE (n.`uuid`) IS
   UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
@@ -67,3 +71,5 @@
 - '20260608041847'
 - '20260608041855'
 - '20260608045508'
+- '20260608202621'
+- '20260608231203'

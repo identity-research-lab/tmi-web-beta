@@ -621,7 +621,8 @@ h1 {
 }
 
 .app-select,
-.app-input {
+.app-input,
+.app-select-fitted {
   min-height: 44px;
   padding: 0.8rem 1rem;
   border: 1px solid var(--border-soft);
@@ -646,7 +647,7 @@ h1 {
   text-align: center;
 }
 
-.dashboard-upload {
+.dashboard-section {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -656,7 +657,7 @@ h1 {
   background: var(--surface);
 }
 
-ul.dashboard-upload-actions {
+ul.dashboard-actions {
   list-style-type: none;
   display: flex;
   align-items: center;
@@ -960,8 +961,29 @@ ul.dashboard-upload-actions {
 
 /* TABLES */
 
+th {
+  text-align: left;
+}
+
 .app-section {
   padding: 3rem 4rem;
+}
+
+.dashboard-section table {
+  width: 100%;
+  margin-top: 3rem;
+  padding: 3rem 4rem;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+.dashboard-section table tr:nth-child(even) {
+  background-color: var(--gray-100);
+}
+
+.dashboard-section table td {
+  padding: 1rem 2rem 1rem 0rem;
+  text-align: left;
 }
 
 .case-table-wrap,
@@ -977,6 +999,8 @@ ul.dashboard-upload-actions {
   background: var(--surface);
 }
 
+.survey-table th,
+.survey-table td,
 .case-table th,
 .case-table td,
 .response-table th,
@@ -1826,18 +1850,18 @@ ul.dashboard-upload-actions {
     padding-right: 1.5rem;
   }
 
-  .dashboard-upload,
+  .dashboard,
   .dashboard-pathway-grid,
   .dashboard-state-grid {
     grid-template-columns: 1fr;
   }
 
-  .dashboard-upload {
+  .dashboard {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 
-  .dashboard-upload-actions {
+  .dashboard-actions {
     justify-content: flex-start;
   }
 
@@ -1977,11 +2001,18 @@ ul.dashboard-upload-actions {
 }
 
 .form-group label {
+  display:flex;
+  flex: 1;
+  align-items: flex-start;
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.form-group select {
+  width: 10rem;
 }
 
 .form-group input,
@@ -2011,6 +2042,26 @@ ul.dashboard-upload-actions {
 .checkbox-row input {
   width: 18px;
   height: 18px;
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: left;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+.radio-row label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.radio-row input {
 }
 
 /* RESPONSIVE: DESKTOP / SMALL LAPTOP */

@@ -7,3 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+["Age", "Class", "Race/Ethnicity", "Religion", "Disability", "Neurodiversity", "Gender", "LGBTQIA+ Status", "Pronouns", "Identity"].each do |dimension_name|
+  Dimension.find_or_create_by!(name: dimension_name)
+end

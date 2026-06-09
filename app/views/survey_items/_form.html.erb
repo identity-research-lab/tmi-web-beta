@@ -9,9 +9,6 @@
       <td><%= f.text_area :prompt, value: survey_item.prompt %></td>
       <td>
         <div class="radio-row">
-          <%= f.radio_button :item_kind, "participant_identifier", checked: survey_item.is_participant_identifier %><%= f.label :item_kind_participant_identifier, "Participant ID" %>
-        </div>
-        <div class="radio-row">
           <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>
         </div>
         <div class="radio-row">

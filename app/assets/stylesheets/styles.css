@@ -621,7 +621,8 @@ h1 {
 }
 
 .app-select,
-.app-input {
+.app-input,
+.app-select-fitted {
   min-height: 44px;
   padding: 0.8rem 1rem;
   border: 1px solid var(--border-soft);
@@ -2005,6 +2006,10 @@ th {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
+}
+
+.form-group select {
+  width: 10rem;
 }
 
 .form-group input,

@@ -26,6 +26,26 @@
     <p class="workspace-note">
       SET UP INSTRUCTIONS
     </p>
+  </div>
+</section>
+
+<section class="dashboard-section">
+  <%= form_with model: @project do |f| %>
+    <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
+    <%= f.submit "Upload", style: "button small" %>
+  <% end  %>
+</section>
+  
+<section class="dashboard-section">
+
+  <div>
+    <div class="form-group"
+      <%= form_with model: @project, url: project_path do |f| %>
+        <%= f.label :participant_id_field, "Partipant ID field" %>
+        <%= f.select :participant_id_field, options_from_collection_for_select(@project.survey_items.order(:csv_header), 'id', 'csv_header'), include_blank: true, class: "app-select-fitted" %>
+      <% end %>
+    </div>
+
     
     <table>
       <thead>
@@ -39,7 +59,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @project.survey_items.each do |survey_item| %>
+        <% @project.survey_items.order(:csv_header).each do |survey_item| %>
           <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
         <% end %>
       </tbody>

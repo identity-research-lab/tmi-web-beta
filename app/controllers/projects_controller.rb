@@ -26,10 +26,23 @@ class ProjectsController < ApplicationController
     end
   end
   
+  def update
+    @project = Project.find(params[:id])
+    if csv_param[:csv_data].present?
+      @project.update!(csv_data: csv_param[:csv_data].read)
+      @project.create_survey_items_from_csv
+    end
+    @project.update!(project_params)
+  end
+  
   private
   
   def project_params
-    params.require(:project).permit(:name, :description, :researcher, :csv_data)
+    params.require(:project).permit(:name, :description, :researcher)
+  end
+  
+  def csv_param
+    params.require(:project).permit(:csv_data)
   end
 
 end

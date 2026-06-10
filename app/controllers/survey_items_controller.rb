@@ -2,6 +2,7 @@ class SurveyItemsController < ApplicationController
   
   def update
     @survey_item = SurveyItem.find(params[:id])
+    Rails.logger.info("!!! -< #{survey_item_params[:is_active]}")
     success = @survey_item.update(survey_item_params)
 
     respond_to do |format|
@@ -14,7 +15,7 @@ class SurveyItemsController < ApplicationController
   private
   
   def survey_item_params
-    params.require(:survey_item).permit(:prompt, :label, :item_kind, :is_ignored, :dimension)
+    params.require(:survey_item).permit(:prompt, :label, :item_kind, :is_active, :dimension_id)
   end
   
 end

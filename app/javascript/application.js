@@ -3,9 +3,11 @@ import "@hotwired/turbo-rails"
 
 import { copyToClipboard } from "copy_to_clipboard"
 import { setupMobileNav } from "mobile_navigation"
+import { handleSchemaForms } from "schema_editing"
 
 document.addEventListener("turbo:load", () => {
   setupMobileNav()
+  handleSchemaForms()
 })
 
 window.copyToClipboard = copyToClipboard

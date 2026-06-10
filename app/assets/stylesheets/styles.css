@@ -41,7 +41,7 @@ a {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .page {
@@ -1998,6 +1998,7 @@ th {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .form-group label {

@@ -2,7 +2,6 @@ class SurveyItemsController < ApplicationController
   
   def update
     @survey_item = SurveyItem.find(params[:id])
-    Rails.logger.info("!!! -< #{survey_item_params[:is_active]}")
     success = @survey_item.update(survey_item_params)
 
     respond_to do |format|

@@ -20,6 +20,7 @@ class SurveyItem
   # has_many :survey_responses, type: :survey_response
 
   before_save :translate_item_kind
+  before_save :sanitize_active_flag
   
   KINDS = [:participant_identifier, :experience, :identity, :reflection]
   
@@ -47,6 +48,18 @@ class SurveyItem
     find_by(is_participant_identifier: true)
   end
 
+  # Force to boolean. Sorry.
+  def sanitize_active_flag
+    case self.is_active
+    when '1'
+      self.is_active = true
+    when '0'
+      self.is_active = false
+    when nil
+      self.is_active = false
+    end
+  end
+  
   def translate_item_kind
     return if @item_kind.nil?
     return unless KINDS.include?(@item_kind.to_sym)

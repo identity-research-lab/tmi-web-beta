@@ -3,12 +3,14 @@ module Services
 	require 'csv'
 
 	# Upserts/merges data as CSV file is imported, meaning that this operation is non-destructive and will not re-import existing data.
+
 	class ImportFromCsv
 
 		attr_accessor :project
 		attr_accessor :record
 
 		# Parse the project's CSV field to create or update Persona and SurveyResponse items
+		# TODO event log
 		def self.perform(project_id)
 			return unless project = Project.find(project_id)
 			return unless project.participant_id_field.present?
@@ -21,14 +23,15 @@ module Services
 				next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
 				survey_items.each do |survey_item|
 					survey_response = SurveyResponse.find_or_initialize_by(
-						persona_id: record[project.participant_id_field],
-						survey_item_id: survey_item.id,
-						dimension_id: survey_item.dimension_id,
+						persona: persona,
+						survey_item: survey_item
 					)
-					survey_response.value = record[survey_item.csv_header]
-					survey_response.save
+					survey_response.dimension = survey_item.dimension
+					survey_response.value = record[survey_item.csv_header] || "No response"
+					survey_response.save!
 				end
 			end
+			project.update_attributes(refreshed_at: DateTime.now)
 		end
 
 	end

@@ -6,27 +6,37 @@
   <div class="app-label">
     <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
   </div>
-  
+
   <h1 class="app-title">Project Details</h1>
-  
+
   <p class="app-description">
     CONTEXT
   </p>
   <p class="app-description">
     INSTRUCTIONS
   </p>
-  
+
 </div>
 </section>
 
 <section class="dashboard-section">
   <div>
-    <div class="app-label">Survey Schema</div>
-    <h2 class="workspace-title">Review Survey Fields</h2>
+    <div class="app-label">Survey Data</div>
+    <h2 class="workspace-title">Review Survey Data</h2>
     <p class="workspace-note">
       SET UP INSTRUCTIONS
     </p>
   </div>
+</section>
+
+<section class="dashboard-section">
+  <% if @project.survey_items.any? %>
+    <%= render partial: "survey_responses/form", locals: { project: @project } %>
+  <% else %>
+    <p>
+      Once your survey fields are configured, you can load survey responses into the graph.
+    </p>
+  <% end %>
 </section>
 
 <section class="dashboard-section">
@@ -35,7 +45,7 @@
     <%= f.submit "Upload", style: "button small" %>
   <% end  %>
 </section>
-  
+
 <section class="dashboard-section">
 
   <div>
@@ -58,7 +68,7 @@
         <% end %>
       </tbody>
     </table>
-    
+
   </div>
 
 </section>

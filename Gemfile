@@ -6,6 +6,7 @@ gem "activesupport"
 gem "sqlite3", ">= 2.1"
 gem "puma", ">= 5.0"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "activejob"
 
 # Minimal asset handling
 gem "propshaft"

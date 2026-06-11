@@ -13,7 +13,7 @@ require "action_controller/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
 require "rails/test_unit/railtie"
-
+require "active_job/railtie"
 require "active_graph/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -41,5 +41,9 @@ module TmiWebBeta
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Use in-memory queue for background jobs
+    config.active_job.queue_adapter = :async
+
   end
 end

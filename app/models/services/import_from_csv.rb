@@ -27,8 +27,8 @@ module Services
 						survey_item_id: survey_item.id,
 						dimension_id: survey_item.dimension_id
 					)
-					survey_response.value = record[survey_item.csv_header] || ""
-					survey_response.save
+					survey_response.value = record[survey_item.csv_header] || "No response"
+					survey_response.save!
 				end
 			end
 			project.update_attributes(refreshed_at: DateTime.now)

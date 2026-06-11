@@ -51,7 +51,8 @@ class Project
   # TODO event
   def create_survey_responses_from_csv
     self.update_attributes(refresh_started_at: DateTime.now)
-    PopulateSurveyResponsesJob.perform_later(project_id: self.id)
+    Services::ImportFromCsv.perform(self.id)
+#    PopulateSurveyResponsesJob.perform_later(project_id: self.id)
   end
 
 end

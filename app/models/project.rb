@@ -34,6 +34,14 @@ class Project
     return false
   end
 
+  def survey_responses_load_progress
+    total_records = CSV.parse(self.csv_data, headers: true).count
+    total_responses =  total_records * active_fields.count
+    in_db = SurveyResponse.count / active_fields.count
+    "#{in_db}/#{total_responses}"
+  end
+
+  # TODO event
   def create_survey_items_from_csv
     survey_fields.each do |field|
       item = SurveyItem.find_or_create_by(csv_header: field, project: self)

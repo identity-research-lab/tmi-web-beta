@@ -21,8 +21,8 @@
 
 <section class="dashboard-section">
   <div>
-    <div class="app-label">Survey Schema</div>
-    <h2 class="workspace-title">Review Survey Fields</h2>
+    <div class="app-label">Survey Data</div>
+    <h2 class="workspace-title">Review Survey Data</h2>
     <p class="workspace-note">
       SET UP INSTRUCTIONS
     </p>
@@ -30,12 +30,13 @@
 </section>
 
 <section class="dashboard-section">
-  <p>
-    Once your survey fields are configured, you can load survey responses into the graph.
-  </p>
-  <%= form_with model: @project do |f| %>
-    <%= f.submit "Load Responses", style: "button small" %>
-  <% end  %>
+  <% if @project.survey_items.any? %>
+    <%= render partial: "survey_responses/form", locals: { project: @project } %>
+  <% else %>
+    <p>
+      Once your survey fields are configured, you can load survey responses into the graph.
+    </p>
+  <% end %>
 </section>
 
 <section class="dashboard-section">

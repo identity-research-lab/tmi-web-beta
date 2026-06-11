@@ -18,4 +18,3 @@ class SurveyItemsController < ApplicationController
   end
 
 end
-

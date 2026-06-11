@@ -1,8 +1,13 @@
-<%= turbo_frame_tag id: "frame-survey-responses" do %>
-  <td><%= survey_item.csv_header %></td>
-  <td>
-    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses }" } do |f| %>
-      <div class="form-group"><%= f.text_field :label, value: survey_item.label %></div>
-    <% end %>
-  </td>
+<% if @project.survey_responses_load_in_progress? %>
+  <p>
+    Survey responses loading in progress. This may take several minutes depending on the size of your dataset. Started <%= distance_of_time_in_words(@project.refresh_started_at, DateTime.now, include_seconds: true) %> ago. <%= project.survey_responses_load_progress %> records imported.
+  </p>
+<% else %>
+  <p>
+    Survey responses were last refreshed <%=   distance_of_time_in_words(@project.refreshed_at, DateTime.now) %> ago.
+  </p>
+  <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses }" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.submit "Load Responses", style: "button small" %>
+  <% end %>
 <% end %>

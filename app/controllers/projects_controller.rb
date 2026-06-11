@@ -32,9 +32,8 @@ class ProjectsController < ApplicationController
       @project.update!(csv_data: csv_param[:csv_data].read)
       @project.create_survey_items_from_csv
     end
-    if csv_param[:csv_data].present?
-      @project.update!(csv_data: csv_param[:csv_data].read)
-      @project.create_survey_items_from_csv
+    if refresh_param[:refresh_started_at].present?
+      @project.create_survey_responses_from_csv
     end
     @project.update!(project_params)
     redirect_to edit_project_path(@project)
@@ -48,6 +47,10 @@ class ProjectsController < ApplicationController
 
   def csv_param
     params.require(:project).permit(:csv_data)
+  end
+
+  def refresh_param
+    params.require(:project).permit(:refresh_started_at)
   end
 
 end

@@ -6,7 +6,8 @@ class Persona
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
-  validates :name, presence: true
+  validates :participant_id, presence: true
+  validates :participant_id, uniqueness: true
 
   has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponses"
 #  has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperiences"
@@ -35,9 +36,9 @@ class Persona
    # Calculates the permanent URL of the Case, which is stored as a property on the associated Persona.
   def permalink
     if Rails.env == "development"
-      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: "localhost", port: 3000, id: self.id)
+#      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: "localhost", port: 3000, id: self.id)
     else
-      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
+#      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
     end
   end
 

@@ -12,20 +12,20 @@ module Services
 		def self.perform(project_id)
 			return unless project = Project.find(project_id)
 			return unless project.participant_id_field.present?
-			return unless project.csv_text.present?
+			return unless project.csv_data.present?
 
 			survey_items = project.active_fields
 
-			CSV.parse(csv_text, headers: true).each do |record|
-				next unless persona = Persona.find_or_create_by(participant_id: )
+			CSV.parse(project.csv_data, headers: true).each do |record|
+				next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
 				survey_items.each do |survey_item|
 					survey_response = SurveyResponse.find_or_initialize_by(
 						persona_id: record[project.participant_id_field],
 						survey_item_id: survey_item.id,
 						dimension_id: survey_item.dimension_id,
 					)
-					survey_response.value = record[survey_item.csv_param]
-					survey_response.save!
+					survey_response.value = record[survey_item.csv_header]
+					survey_response.save
 				end
 			end
 		end

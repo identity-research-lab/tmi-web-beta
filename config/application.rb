@@ -41,5 +41,9 @@ module TmiWebBeta
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Use in-memory queue for background jobs
+    config.active_job.queue_adapter = :async
+
   end
 end

@@ -5,38 +5,26 @@ module Services
 	# Upserts/merges data as CSV file is imported, meaning that this operation is non-destructive and will not re-import existing data.
 	class ImportFromCsv
 
+		attr_accessor :project
 		attr_accessor :record
 
-		# Given a file handle to a data file, parse the file contents as CSV and hydrate Case records in serial.
-		def self.perform(csv_text)
+		# Parse the project's CSV field to create or update Persona and SurveyResponse items
+		def self.perform(project)
+			survey_items = project.active_fields
+			return unless project.csv_text.present?
+
 			CSV.parse(csv_text, headers: true).each do |record|
-				new(record).perform
+				next unless persona = Persona.find_or_create_by(participant_id: )
+				survey_items.each do |survey_item|
+					survey_response = SurveyResponse.find_or_initialize_by(
+						persona_id: record[project.participant_id_field],
+						survey_item_id: survey_item.id,
+						dimension_id: survey_item.dimension_id,
+					)
+					survey_response.value = record[survey_item.csv_param]
+					survey_response.save!
+				end
 			end
-		end
-
-		def initialize(record)
-			@record = record
-		end
-
-		def perform
-			return unless record_valid?
-			kase = Persona.find_or_create_by(response_id: record['ResponseId'] || record['source_record_id'])
-			row_hash = Question.all.map(&:key).inject({}) { |accumulator, key| accumulator[key] = record[key]; accumulator }
-		  PopulateCaseJob.perform_async(kase.id, row_hash)
-		end
-
-		private
-
-		# Pronoun data can come from a radio button or a freeform text field. We want to distinguish between the two by
-		# flagging freeform answers as "self-described".
-		def pronouns
-			return "#{record['pronouns_given_5_TEXT'] || record['pronouns_given_text']} (self-described)" if record['pronouns_given'] == "self-describe"
-			return record['pronouns_given']
-		end
-
-		# If a Case doesn't contain a response for the required fields, it will be considered invalid.
-		def record_valid?
-			Question.identity_questions.map(&:key).select{ |key| record[key.to_s].present? }.count >= 1
 		end
 
 	end

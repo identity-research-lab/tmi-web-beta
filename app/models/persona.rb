@@ -1,7 +1,7 @@
 class Persona
   include ActiveGraph::Node
 
-  property :name
+  property :participant_id
   property :permalink
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
@@ -15,7 +15,7 @@ class Persona
   # has_many :out, :memos
   # has_many :out, :events
   # has_many :out, :keywords, type: :keyword
-  
+
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query
     {
@@ -23,12 +23,12 @@ class Persona
       query: "MATCH (p:Persona)-[]-(n) WHERE p.case_id=#{self.id} RETURN p,n"
     }
   end
-  
+
   # Convenience method to pad ID.
   def identifier
     self.id.to_s.rjust(4, "0")
   end
-  
+
    # Calculates the permanent URL of the Case, which is stored as a property on the associated Persona.
   def permalink
     if Rails.env == "development"
@@ -37,5 +37,5 @@ class Persona
       Rails.application.routes.url_helpers.url_for(controller: "cases", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
     end
   end
-  
+
 end

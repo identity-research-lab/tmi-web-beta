@@ -1,5 +1,5 @@
 class SurveyItemsController < ApplicationController
-  
+
   def update
     @survey_item = SurveyItem.find(params[:id])
     success = @survey_item.update(survey_item_params)
@@ -10,12 +10,12 @@ class SurveyItemsController < ApplicationController
       end
     end
   end
-  
+
   private
-  
+
   def survey_item_params
     params.require(:survey_item).permit(:prompt, :label, :item_kind, :is_active, :dimension_id)
   end
-  
+
 end
 

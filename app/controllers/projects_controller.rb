@@ -32,6 +32,10 @@ class ProjectsController < ApplicationController
       @project.update!(csv_data: csv_param[:csv_data].read)
       @project.create_survey_items_from_csv
     end
+    if csv_param[:csv_data].present?
+      @project.update!(csv_data: csv_param[:csv_data].read)
+      @project.create_survey_items_from_csv
+    end
     @project.update!(project_params)
     redirect_to edit_project_path(@project)
   end

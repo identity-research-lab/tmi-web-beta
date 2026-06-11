@@ -6,16 +6,16 @@
   <div class="app-label">
     <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
   </div>
-  
+
   <h1 class="app-title">Project Details</h1>
-  
+
   <p class="app-description">
     CONTEXT
   </p>
   <p class="app-description">
     INSTRUCTIONS
   </p>
-  
+
 </div>
 </section>
 
@@ -30,12 +30,21 @@
 </section>
 
 <section class="dashboard-section">
+  <p>
+    Once your survey fields are configured, you can load survey responses into the graph.
+  </p>
+  <%= form_with model: @project do |f| %>
+    <%= f.submit "Load Responses", style: "button small" %>
+  <% end  %>
+</section>
+
+<section class="dashboard-section">
   <%= form_with model: @project do |f| %>
     <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
     <%= f.submit "Upload", style: "button small" %>
   <% end  %>
 </section>
-  
+
 <section class="dashboard-section">
 
   <div>
@@ -58,7 +67,7 @@
         <% end %>
       </tbody>
     </table>
-    
+
   </div>
 
 </section>

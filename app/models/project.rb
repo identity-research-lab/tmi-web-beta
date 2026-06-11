@@ -10,6 +10,7 @@ class Project
   property :participant_id_field, default: "participant_id"
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
+  property :refresh_started_at, type: DateTime
   property :refreshed_at, type: DateTime
 
   validates :name, presence: true
@@ -25,10 +26,24 @@ class Project
     CSV.parse(self.csv_data, headers: true).headers
   end
 
+  def survey_responses_load_in_progress?
+    return false unless self.refresh_started_at
+    return true if self.refresh_started_at && self.refreshed_at.nil?
+    return false if self.refresh_started_at < self.refreshed_at
+    return true if self.refresh_started_at >= self.refreshed_at
+    return false
+  end
+
   def create_survey_items_from_csv
     survey_fields.each do |field|
       item = SurveyItem.find_or_create_by(csv_header: field, project: self)
     end
+  end
+
+  # TODO event
+  def create_survey_responses_from_csv
+    self.update_attributes(refresh_started_at: DateTime.now)
+    PopulateSurveyResponsesJob.perform_later(project_id: self.id)
   end
 
 end

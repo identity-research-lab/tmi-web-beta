@@ -5,9 +5,10 @@ class SurveyResponse
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
-  belongs_to :dimension
-  belongs_to :survey_item
-  belongs_to :persona, rel_class: :RespondsWith
+   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
+   has_one :out, :survey_item, type: :HasItem, model_class: "SurveyItem"
+   has_one :out, :persona, type: :RespondsWith, model_class: "Persona"
+
   has_many :memos
-  
+
 end

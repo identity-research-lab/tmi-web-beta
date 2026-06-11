@@ -11,7 +11,7 @@ class CodedExperiences
   validates :dimension_name, presence: true
   validates_uniqueness_of :name, scope: :dimension_name
 
-  belongs_to :dimension
+  has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_many :in, :personas, rel_class: :Experiences
   has_many :in, :categories, rel_class: :Contains
   has_many :out, :events
@@ -21,11 +21,11 @@ class CodedExperiences
     codes = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct > 0').order('c DESC').return('c.name, ct')
     codes.inject({}) {|accumulator,code| accumulator[code.values[0]] ||= 0; accumulator[code.values[0]] += code.values[1]; accumulator}
   end
-  
+
   private
-  
+
   def sanitize
     self.name.strip!
   end
-  
+
 end

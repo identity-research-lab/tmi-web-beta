@@ -1,5 +1,4 @@
-# An Identity is a word or phrase used by a survey participant to self-describe. Identities have associated dimensions.
-class Identity
+class Reflection
   include ActiveGraph::Node
 
   property :name

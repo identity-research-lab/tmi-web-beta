@@ -1,4 +1,4 @@
-class Event 
+class Event
   include ActiveGraph::Node
 
   property :label
@@ -11,5 +11,5 @@ class Event
   belongs_to :persona
   belongs_to :coded_experience
   belongs_to :identity
-  
+
 end

@@ -14,7 +14,7 @@ class Category
   validates :name, presence: true
   validates_uniqueness_of :name, scope: :dimension
 
-  belongs_to :dimension
+  has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_many :out, :coded_experiences, rel_class: :Contains
   has_many :in, :themes, rel_class: :EmergesFrom
   has_many :out, :memos

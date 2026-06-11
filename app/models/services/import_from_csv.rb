@@ -23,11 +23,11 @@ module Services
 				next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
 				survey_items.each do |survey_item|
 					survey_response = SurveyResponse.find_or_initialize_by(
-						persona_id: record[project.participant_id_field],
+						persona_id: persona.id,
 						survey_item_id: survey_item.id,
-						dimension_id: survey_item.dimension_id,
+						dimension_id: survey_item.dimension_id
 					)
-					survey_response.value = record[survey_item.csv_header]
+					survey_response.value = record[survey_item.csv_header] || ""
 					survey_response.save
 				end
 			end

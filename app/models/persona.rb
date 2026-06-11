@@ -9,8 +9,8 @@ class Persona
   validates :participant_id, presence: true
   validates :participant_id, uniqueness: true
 
-  has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponses"
-#  has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperiences"
+  has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
+#  has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperience"
 
   # has_many :out, :coded_experiences, rel_class: :Experiences
   # has_many :out, :identities, rel_class: :IdentifiesWith

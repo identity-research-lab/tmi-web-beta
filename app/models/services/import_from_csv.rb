@@ -16,7 +16,8 @@ module Services
 
 			survey_items = project.active_fields
 
-			CSV.parse(project.csv_data, headers: true).each do |record|
+			records = CSV.parse(project.csv_data, headers: true)
+			records.each do |record|
 				next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
 				survey_items.each do |survey_item|
 					survey_response = SurveyResponse.find_or_initialize_by(

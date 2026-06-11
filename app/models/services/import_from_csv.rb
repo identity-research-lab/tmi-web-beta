@@ -19,14 +19,14 @@ module Services
 			survey_items = project.active_fields
 
 			records = CSV.parse(project.csv_data, headers: true)
-			records.each do |record|
+			records[0..9].each do |record|
 				next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
 				survey_items.each do |survey_item|
 					survey_response = SurveyResponse.find_or_initialize_by(
-						persona_id: persona.id,
-						survey_item_id: survey_item.id,
-						dimension_id: survey_item.dimension_id
+						persona: persona,
+						survey_item: survey_item
 					)
+					survey_response.dimension = survey_item.dimension
 					survey_response.value = record[survey_item.csv_header] || "No response"
 					survey_response.save!
 				end

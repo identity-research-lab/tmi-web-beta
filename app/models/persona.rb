@@ -8,10 +8,13 @@ class Persona
 
   validates :name, presence: true
 
-  has_many :out, :coded_experiences, rel_class: :Experiences
-  has_many :out, :identities, rel_class: :IdentifiesWith
-  has_many :out, :reflections, rel_class: :ReflectsOn
-  has_many :out, :survey_responses, rel_class: :RespondsWith
+  has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponses"
+#  has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperiences"
+
+  # has_many :out, :coded_experiences, rel_class: :Experiences
+  # has_many :out, :identities, rel_class: :IdentifiesWith
+  # has_many :out, :reflections, rel_class: :ReflectsOn
+  # has_many :out, :survey_responses, rel_class: :RespondsWith
   # has_many :out, :memos
   # has_many :out, :events
   # has_many :out, :keywords, type: :keyword
@@ -32,9 +35,9 @@ class Persona
    # Calculates the permanent URL of the Case, which is stored as a property on the associated Persona.
   def permalink
     if Rails.env == "development"
-      Rails.application.routes.url_helpers.url_for(controller: "cases", action: "show", host: "localhost", port: 3000, id: self.id)
+      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: "localhost", port: 3000, id: self.id)
     else
-      Rails.application.routes.url_helpers.url_for(controller: "cases", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
+      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
     end
   end
 

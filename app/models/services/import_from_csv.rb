@@ -9,9 +9,12 @@ module Services
 		attr_accessor :record
 
 		# Parse the project's CSV field to create or update Persona and SurveyResponse items
-		def self.perform(project)
-			survey_items = project.active_fields
+		def self.perform(project_id)
+			return unless project = Project.find(project_id)
+			return unless project.participant_id_field.present?
 			return unless project.csv_text.present?
+
+			survey_items = project.active_fields
 
 			CSV.parse(csv_text, headers: true).each do |record|
 				next unless persona = Persona.find_or_create_by(participant_id: )

@@ -37,7 +37,7 @@ class Project
   def survey_responses_load_progress
     total_records = CSV.parse(self.csv_data, headers: true).count
     total_responses =  total_records * active_fields.count
-    in_db = SurveyResponse.count / active_fields.count
+    in_db = SurveyResponse.count
     "#{in_db}/#{total_responses}"
   end
 
@@ -51,8 +51,8 @@ class Project
   # TODO event
   def create_survey_responses_from_csv
     self.update_attributes(refresh_started_at: DateTime.now)
-    Services::ImportFromCsv.perform(self.id)
-#    PopulateSurveyResponsesJob.perform_later(project_id: self.id)
+#    Services::ImportFromCsv.perform(self.id)
+    PopulateSurveyResponsesJob.perform_later(project_id: self.id)
   end
 
 end

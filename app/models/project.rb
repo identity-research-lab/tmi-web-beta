@@ -16,7 +16,10 @@ class Project
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  has_many :in, :survey_items, type: :HasProject
+  has_many :in, :survey_items, type: :HasProject, model_class: "SurveyItem"
+  has_many :in, :survey_responses, type: :HasProject, model_class: "SurveyResponse"
+  has_many :out, :events, type: :HasEvent, model_class: "Event"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   def active_fields
     @active_fields ||= self.survey_items.where(is_active: true)

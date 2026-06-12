@@ -9,16 +9,12 @@ class Persona
   validates :participant_id, presence: true
   validates :participant_id, uniqueness: true
 
+  has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperience"
+  has_many :out, :identities, type: :IdentifiesWith, model_class: "Identity"
+  has_many :out, :reflections, type: :ReflectsOn, model_class: "Reflection"
   has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
-#  has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperience"
-
-  # has_many :out, :coded_experiences, rel_class: :Experiences
-  # has_many :out, :identities, rel_class: :IdentifiesWith
-  # has_many :out, :reflections, rel_class: :ReflectsOn
-  # has_many :out, :survey_responses, rel_class: :RespondsWith
-  # has_many :out, :memos
-  # has_many :out, :events
-  # has_many :out, :keywords, type: :keyword
+  has_many :out, :events, type: :HasEvent, model_class: "Event"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query

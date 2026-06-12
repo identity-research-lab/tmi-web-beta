@@ -12,8 +12,14 @@
 
 ---
 :constraints:
+- 'CREATE CONSTRAINT `NODE_CodedExperience#uuid_key` FOR (n:`CodedExperience`) REQUIRE
+  (n.`uuid`) IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Dimension#uuid_key` FOR (n:`Dimension`) REQUIRE (n.`uuid`)
   IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `NODE_Event#uuid_key` FOR (n:`Event`) REQUIRE (n.`uuid`) IS NODE
+  KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `NODE_Memo#uuid_key` FOR (n:`Memo`) REQUIRE (n.`uuid`) IS NODE
+  KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Project#uuid_key` FOR (n:`Project`) REQUIRE (n.`uuid`)
   IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_SurveyItem#uuid_key` FOR (n:`SurveyItem`) REQUIRE (n.`uuid`)
@@ -75,3 +81,6 @@
 - '20260608202621'
 - '20260608231203'
 - '20260611021155'
+- '20260612181943'
+- '20260612185923'
+- '20260612191323'

@@ -8,8 +8,10 @@ class Event
   validates :label, presence: true
   validates :description, presence: true
 
-  belongs_to :persona
-  belongs_to :coded_experience
-  belongs_to :identity
+  has_one :out, :persona, origin: :persona, type: :HasEvent
+  has_one :out, :coded_experience, origin: :coded_experience, type: :HasEvent
+  has_one :out, :identity, origin: :identity, type: :HasEvent
+  has_one :out, :reflection, origin: :reflection, type: :HasEvent
+  has_one :out, :project, origin: :project, type: :HasEvent
 
 end

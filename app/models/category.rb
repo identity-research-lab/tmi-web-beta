@@ -15,9 +15,9 @@ class Category
   validates_uniqueness_of :name, scope: :dimension
 
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
-  has_many :out, :coded_experiences, rel_class: :Contains
-  has_many :in, :themes, rel_class: :EmergesFrom
-  has_many :out, :memos
+  has_many :out, :coded_experiences, type: :Contains, model_class: "CodedExperience"
+  has_many :in, :themes, type: :EmergesFrom, model_class: "Theme"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   # Generates a hash with the unique category name as the key and the count of its associated coded experiences as a value.
   def self.histogram(dimension)

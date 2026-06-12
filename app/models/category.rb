@@ -14,10 +14,10 @@ class Category
   validates :name, presence: true
   validates_uniqueness_of :name, scope: :dimension
 
-  has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
-  has_many :out, :coded_experiences, rel_class: :Contains
-  has_many :in, :themes, rel_class: :EmergesFrom
-  has_many :out, :memos
+  has_one :out, :dimension, type: :HasDimension
+  has_many :out, :coded_experiences, type: :Contains
+  has_many :in, :themes, type: :EmergesFrom
+  #has_many :out, :memos, type:
 
   # Generates a hash with the unique category name as the key and the count of its associated coded experiences as a value.
   def self.histogram(dimension)

@@ -1,4 +1,3 @@
-# A Theme is a label representing a fundamental concept that emerges from the data, in particular clusters of one or more Codes.
 class Theme
   include ActiveGraph::Node
 

@@ -15,9 +15,9 @@ class SurveyItem
   property :updated_at, type: DateTime
 
   has_many :in, :survey_responses, type: :HasItem, model_class: "SurveyResponse"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_one :out, :project, type: :HasProject, model_class: "Project"
-  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   before_save :translate_item_kind
   before_save :sanitize_active_flag

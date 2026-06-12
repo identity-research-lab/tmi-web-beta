@@ -17,6 +17,7 @@ class Project
   validates :name, uniqueness: true
 
   has_many :in, :survey_items, type: :HasProject, model_class: "SurveyItem"
+  has_many :in, :survey_responses, type: :HasProject, model_class: "SurveyResponse"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 

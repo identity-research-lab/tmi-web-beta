@@ -44,18 +44,18 @@ class Project
     "#{in_db}/#{total_responses}"
   end
 
-  # TODO event
   def create_survey_items_from_csv
     survey_fields.each do |field|
       item = SurveyItem.find_or_create_by(csv_header: field, project: self)
     end
+    Event.create(project: self, label: "Survey items", description: "Survey items refreshed from upload.")
   end
 
-  # TODO event
   def create_survey_responses_from_csv
     self.update_attributes(refresh_started_at: DateTime.now)
 #    Services::ImportFromCsv.perform(self.id)
     PopulateSurveyResponsesJob.perform_later(project_id: self.id)
+    Event.create(project: self, label: "Survey responses", description: "Survey responses import started.")
   end
 
 end

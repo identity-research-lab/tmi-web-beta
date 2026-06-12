@@ -206,24 +206,22 @@ Download TMI-WEB Survey Template
   </div>
 
   <div class="overview-card">
-  <ul class="activity-list">
-  <li>
-  <strong>Q05 · Class</strong><br>
-  Code frequencies reviewed · May 14, 2026 · 4:22 PM
-  </li>
-  <li>
-  <strong>Persona_001</strong><br>
-  Researcher codes edited · May 14, 2026 · 2:22 PM
-  </li>
-  <li>
-  <strong>Spreadsheet Merge</strong><br>
-  Updated response set imported · May 13, 2026 · 11:06 AM
-  </li>
-  <li>
-  <strong>Q08 · Gender Experience</strong><br>
-  New memo added · May 12, 2026 · 3:14 PM
-  </li>
-  </ul>
+    <ul class="activity-list">
+        <% if @recent_events.any? %>
+        <% @recent_events.each do |event| %>
+          <%= render partial: "events/show", locals: { event: event } %>
+        <% end %>
+      <% else %>
+        <li class="event-entry">
+          <p class="event-text">
+            No recent events.
+          </p>
+        </li>
+      <% end %>
+    </ul>
+    <% if @recent_events.any? %>
+      <a href="#" class="button small secondary" style="margin-top:1rem;">View All Activities</a>
+    <% end %>
   </div>
 
   </div>
@@ -233,12 +231,22 @@ Download TMI-WEB Survey Template
   <div class="sidebar-card-title">
   Recent Memos
   </div>
-  <ul class="memo-feed">
-    <% @recent_memos.each do |memo| %>
-      <%= render partial: "memos/show", locals: { memo: memo } %>
+    <ul class="memo-feed">
+      <% if @recent_memos.any? %>
+        <% @recent_memos.each do |memo| %>
+          <%= render partial: "memos/show", locals: { memo: memo } %>
+        <% end %>
+      <% else %>
+        <li class="memo-entry">
+          <p class="memo-text">
+            No recent memos.
+          </p>
+        </li>
+      <% end %>
+    </ul>
+    <% if @recent_memos.any? %>
+      <a href="#" class="button small secondary" style="margin-top:1rem;">View All Memos</a>
     <% end %>
-  </ul>
-  <a href="#" class="button small secondary" style="margin-top:1rem;">View All Memos</a>
   </section>
   </aside>
 

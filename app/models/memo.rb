@@ -2,12 +2,11 @@ class Memo
 
   include ActiveGraph::Node
 
-  property :note
+  property :text
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
-  validates :note, presence: true
-  validates :note, uniqueness: true
+  validates :text, presence: true
 
   has_one :out, :persona, type: :HasMemo
   has_one :out, :coded_experience, type: :HasMemo

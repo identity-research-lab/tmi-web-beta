@@ -8,10 +8,10 @@ class Event
   validates :label, presence: true
   validates :description, presence: true
 
-  has_one :out, :persona, origin: :persona, type: :HasEvent
-  has_one :out, :coded_experience, origin: :coded_experience, type: :HasEvent
-  has_one :out, :identity, origin: :identity, type: :HasEvent
-  has_one :out, :reflection, origin: :reflection, type: :HasEvent
-  has_one :out, :project, origin: :project, type: :HasEvent
+  has_one :out, :persona, type: :HasEvent
+  has_one :out, :coded_experience, type: :HasEvent
+  has_one :out, :identity, type: :HasEvent
+  has_one :out, :reflection, type: :HasEvent
+  has_one :out, :project, type: :HasEvent
 
 end

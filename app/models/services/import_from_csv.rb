@@ -10,7 +10,6 @@ module Services
 		attr_accessor :record
 
 		# Parse the project's CSV field to create or update Persona and SurveyResponse items
-		# TODO event log
 		def self.perform(project_id)
 			return unless project = Project.find(project_id)
 			return unless project.participant_id_field.present?
@@ -32,6 +31,7 @@ module Services
 				end
 			end
 			project.update_attributes(refreshed_at: DateTime.now)
+      Event.create(project: self, label: "Survey responses", description: "Survey responses import completed, #{records.count} cases refreshed.")
 		end
 
 	end

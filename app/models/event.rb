@@ -14,4 +14,8 @@ class Event
   has_one :out, :reflection, type: :HasEvent
   has_one :out, :project, type: :HasEvent
 
+  def referrent
+    @referrent ||= self.persona || self.coded_experience || self.reflection || self.project
+  end
+  
 end

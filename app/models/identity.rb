@@ -12,9 +12,9 @@ class Identity
   validates_uniqueness_of :name, scope: :dimension
 
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
-  has_many :in, :personas, rel_class: :IdentifiesWith
-  has_many :out, :events, type: :HasEvent
-  has_many :out, :memos, type: :HasMemo
+  has_many :in, :personas, type: :IdentifiesWith, model_class: "Persona"
+  has_many :out, :events, type: :HasEvent, model_class: "Event"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   private
 

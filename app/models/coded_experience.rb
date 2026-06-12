@@ -12,10 +12,10 @@ class CodedExperience
   validates_uniqueness_of :name, scope: :dimension_name
 
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
-  has_many :in, :personas, rel_class: :Experiences
-  has_many :in, :categories, rel_class: :Contains
-  has_many :out, :events, type: :HasEvent
-  has_many :out, :memos, type: :HasMemo
+  has_many :in, :personas, type: :Experiences, model_class: "Persona"
+  has_many :in, :categories, type: :Contains, model_class: "Category"
+  has_many :out, :events, type: :HasEvent, model_class: "Event"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   # Given a dimension, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(dimension)

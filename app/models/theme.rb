@@ -13,9 +13,9 @@ class Theme
   validates :name, presence: true
   validates_uniqueness_of :name
 
-  has_many :out, :categories, rel_class: :EmergesFrom
-  has_many :out, :memos
-  
+  has_many :out, :categories, type: :EmergesFrom, model_class: "Category"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
+
   private
 
   def sanitize

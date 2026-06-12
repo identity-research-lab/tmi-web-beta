@@ -6,6 +6,9 @@ class ProjectsController < ApplicationController
     @case_count = Persona.count
     @survey_item_count = SurveyItem.count
     @code_count = CodedExperience.count
+    @category_count = Category.count
+    @theme_count = Theme.count
+    @memo_count = Memo.count
   end
 
   def show

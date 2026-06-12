@@ -11,7 +11,7 @@ class Persona
 
   has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperience"
   has_many :out, :identities, type: :IdentifiesWith, model_class: "Identity"
-  has_many :out, :reflections, type: :ReflectsOn, model_class: "Reflection"
+#  has_many :out, :reflections, type: :ReflectsOn, model_class: "Reflection"
   has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"

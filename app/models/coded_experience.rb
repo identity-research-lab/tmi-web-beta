@@ -1,4 +1,4 @@
-class CodedExperiences
+class CodedExperience
   include ActiveGraph::Node
 
   property :name
@@ -14,7 +14,7 @@ class CodedExperiences
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_many :in, :personas, rel_class: :Experiences
   has_many :in, :categories, rel_class: :Contains
-  has_many :out, :events
+  has_many :out, :events, type: :HasEvent
 
   # Given a dimension, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(dimension)

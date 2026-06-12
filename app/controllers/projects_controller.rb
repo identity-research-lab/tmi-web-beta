@@ -4,6 +4,8 @@ class ProjectsController < ApplicationController
     @project = Project.last
     @project ||= Project.create
     @case_count = Persona.count
+    @survey_item_count = SurveyItem.count
+    @code_count = CodedExperience.count
   end
 
   def show

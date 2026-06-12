@@ -11,7 +11,7 @@
 <h1 class="app-title">Project Dashboard</h1>
 
 <p class="app-description">
-Welcome to your TMI-WEB project dashboard. 
+Welcome to your TMI-WEB project dashboard.
 All TMI-WEB projects begin with the <a href="">TMI-WEB Survey Template</a>. The template can be used with survey platforms such as Google Forms, Qualtrics, or custom survey systems, and supports intersectional analysis by organizing identity dimensions, experiences, and contextual research data into a shared project structure.</p>
 <p class="app-description">
 Use this dashboard to start a new project by uploading a TMI-WEB Survey Template (csv), merge updated project data into an active project, review the current state of analysis, enter the dataset through <a href="">participant-centered coding workflows</a> or <a href="">question-centered coding workflows</a>, or continue developing interpretive elements such as codes, categories, themes, and analytical memos.
@@ -37,17 +37,17 @@ Download TMI-WEB Survey Template
   </div>
 
   <div class="app-stat">
-    <span class="app-stat-value">77</span>
+    <span class="app-stat-value"><%= @survey_item_count %></span>
     <span class="app-stat-label">Survey Items</span>
   </div>
 
   <div class="app-stat">
-    <span class="app-stat-value">5555</span>
+    <span class="app-stat-value"><%= @code_count %></span>
     <span class="app-stat-label">Applied Codes</span>
   </div>
 
   <div class="app-stat">
-    <span class="app-stat-value">66</span>
+    <span class="app-stat-value">???</span>
     <span class="app-stat-label">Unique Codes</span>
   </div>
 
@@ -63,10 +63,10 @@ Download TMI-WEB Survey Template
     <div class="app-label">Project Data</div>
     <h2 class="workspace-title">Upload or Update Spreadsheet</h2>
     <p class="workspace-note">
-      Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv). 
+      Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv).
       Return here anytime to merge updated survey responses, cases, or project data into the active dataset.
     </p>
-    
+
     <ul class="dashboard-actions">
       <% if @case_count > 0 %>
       <li><%= link_to "Merge Updated Project Data", edit_project_path(@project), class: "button small secondary" %></li>
@@ -74,47 +74,47 @@ Download TMI-WEB Survey Template
       <li><%= link_to "Upload New Project Spreadsheet", edit_project_path(@project), class: "button small secondary" %></li>
     <% end %>
     </ul>
-    
+
   </div>
 </section>
 
 <section class="app-section">
-  
+
   <div class="section-label">Thematic Coding Pathways</div>
-  
+
   <div class="dashboard-pathway-grid">
     <article class="dashboard-pathway-card">
       <div class="dashboard-pathway-label">Participant-Centered Thematic Analysis</div>
       <h2 class="dashboard-pathway-title">Code Cases Pathway</h2>
-  
+
       <p class="dashboard-pathway-text">
         Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
       </p>
-  
+
       <div class="dashboard-pathway-meta">
         <span class="tag dark">### cases</span>
         <span class="tag">### uncoded</span>
       </div>
-    
+
       <a href="#" class="button small">Enter Cases Pathway</a>
     </article>
-  
+
     <article class="dashboard-pathway-card">
       <div class="dashboard-pathway-label">Question-Centered Thematic Analysis</div>
       <h2 class="dashboard-pathway-title">Code Survey Items Pathway</h2>
-      
+
       <p class="dashboard-pathway-text">
         Enter the dataset through individual survey items/questions. Review and code all participant responses associated with a single question, supporting cross-case comparison, thematic pattern recognition, frequency analysis, and emergent interpretive synthesis.
       </p>
-      
+
       <div class="dashboard-pathway-meta">
         <span class="tag dark">## survey items</span>
         <span class="tag">## in progress</span>
       </div>
-      
+
       <a href="03code-survey-items.html" class="button small">Enter Survey Items Pathway</a>
     </article>
-  
+
   </div>
 </section>
 
@@ -182,7 +182,7 @@ Download TMI-WEB Survey Template
           <span>Researcher memos</span>
           <strong>31</strong>
         </div>
-      
+
       </div>
 
     </article>
@@ -193,7 +193,7 @@ Download TMI-WEB Survey Template
 <!-- ANALYSIS STATE ZONE RIGHT SIDE MODULES -->
 <section class="app-layout">
   <div class="app-main">
-  
+
   <div class="workspace-title-row">
   <div>
     <h2 class="workspace-title">
@@ -204,7 +204,7 @@ Download TMI-WEB Survey Template
     </p>
   </div>
   </div>
-  
+
   <div class="overview-card">
   <ul class="activity-list">
   <li>
@@ -225,9 +225,9 @@ Download TMI-WEB Survey Template
   </li>
   </ul>
   </div>
-  
+
   </div>
-  
+
   <aside class="app-sidebar" aria-label="Dashboard sidebar">
   <section class="sidebar-card white">
   <div class="sidebar-card-title">

@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
     @category_count = Category.count
     @theme_count = Theme.count
     @memo_count = Memo.count
+    @recent_memos = Memo.all.order(created_at: :desc)
   end
 
   def show

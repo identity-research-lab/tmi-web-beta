@@ -233,16 +233,11 @@ Download TMI-WEB Survey Template
   <div class="sidebar-card-title">
   Recent Memos
   </div>
-  <div class="memo-entry">
-  <div class="memo-date">May 14, 2026 · 5:01 PM</div>
-  <p class="memo-text">
-  Frequency alone does not capture interpretive weight. Some lower-frequency codes may carry strong analytical significance.
-  </p>
-  </div>
-  <div class="memo-entry">
-  <div class="memo-date">May 14, 2026 · 4:35 PM</div>
-  <p class="memo-text">Consider how participant-centered and survey-item-centered coding pathways reveal different patterns.</p>
-  </div>
+  <ul class="memo-feed">
+    <% @recent_memos.each do |memo| %>
+      <%= render partial: "memos/show", locals: { memo: memo } %>
+    <% end %>
+  </ul>
   <a href="#" class="button small secondary" style="margin-top:1rem;">View All Memos</a>
   </section>
   </aside>

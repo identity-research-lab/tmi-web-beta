@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
     @project ||= Project.create
     @case_count = Persona.count
     @survey_item_count = SurveyItem.count
+    @survey_response_count = SurveyResponse.count
     @code_count = CodedExperience.count
     @category_count = Category.count
     @theme_count = Theme.count

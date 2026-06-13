@@ -32,23 +32,23 @@ Download TMI-WEB Survey Template
 <div class="app-stats-grid">
 
   <div class="app-stat">
-    <span class="app-stat-value"><%= @case_count %></span>
-    <span class="app-stat-label">Cases</span>
-  </div>
-
-  <div class="app-stat">
     <span class="app-stat-value"><%= @survey_item_count %></span>
     <span class="app-stat-label">Survey Items</span>
   </div>
 
   <div class="app-stat">
-    <span class="app-stat-value"><%= @code_count %></span>
-    <span class="app-stat-label">Applied Codes</span>
+    <span class="app-stat-value"><%= @survey_response_count %></span>
+    <span class="app-stat-label">Unique Responses</span>
   </div>
 
   <div class="app-stat">
-    <span class="app-stat-value">???</span>
-    <span class="app-stat-label">Unique Codes</span>
+    <span class="app-stat-value"><%= @case_count %></span>
+    <span class="app-stat-label">Cases</span>
+  </div>
+
+  <div class="app-stat">
+    <span class="app-stat-value"><%= @code_count %></span>
+    <span class="app-stat-label">Applied Codes</span>
   </div>
 
 </div>

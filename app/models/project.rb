@@ -12,6 +12,7 @@ class Project
   property :updated_at, type: DateTime
   property :refresh_started_at, type: DateTime
   property :refreshed_at, type: DateTime
+  property :refresh_in_progress, type: Boolean, default: false
 
   validates :name, presence: true
   validates :name, uniqueness: true
@@ -27,21 +28,6 @@ class Project
 
   def survey_fields
     CSV.parse(self.csv_data, headers: true).headers
-  end
-
-  def survey_responses_load_in_progress?
-    return false unless self.refresh_started_at
-    return true if self.refresh_started_at && self.refreshed_at.nil?
-    return false if self.refresh_started_at < self.refreshed_at
-    return true if self.refresh_started_at >= self.refreshed_at
-    return false
-  end
-
-  def survey_responses_load_progress
-    total_records = CSV.parse(self.csv_data, headers: true).count
-    total_responses =  total_records * active_fields.count
-    in_db = SurveyResponse.count
-    "#{in_db}/#{total_responses}"
   end
 
   def create_survey_items_from_csv

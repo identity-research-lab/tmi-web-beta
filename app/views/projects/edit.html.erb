@@ -30,6 +30,13 @@
 </section>
 
 <section class="dashboard-section">
+  <%= form_with model: @project do |f| %>
+    <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
+    <%= f.submit "Upload", style: "hidden button small" %>
+  <% end  %>
+</section>
+
+<section class="dashboard-section">
   <% if @project.survey_items.any? %>
     <%= render partial: "survey_responses/form", locals: { project: @project } %>
   <% else %>
@@ -37,13 +44,6 @@
       Once your survey fields are configured, you can load survey responses into the graph.
     </p>
   <% end %>
-</section>
-
-<section class="dashboard-section">
-  <%= form_with model: @project do |f| %>
-    <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
-    <%= f.submit "Upload", style: "button small" %>
-  <% end  %>
 </section>
 
 <section class="dashboard-section">

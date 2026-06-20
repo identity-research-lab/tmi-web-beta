@@ -32,7 +32,7 @@
 <section class="dashboard-section">
   <%= form_with model: @project do |f| %>
     <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
-    <%= f.submit "Upload", style: "hidden button small" %>
+    <%= f.submit "Upload", style: "button small" %>
   <% end  %>
 </section>
 

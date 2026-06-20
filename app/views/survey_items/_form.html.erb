@@ -1,19 +1,19 @@
   <td><%= survey_item.csv_header %></td>
   <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
     data: { turbo_stream: true } do |f| %>
       <div class="form-group"><%= f.text_field :label, value: survey_item.label %></div>
     <% end %>
   </td>
   <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
     data: { turbo_stream: true } do |f| %>
 
       <div class="form-group"><%= f.text_area :prompt, value: survey_item.prompt %></div>
     <% end %>
   </td>
   <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", 
+    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
     data: { turbo_stream: true } do |f| %>
       <div class="form-group">
         <label for="dimension">Dimension</label>

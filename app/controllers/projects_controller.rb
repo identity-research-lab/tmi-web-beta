@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.last
     @project ||= Project.new
-    @project.csv_data = project_params[:csv_data].read
+    @project.csv_data = String.new(project_params[:csv_data].read, encoding: 'UTF-8')
     if @project.save
       redirect_to project_path(@project)
     else
@@ -37,7 +37,7 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     if csv_param[:csv_data].present?
-      @project.update!(csv_data: csv_param[:csv_data].read)
+      @project.update!(csv_data: String.new(csv_param[:csv_data].read, encoding: 'UTF-8'))
       @project.create_survey_items_from_csv
     end
     if refresh_param[:refresh_started_at].present?

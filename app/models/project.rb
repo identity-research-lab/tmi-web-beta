@@ -27,12 +27,12 @@ class Project
   end
 
   def survey_fields
-    CSV.parse(self.csv_data, headers: true).headers
+    CSV.parse(self.csv_data, headers: true).headers.reject{ |f| f == self.participant_id_field }
   end
 
   def create_survey_items_from_csv
     survey_fields.each do |field|
-      survey_items.find_or_create_by(csv_header: "#{field}") # string interpolation fixes character encoding issue
+      survey_items.find_or_create_by(csv_header: field)
     end
     Event.create(project: self, label: "Survey items", description: "Survey items refreshed from upload.")
   end

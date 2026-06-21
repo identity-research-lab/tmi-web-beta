@@ -22,12 +22,13 @@ module Services
 				records = CSV.parse(project.csv_data, headers: true)
 				records.each do |record|
 					next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
-					next unless value = record[survey_item.csv_header]
 					survey_items.each do |survey_item|
+						next unless value = record[survey_item.csv_header]
 						survey_response = SurveyResponse.find_or_initialize_by(
 							persona: persona,
 							survey_item: survey_item
 						)
+						next if survey_response.value == value
 						survey_response.dimension = survey_item.dimension
 						survey_response.value = value
 						survey_response.save!
@@ -35,7 +36,8 @@ module Services
 				end
 				project.update_attributes(refreshed_at: DateTime.now, refresh_in_progress: false)
 				Event.create(project: project, label: "Survey responses", description: "Survey responses import completed, #{records.count} cases refreshed.")
-			rescue Exception
+			rescue StandardError => exception
+				Rails.logger.error("#{exception.inspect}\n#{exception.backtrace[0..3].to_s}")
 				project.update_attributes(refresh_in_progress: false)
 				Event.create(project: project, label: "Survey responses", description: "Survey responses import failed.")
 			end

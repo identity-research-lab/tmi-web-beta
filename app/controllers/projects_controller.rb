@@ -4,8 +4,12 @@ class ProjectsController < ApplicationController
     @project = Project.last
     @project ||= Project.create
     @case_count = Persona.count
+    @uncoded_case_count = Persona.uncoded.count
+    @in_progress_case_count = Persona.in_progress.count
+    @completed_case_count = Persona.completed.count
     @survey_item_count = SurveyItem.count
     @survey_response_count = SurveyResponse.count
+    @survey_response_coded_count = SurveyResponse.coded.count
     @code_count = CodedExperience.count
     @category_count = Category.count
     @theme_count = Theme.count

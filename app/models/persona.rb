@@ -3,6 +3,8 @@ class Persona
 
   property :participant_id
   property :permalink
+  property :is_completed, type: Boolean, default: false
+  property :is_coded, type: Boolean, default: false
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
@@ -15,6 +17,18 @@ class Persona
   has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
+
+  def self.completed
+    where(is_completed: true)
+  end
+
+  def self.in_progress
+    where(is_completed: false, is_coded: true)
+  end
+
+  def self.uncoded
+    where(is_coded: false)
+  end
 
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query

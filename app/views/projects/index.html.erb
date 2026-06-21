@@ -68,80 +68,76 @@ Download TMI-WEB Survey Template
 
 </section>
 
+<% if SurveyResponse.first %>
+  <section class="app-section">
+
+    <div class="section-label">Thematic Coding Pathways</div>
+
+    <div class="dashboard-pathway-grid">
+      <article class="dashboard-pathway-card">
+        <div class="dashboard-pathway-label">Participant-Centered Thematic Analysis</div>
+        <h2 class="dashboard-pathway-title">Pathway: Code by Case</h2>
+
+        <p class="dashboard-pathway-text">
+          Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+        </p>
+
+        <div class="frequency-bar-track">
+          <% width = (@case_count - @uncoded_case_count) / @case_count.to_f * 100 %>
+          <div class="frequency-bar" style="width:<%= width %>%;"></div>
+        </div>
+
+        <div class="dashboard-pathway-meta">
+          <span class="tag dark"><%= @case_count %> cases</span>
+          <span class="tag"><%= @completed_case_count %> completed</span>
+          <span class="tag"><%= @in_progress_case_count %> in progress</span>
+          <span class="tag"><%= @uncoded_case_count %> uncoded</span>
+        </div>
+
+        <a href="#" class="button small">Start Coding Cases</a>
+      </article>
+
+      <article class="dashboard-pathway-card">
+        <div class="dashboard-pathway-label">Question-Centered Thematic Analysis</div>
+        <h2 class="dashboard-pathway-title">Pathway: Code by Survey Item</h2>
+
+        <p class="dashboard-pathway-text">
+          Enter the dataset through individual survey items/questions. Review and code all participant responses associated with a single question, supporting cross-case comparison, thematic pattern recognition, frequency analysis, and emergent interpretive synthesis.
+        </p>
+
+        <div class="frequency-bar-track">
+          <% width = @survey_response_coded_count / @survey_response_count.to_f * 100 %>
+          <div class="frequency-bar" style="width:<%= width %>%;"></div>
+        </div>
+        <div class="dashboard-pathway-meta">
+          <span class="tag dark"><%= @survey_response_count %> survey responses</span>
+          <span class="tag"><%= @survey_response_coded_count %> coded</span>
+          <span class="tag"><%= @survey_response_count - @survey_response_coded_count %> uncoded</span>
+        </div>
+
+        <a href="03code-survey-items.html" class="button small">Start Coding Survey Item Responses</a>
+      </article>
+
+    </div>
+  </section>
+<% end %>
+
 <section class="dashboard-section">
   <div>
     <div class="app-label">Project Data</div>
-    <h2 class="workspace-title">Upload or Update Spreadsheet</h2>
+    <h2 class="workspace-title">Upload Survey Responses</h2>
     <p class="workspace-note">
       Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv).
-      Return here anytime to merge updated survey responses, cases, or project data into the active dataset.
+      Return here anytime to merge updated survey responses, add cases, or remap data into the active dataset.
     </p>
 
     <ul class="dashboard-actions">
-      <% if @case_count > 0 %>
-      <li><%= link_to "Merge Updated Project Data", edit_project_path(@project), class: "button small secondary" %></li>
-    <% else %>
-      <li><%= link_to "Upload New Project Spreadsheet", edit_project_path(@project), class: "button small secondary" %></li>
-    <% end %>
+      <li><%= link_to "Manage Project Data", edit_project_path(@project), class: "button small secondary" %></li>
     </ul>
 
   </div>
 </section>
 
-<section class="app-section">
-
-  <div class="section-label">Thematic Coding Pathways</div>
-
-  <div class="dashboard-pathway-grid">
-    <article class="dashboard-pathway-card">
-      <div class="dashboard-pathway-label">Participant-Centered Thematic Analysis</div>
-      <h2 class="dashboard-pathway-title">Pathway: Code by Case</h2>
-
-      <p class="dashboard-pathway-text">
-        Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
-      </p>
-
-      <div class="frequency-bar-track">
-        <% width = (@case_count - @uncoded_case_count) / @case_count.to_f * 100 %>
-        <div class="frequency-bar" style="width:<%= width %>%;"></div>
-      </div>
-
-      <div class="dashboard-pathway-meta">
-        <span class="tag dark"><%= @case_count %> cases</span>
-        <span class="tag"><%= @completed_case_count %> completed</span>
-        <span class="tag"><%= @in_progress_case_count %> in progress</span>
-        <span class="tag"><%= @uncoded_case_count %> uncoded</span>
-      </div>
-
-      <a href="#" class="button small">Start Coding Cases</a>
-    </article>
-
-    <article class="dashboard-pathway-card">
-      <div class="dashboard-pathway-label">Question-Centered Thematic Analysis</div>
-      <h2 class="dashboard-pathway-title">Pathway: Code by Survey Item</h2>
-
-      <p class="dashboard-pathway-text">
-        Enter the dataset through individual survey items/questions. Review and code all participant responses associated with a single question, supporting cross-case comparison, thematic pattern recognition, frequency analysis, and emergent interpretive synthesis.
-      </p>
-
-      <div class="frequency-bar-track">
-        <% width = @survey_response_coded_count / @survey_response_count.to_f * 100 %>
-        <div class="frequency-bar" style="width:<%= width %>%;"></div>
-      </div>
-      <div class="dashboard-pathway-meta">
-        <span class="tag dark"><%= @survey_response_count %> survey responses</span>
-        <span class="tag"><%= @survey_response_coded_count %> coded</span>
-        <span class="tag"><%= @survey_response_count - @survey_response_coded_count %> uncoded</span>
-      </div>
-
-      <a href="03code-survey-items.html" class="button small">Start Coding Survey Item Responses</a>
-    </article>
-
-  </div>
-</section>
-
-<!-------------------------------------------------->
-<!-- ANALYSIS STATE ZONE RIGHT SIDE MODULES -->
 <section class="app-layout">
   <div class="app-main">
 
@@ -151,7 +147,7 @@ Download TMI-WEB Survey Template
     Recent Activity
     </h2>
     <p class="workspace-note">
-    Track recent coding, memoing, imports, exports, and pathway activity.
+    Track recent coding, memoing, imports, and other activity.
     </p>
   </div>
   </div>
@@ -175,3 +171,4 @@ Download TMI-WEB Survey Template
   </div>
 
 </section>
+

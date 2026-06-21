@@ -50,7 +50,7 @@
 
   <div class="schema-grid">
     <% @project.survey_items.order(:csv_header).each do |survey_item| %>
-      <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
+      <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
     <% end %>
   </div>
 

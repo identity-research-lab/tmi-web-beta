@@ -14,7 +14,7 @@ data: { turbo_stream: true } do |f| %>
     <div class="schema-cell">
       <div class="form-group">
         <label for="dimension">Dimension</label>
-        <%= f.select :dimension_id, options_from_collection_for_select(Dimension.all.order(:name), 'id', 'name', survey_item.dimension_id), include_blank: true %>
+        <%= f.select :dimension_id, options_from_collection_for_select(dimensions, 'id', 'name', survey_item.dimension_id), include_blank: true %>
       </div>
       <div class="radio-row">
         <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>

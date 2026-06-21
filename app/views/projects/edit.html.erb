@@ -48,27 +48,10 @@
 
 <section class="dashboard-section">
 
-  <div>
-    <table class="survey-table">
-      <thead>
-        <tr>
-          <th>CSV Header</th>
-          <th>Label</th>
-          <th>Prompt</th>
-          <th>Dimension</th>
-          <th>Active</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @project.survey_items.order(:csv_header).each do |survey_item| %>
-          <tr>
-            <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-
+  <div class="schema-grid">
+    <% @project.survey_items.order(:csv_header).each do |survey_item| %>
+      <%= render partial: "survey_items/form", locals: { survey_item: survey_item } %>
+    <% end %>
   </div>
 
 </section>

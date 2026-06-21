@@ -2,6 +2,8 @@ class SurveyResponse
   include ActiveGraph::Node
 
   property :value
+  property :is_coded, type: Boolean, default: false
+
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
@@ -12,5 +14,9 @@ class SurveyResponse
   has_one :out, :persona, type: :RespondsWith, model_class: "Persona"
   has_one :out, :project, type: :HasProject, model_class: "Project"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
+
+  def self.coded
+    where(is_coded: true)
+  end
 
 end

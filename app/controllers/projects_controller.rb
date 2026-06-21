@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
 
   def edit
     @project = Project.find(params[:id])
+    @dimensions_for_select = Dimension.all.order(:name)
   end
 
   def create
@@ -36,29 +37,21 @@ class ProjectsController < ApplicationController
 
   def update
     @project = Project.find(params[:id])
-    if csv_param[:csv_data].present?
-      @project.update!(csv_data: String.new(csv_param[:csv_data].read, encoding: 'UTF-8'))
+    if project_params[:csv_data].present?
+      @project.update!(csv_data: String.new(project_params[:csv_data].read, encoding: 'UTF-8'))
       @project.create_survey_items_from_csv
-    end
-    if refresh_param[:refresh_started_at].present?
+    elsif project_params[:refresh_started_at].present?
       @project.create_survey_responses_from_csv
+    else
+      @project.update!(project_params)
     end
-    @project.update!(project_params)
     redirect_to edit_project_path(@project)
   end
 
   private
 
   def project_params
-    params.require(:project).permit(:name, :description, :researcher)
-  end
-
-  def csv_param
-    params.require(:project).permit(:csv_data)
-  end
-
-  def refresh_param
-    params.require(:project).permit(:refresh_started_at)
+    params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at)
   end
 
 end

@@ -1,20 +1,17 @@
-  <td><%= survey_item.csv_header %></td>
-  <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
-    data: { turbo_stream: true } do |f| %>
-      <div class="form-group"><%= f.text_field :label, value: survey_item.label %></div>
-    <% end %>
-  </td>
-  <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
-    data: { turbo_stream: true } do |f| %>
+<%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
+data: { turbo_stream: true } do |f| %>
 
-      <div class="form-group"><%= f.text_area :prompt, value: survey_item.prompt %></div>
-    <% end %>
-  </td>
-  <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
-    data: { turbo_stream: true } do |f| %>
+  <div class="schema-row">
+    <div class="schema-cell form-group"><label>CSV header</label><%= survey_item.csv_header %></div>
+    <div class="schema-cell form-group">
+        <label for="label">Label</label>
+      <%= f.text_field :label, value: survey_item.label %>
+    </div>
+    <div class="schema-cell form-group">
+      <label for="prompt">Prompt</label>
+      <%= f.text_area :prompt, value: survey_item.prompt %>
+    </div>
+    <div class="schema-cell">
       <div class="form-group">
         <label for="dimension">Dimension</label>
         <%= f.select :dimension_id, options_from_collection_for_select(Dimension.all.order(:name), 'id', 'name', survey_item.dimension_id), include_blank: true %>
@@ -28,10 +25,10 @@
       <div class="radio-row">
         <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
       </div>
-    <% end %>
-  </td>
-  <td>
-    <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form", data: { turbo_stream: true } do |f| %>
+    </div>
+    <div class="schema-cell form-group">
+      <label for="is_active">Active</label>
       <%= f.checkbox :is_active, checked: survey_item.is_active %>
-    <% end %>
-  </td>
+    </div>
+  </div>
+<% end %>

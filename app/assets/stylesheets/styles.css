@@ -1050,6 +1050,35 @@ th {
   width: 28%;
 }
 
+/* SCHEMA ROWS */
+
+.schema-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.schema-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  transition: background 0.2s ease;
+  border-bottom: 1px solid var(--gray-300);
+}
+
+.schema-row:hover {
+  background: var(--surface-soft);
+}
+
+.schema-cell {
+  min-width: 15rem;
+  padding: .75rem;
+}
+
+.schema-row :nth-child(5) {
+  min-width: 5rem;
+}
+
 /* CASE ROWS + LINKS */
 
 .case-row {
@@ -2006,9 +2035,9 @@ ul.memo-feed {
 }
 
 .form-group label {
-  display:flex;
+  /* display:flex;
   flex: 1;
-  align-items: flex-start;
+  align-items: flex-start; */
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.12em;

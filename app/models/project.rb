@@ -32,7 +32,7 @@ class Project
 
   def create_survey_items_from_csv
     survey_fields.each do |field|
-      item = SurveyItem.find_or_create_by(csv_header: field, project: self)
+      survey_items.find_or_create_by(csv_header: "#{field}") # string interpolation fixes character encoding issue
     end
     Event.create(project: self, label: "Survey items", description: "Survey items refreshed from upload.")
   end

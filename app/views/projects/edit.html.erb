@@ -1,57 +1,61 @@
 <%- title "Edit Project" %>
 
 <section class="app-header dashboard-hero">
-
-<div class="app-header-copy">
-  <div class="app-label">
-    <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+    </div>
+    <h1 class="app-title">Project Data</h1>
+    <p class="app-description">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
   </div>
-
-  <h1 class="app-title">Project Details</h1>
-
-  <p class="app-description">
-    CONTEXT
-  </p>
-  <p class="app-description">
-    INSTRUCTIONS
-  </p>
-
-</div>
+  <div>
+    <a href="#" class="button small secondary dashboard-template-button">
+      Download TMI-WEB Survey Template
+    </a>
+  </div>
 </section>
 
 <section class="dashboard-section">
   <div>
-    <div class="app-label">Survey Data</div>
-    <h2 class="workspace-title">Review Survey Data</h2>
+    <h2 class="workspace-title">Upload Survey Data</h2>
     <p class="workspace-note">
-      SET UP INSTRUCTIONS
+      Make sure that your data file includes a participant_id column with a unique identifier for each row.
     </p>
+    <ul class="dashboard-actions">
+      <li>
+        <%= form_with model: @project do |f| %>
+          <%= f.file_field :csv_data, accept: ".csv,text/csv" %><br />
+          <%= f.submit "Upload", class: "button small secondary" %>
+        <% end  %>
+      </li>
+    </ul>
   </div>
 </section>
 
-<section class="dashboard-section">
-  <%= form_with model: @project do |f| %>
-    <%= f.file_field :csv_data, accept: ".csv,text/csv" %>
-    <%= f.submit "Upload", style: "button small" %>
-  <% end  %>
-</section>
+<% if @project.survey_items.any? %>
+  <section class="dashboard-section">
+    <div>
+      <h2 class="workspace-title">Import Survey Responses</h2>
+      <p class="workspace-note">
+        Once your survey fields are configured, you can load survey responses into the graph.
+      </p>
+      <%= render partial: "survey_responses/form", locals: { project: @project } %>
+    </div>
+  </section>
+<% end %>
 
 <section class="dashboard-section">
-  <% if @project.survey_items.any? %>
-    <%= render partial: "survey_responses/form", locals: { project: @project } %>
-  <% else %>
-    <p>
-      Once your survey fields are configured, you can load survey responses into the graph.
+  <div>
+    <h2 class="workspace-title">Configure Survey Fields</h2>
+    <p class="workspace-note">
+      Configure how TMI-WEB maps columns in your uploaded data file to fields in the database.
     </p>
-  <% end %>
-</section>
-
-<section class="dashboard-section">
-
-  <div class="schema-grid">
-    <% @project.survey_items.order(:csv_header).each do |survey_item| %>
-      <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
-    <% end %>
+    <div class="schema-grid">
+      <% @project.survey_items.order(:csv_header).each do |survey_item| %>
+        <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
+      <% end %>
+    </div>
   </div>
-
 </section>

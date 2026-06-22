@@ -2,73 +2,56 @@
 
 <section class="app-header dashboard-hero">
 
-<div class="app-header-copy">
-
-<div class="app-label">
-<%= @project.name %> · <span class="app-label-dense">Dashboard</span>
-</div>
-
-<h1 class="app-title">Project Dashboard</h1>
-
-<p class="app-description">
-Welcome to your TMI-WEB project dashboard.
-All TMI-WEB projects begin with the <a href="">TMI-WEB Survey Template</a>. The template can be used with survey platforms such as Google Forms, Qualtrics, or custom survey systems, and supports intersectional analysis by organizing identity dimensions, experiences, and contextual research data into a shared project structure.</p>
-<p class="app-description">
-Use this dashboard to start a new project by uploading a TMI-WEB Survey Template (csv), merge updated project data into an active project, review the current state of analysis, enter the dataset through <a href="">participant-centered coding workflows</a> or <a href="">question-centered coding workflows</a>, or continue developing interpretive elements such as codes, categories, themes, and analytical memos.
-</p>
-
-</div>
-
-<div>
-
-<aside class="app-header-panel" aria-label="Project status summary">
-
-<div class="app-panel-title">Active Project Status</div>
-
-<div class="app-stats-grid">
-
-  <div class="app-stat">
-    <span class="app-stat-value"><%= @case_count %></span>
-    <span class="app-stat-label">Cases</span>
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+    </div>
+    <h1 class="app-title">Project Dashboard</h1>
+    <p class="app-description">
+      Welcome to your TMI-WEB project dashboard. All TMI-WEB projects begin with the <a href="">TMI-WEB Survey Template</a>. The template can be used with survey platforms such as Google Forms, Qualtrics, or custom survey systems, and supports intersectional analysis by organizing identity dimensions, experiences, and contextual research data into a shared project structure.
+    </p>
+    <p class="app-description">
+      Use this dashboard to start a new project by uploading a TMI-WEB Survey Template (csv), merge updated project data into an active project, review the current state of analysis, enter the dataset through <a href="">participant-centered coding workflows</a> or <a href="">question-centered coding workflows</a>, or continue developing interpretive elements such as codes, categories, themes, and analytical memos.
+    </p>
   </div>
 
-  <div class="app-stat">
-    <span class="app-stat-value"><%= @survey_response_count %></span>
-    <span class="app-stat-label">Unique Responses</span>
+  <div>
+    <aside class="app-header-panel" aria-label="Project status summary">
+      <div class="app-panel-title">Active Project Status</div>
+      <div class="app-stats-grid">
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @case_count %></span>
+          <span class="app-stat-label">Cases</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @survey_response_count %></span>
+          <span class="app-stat-label">Unique Responses</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @code_count %></span>
+          <span class="app-stat-label">Applied Codes</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @category_count %></span>
+          <span class="app-stat-label">Categories</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @theme_count %></span>
+          <span class="app-stat-label">Themes</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @memo_count %></span>
+          <span class="app-stat-label">Researcher memos</span>
+        </div>
+      </div>
+    </aside>
   </div>
-
-  <div class="app-stat">
-    <span class="app-stat-value"><%= @code_count %></span>
-    <span class="app-stat-label">Applied Codes</span>
-  </div>
-
-  <div class="app-stat">
-    <span class="app-stat-value"><%= @category_count %></span>
-    <span class="app-stat-label">Categories</span>
-  </div>
-
-  <div class="app-stat">
-    <span class="app-stat-value"><%= @theme_count %></span>
-    <span class="app-stat-label">Themes</span>
-  </div>
-
-  <div class="app-stat">
-    <span class="app-stat-value"><%= @memo_count %></span>
-    <span class="app-stat-label">Researcher memos</span>
-  </div>
-
-</div>
-
-</aside>
-</div>
 
 </section>
 
 <% if SurveyResponse.first %>
   <section class="app-section">
-
     <div class="section-label">Thematic Coding Pathways</div>
-
     <div class="dashboard-pathway-grid">
       <article class="dashboard-pathway-card">
         <div class="dashboard-pathway-label">Participant-Centered Thematic Analysis</div>
@@ -90,7 +73,7 @@ Use this dashboard to start a new project by uploading a TMI-WEB Survey Template
           <span class="tag"><%= @uncoded_case_count %> uncoded</span>
         </div>
 
-        <a href="#" class="button small">Start Coding Cases</a>
+        <%= link_to "Start Coding Cases", personas_path, class: "button small" %>
       </article>
 
       <article class="dashboard-pathway-card">
@@ -126,45 +109,39 @@ Use this dashboard to start a new project by uploading a TMI-WEB Survey Template
       Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv).
       Return here anytime to merge updated survey responses, add cases, or remap data into the active dataset.
     </p>
-
     <ul class="dashboard-actions">
       <li><%= link_to "Manage Project Data", edit_project_path(@project), class: "button small secondary" %></li>
     </ul>
-
   </div>
 </section>
 
 <section class="app-layout">
   <div class="app-main">
-
-  <div class="workspace-title-row">
-  <div>
-    <h2 class="workspace-title">
-    Recent Activity
-    </h2>
-    <p class="workspace-note">
-    Track recent coding, memoing, imports, and other activity.
-    </p>
-  </div>
-  </div>
-
-  <div class="overview-card">
-    <ul class="activity-list">
-        <% if @recent_events.any? %>
-        <% @recent_events.each do |event| %>
-          <%= render partial: "events/show", locals: { event: event } %>
+    <div class="workspace-title-row">
+      <div>
+        <h2 class="workspace-title">
+        Recent Activity
+        </h2>
+        <p class="workspace-note">
+        Track recent coding, memoing, imports, and other activity.
+        </p>
+      </div>
+    </div>
+    <div class="overview-card">
+      <ul class="activity-list">
+          <% if @recent_events.any? %>
+          <% @recent_events.each do |event| %>
+            <%= render partial: "events/show", locals: { event: event } %>
+          <% end %>
+        <% else %>
+          <li class="event-entry">
+            <p class="event-text">
+              No recent events.
+            </p>
+          </li>
         <% end %>
-      <% else %>
-        <li class="event-entry">
-          <p class="event-text">
-            No recent events.
-          </p>
-        </li>
-      <% end %>
-    </ul>
+      </ul>
+    </div>
   </div>
-
-  </div>
-
 </section>
 

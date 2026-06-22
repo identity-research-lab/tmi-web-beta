@@ -1,0 +1,74 @@
+<%- title "Participant Cases" %>
+
+<section class="app-header dashboard-hero">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+    </div>
+    <h1 class="app-title">Participant Cases</h1>
+    <p class="app-description">
+      Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+    </p>
+  </div>
+
+  <div>
+    <aside class="app-header-panel" aria-label="Project status summary">
+      <div class="app-panel-title">Dataset Status</div>
+      <div class="app-stats-grid">
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @case_count %></span>
+          <span class="app-stat-label">Cases</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @uncoded_case_count %></span>
+          <span class="app-stat-label">Uncoded</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @in_progress_case_count %></span>
+          <span class="app-stat-label">In Progress</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @completed_case_count %></span>
+          <span class="app-stat-label">Completed</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @code_count %></span>
+          <span class="app-stat-label">Applied Codes</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @category_count %></span>
+          <span class="app-stat-label">Categories</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+</section>
+
+<% if @personas.any? %>
+  <section class="app-section">
+    <div class="section-label">
+      Cases / Personas
+    </div>
+    <div class="case-table-wrap">
+      <table class="case-table">
+        <thead>
+          <tr>
+            <th scope="col">Persona</th>
+            <th scope="col">Graph</th>
+            <th scope="col">Codes</th>
+            <th scope="col">Categories</th>
+            <th scope="col">Status</th>
+            <th scope="col">Activity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @personas.each do |persona| %>
+            <%= render partial: "personas/form", locals: { persona: persona } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% end %>

@@ -1,6 +1,7 @@
 class Persona
   include ActiveGraph::Node
 
+  property :identifier
   property :participant_id
   property :permalink
   property :is_completed, type: Boolean, default: false
@@ -10,6 +11,8 @@ class Persona
 
   validates :participant_id, presence: true
   validates :participant_id, uniqueness: true
+  validates :identifier, presence: true
+  validates :identifier, uniqueness: true
 
   has_many :out, :coded_experiences, type: :Experiences, model_class: "CodedExperience"
   has_many :out, :identities, type: :IdentifiesWith, model_class: "Identity"
@@ -34,13 +37,18 @@ class Persona
   def graph_query
     {
       explainer: "Access and explore this case (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
-      query: "MATCH (p:Persona)-[]-(n) WHERE p.case_id=#{self.id} RETURN p,n"
+      query: "MATCH (p:Persona)-[]-(n) WHERE p.participant_id=\"#{self.participant_id}\" RETURN p,n"
     }
   end
 
-  # Convenience method to pad ID.
-  def identifier
-    self.id.to_s.rjust(4, "0")
+  def formatted_identifier
+    self.identifier.to_s.rjust(4, "0")
+  end
+
+  def status
+    return "Completed" if self.is_completed?
+    return "In Progress" if self.is_coded?
+    return "Not Started"
   end
 
   def complete!

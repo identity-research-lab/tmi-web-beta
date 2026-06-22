@@ -20,8 +20,12 @@ module Services
 				survey_items = project.active_fields
 
 				records = CSV.parse(project.csv_data, headers: true)
-				records.each do |record|
-					next unless persona = Persona.find_or_create_by(participant_id: record[project.participant_id_field])
+				persona_index_base = Persona.count + 1
+
+				# Create personas from records
+				records.each_with_index do |record, i|
+					persona = Persona.find_by(participant_id: record[project.participant_id_field])
+					persona ||= Persona.create!(participant_id: record[project.participant_id_field], identifier: persona_index_base + i)
 					survey_items.each do |survey_item|
 						next unless value = record[survey_item.csv_header]
 						survey_response = SurveyResponse.find_or_initialize_by(
@@ -39,7 +43,7 @@ module Services
 			rescue StandardError => exception
 				Rails.logger.error("#{exception.inspect}\n#{exception.backtrace[0..3].to_s}")
 				project.update_attributes(refresh_in_progress: false)
-				Event.create(project: project, label: "Survey responses", description: "Survey responses import failed.")
+				Event.create(project: project, label: "Survey responses", description: "Survey responses import failed: #{exception.inspect}")
 			end
 		end
 

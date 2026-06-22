@@ -8,9 +8,12 @@ class PersonasController < ApplicationController
     @in_progress_case_count = Persona.in_progress.count
     @completed_case_count = Persona.completed.count
     @code_count = CodedExperience.count
+    @category_count = Category.count
   end
 
   def show
+    @persona = Persona.find(params[:id])
+    @survey_responses = @persona.survey_responses
   end
 
   def edit

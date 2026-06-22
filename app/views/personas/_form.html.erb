@@ -1,0 +1,47 @@
+<tr class="case-row">
+  <td>
+    <%= link_to "Persona #{persona.identifier}", persona_path(persona) %>
+    <div class="case-subtext">
+      Graph:
+      <a href="#" class="cypher-link">
+        MATCH (p:Persona)-[]-(n) WHERE p.case_id=1 RETURN p,n
+      </a>
+      <button class="copy-query-button" aria-label="Copy Cypher query">⧉</button>
+    </div>
+  </td>
+
+  <td>
+    <div class="identity-tags">
+      <span class="tag">zillenial</span>
+      <span class="tag">nonbinary</span>
+      <span class="tag">disabled</span>
+    </div>
+  </td>
+
+  <td>
+    <div class="code-tags">
+      <span class="tag dark">27 codes</span>
+      <span class="tag">masking</span>
+      <span class="tag">affinity groups</span>
+    </div>
+  </td>
+
+  <td>
+    <div class="category-tags">
+      <span class="tag">Something</span>
+      <span class="tag">Something</span>
+    </div>
+  </td>
+
+  <td>
+    <span class="status-pill active">In Progress</span>
+  </td>
+
+  <td>
+    <strong>Edited today</strong>
+    <div class="activity-subtext">
+      Last code edit · 2:22 PM
+    </div>
+  </td>
+
+</tr>

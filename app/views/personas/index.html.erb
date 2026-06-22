@@ -46,3 +46,29 @@
 
 </section>
 
+<% if @personas.any? %>
+  <section class="app-section">
+    <div class="section-label">
+      Cases / Personas
+    </div>
+    <div class="case-table-wrap">
+      <table class="case-table">
+        <thead>
+          <tr>
+            <th scope="col">Persona</th>
+            <th scope="col">Identity Snapshot</th>
+            <th scope="col">Codes</th>
+            <th scope="col">Categories</th>
+            <th scope="col">Status</th>
+            <th scope="col">Activity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @personas.each do |persona| %>
+            <%= render partial: "personas/form", locals: { persona: persona } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% end %>

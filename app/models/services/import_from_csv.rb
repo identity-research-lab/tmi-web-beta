@@ -20,7 +20,7 @@ module Services
 				survey_items = project.active_fields
 
 				records = CSV.parse(project.csv_data, headers: true)
-				persona_index_base = Persona.count
+				persona_index_base = Persona.count + 1
 
 				# Create personas from records
 				records.each_with_index do |record, i|

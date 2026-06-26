@@ -965,9 +965,21 @@ th {
   text-align: left;
 }
 
+.sortable {
+  white-space: nowrap;
+}
+
 .sortable:hover {
   cursor: pointer;
   font-weight: 500;
+}
+
+th.sort-asc span::after {
+  content: " ⏶";
+}
+
+th.sort-desc span::after {
+  content: " ▾";
 }
 
 .app-section {

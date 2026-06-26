@@ -1,0 +1,67 @@
+<%- title "All Survey Items" %>
+
+<section class="app-header dashboard-hero">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Question</span>
+    </div>
+    <h1 class="app-title">All Survey Items</h1>
+    <p class="app-description">
+      Enter the dataset through individual survey items/questions. Review complete question text, response coverage, coding progress, and cross-case response patterns. Click on an individual survey item to review participant responses, revise codes, and explore emergent thematic relationships across the dataset.
+    </p>
+  </div>
+
+  <div>
+    <aside class="app-header-panel" aria-label="Project status summary">
+      <div class="app-panel-title">Dataset Status</div>
+      <div class="app-stats-grid">
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @question_count %></span>
+          <span class="app-stat-label">Questions</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @responses_count %></span>
+          <span class="app-stat-label">Responses</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @identities_count %></span>
+          <span class="app-stat-label">Identity Dimensions</span>
+        </div>
+        <div class="app-stat">
+          <span class="app-stat-value"><%= @coded_experiences_count %></span>
+          <span class="app-stat-label">Coded Experiences</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+</section>
+
+<% if @survey_items.any? %>
+  <section class="app-section">
+    <div class="section-label">
+      Survey Items
+    </div>
+    <div class="response-table-wrap">
+      <table class="response-table" id="data-table">
+        <thead>
+          <tr>
+            <th scope="col" class="sortable sort-desc" data-sort-direction="desc" onclick="sortTable(0)"><span class="sort-header">Q#</span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(1)"><span class="sort-header">Label</span></th>
+            <th scope="col">Prompt</th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(3)"><span class="sort-header">Responses</span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(4)"><span class="sort-header">Codes</span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(5)"><span class="sort-header">Status</span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(6)"><span class="sort-header">Activity</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @survey_items.each do |survey_item| %>
+            <%= render partial: "survey_items/row", locals: { survey_item: survey_item } %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% end %>

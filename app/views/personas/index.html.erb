@@ -65,7 +65,7 @@
         </thead>
         <tbody>
           <% @personas.each do |persona| %>
-            <%= render partial: "personas/form", locals: { persona: persona } %>
+            <%= render partial: "personas/row", locals: { persona: persona } %>
           <% end %>
         </tbody>
       </table>

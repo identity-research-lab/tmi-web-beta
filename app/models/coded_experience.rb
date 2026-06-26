@@ -14,6 +14,7 @@ class CodedExperience
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_many :in, :personas, type: :Experiences, model_class: "Persona"
   has_many :in, :categories, type: :Contains, model_class: "Category"
+  has_many :in, :survey_items, type: :AssociatedWith, model_class: "SurveyItem"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 

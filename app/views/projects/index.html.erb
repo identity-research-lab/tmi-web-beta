@@ -94,7 +94,7 @@
           <span class="tag"><%= @survey_response_count - @survey_response_coded_count %> uncoded</span>
         </div>
 
-        <a href="03code-survey-items.html" class="button small">Start Coding Survey Item Responses</a>
+        <%= link_to "Start Coding Survey Item Responses", survey_items_path, class: "button small" %>
       </article>
 
     </div>

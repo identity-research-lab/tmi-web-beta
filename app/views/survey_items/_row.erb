@@ -1,0 +1,40 @@
+<tr class="response-row">
+  <td data-sort-index="<%= survey_item.formatted_identifier %>">
+    <%= link_to "Q#{survey_item.formatted_identifier}", survey_item_path(survey_item) %>
+  </td>
+
+  <td data-sort-index="<%= survey_item.label %>">
+    <%= survey_item.label %>
+  </td>
+
+  <td>
+    <%= survey_item.prompt %>
+  </td>
+
+  <% responses_count = survey_item.survey_responses.count %>
+  <td data-sort-index="<%= responses_count %>">
+    <div class="code-tags">
+      <span class="tag dark"><%= responses_count %></span>
+    </div>
+  </td>
+
+
+  <% coded_experiences_count = survey_item.coded_experiences.count %>
+  <td data-sort-index="<%= coded_experiences_count %>">
+    <div class="code-tags">
+      <span class="tag dark"><%= coded_experiences_count %></span>
+    </div>
+  </td>
+
+  <td data-sort-index="<%= survey_item.status %>">
+    <span class="status-pill active"><%= survey_item.status %></span>
+  </td>
+
+  <td data-sort-index="<%= survey_item.updated_at.to_i %>">
+    <strong>Edited <%= distance_of_time_in_words(survey_item.updated_at, DateTime.now) %> ago.</strong>
+    <div class="activity-subtext">
+      <%= survey_item.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC
+    </div>
+  </td>
+
+</tr>

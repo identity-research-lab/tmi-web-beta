@@ -11,11 +11,14 @@ class SurveyItem
   property :is_identity, default: false
   property :is_reflection, default: false
   property :is_active, default: true
+  property :is_completed, type: Boolean, default: false
+  property :is_coded, type: Boolean, default: false
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
   has_many :in, :survey_responses, type: :HasItem, model_class: "SurveyResponse"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
+  has_many :out, :coded_experiences, type: :AssociatedWith, model_class: "CodedExperience"
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_one :out, :project, type: :HasProject, model_class: "Project"
 
@@ -46,6 +49,33 @@ class SurveyItem
 
   def self.participant_identifier_item
     find_by(is_participant_identifier: true)
+  end
+
+  def self.completed
+    where(is_completed: true)
+  end
+
+  def self.in_progress
+    where(is_completed: false, is_coded: true)
+  end
+
+  def self.uncoded
+    where(is_coded: false)
+  end
+
+  def formatted_identifier
+    (project.survey_fields.index(self.csv_header) + 1).to_s.rjust(3, "0")
+  end
+
+  def status
+    return "Completed" if self.is_completed?
+    return "In Progress" if self.is_coded?
+    return "Not Started"
+  end
+
+  def complete!
+    update_attributes(is_completed: true)
+    Event.create(persona: self, label: "Persona #{self.identifier}", description: "Coding completed.")
   end
 
   # Force to boolean. Sorry.

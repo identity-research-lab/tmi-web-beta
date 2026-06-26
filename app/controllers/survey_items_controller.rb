@@ -1,5 +1,14 @@
 class SurveyItemsController < ApplicationController
 
+  def index
+    @project = Project.last
+    @survey_items = @project.active_fields.all
+    @question_count = @survey_items.count
+    @responses_count = SurveyResponse.count
+    @identies_count = Identity.count
+    @coded_experiences_count = CodedExperience.count
+  end
+
   def update
     @survey_item = SurveyItem.find(params[:id])
     success = @survey_item.update(survey_item_params)

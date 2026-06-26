@@ -4,6 +4,7 @@ import "@hotwired/turbo-rails"
 import { copyToClipboard } from "copy_to_clipboard"
 import { setupMobileNav } from "mobile_navigation"
 import { handleSchemaForms } from "schema_editing"
+import { sortTable } from "sort_table"
 
 document.addEventListener("turbo:load", () => {
   setupMobileNav()
@@ -11,3 +12,4 @@ document.addEventListener("turbo:load", () => {
 })
 
 window.copyToClipboard = copyToClipboard
+window.sortTable = sortTable

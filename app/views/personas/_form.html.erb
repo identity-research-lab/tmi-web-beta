@@ -29,7 +29,7 @@
     <span class="status-pill active"><%= persona.status %></span>
   </td>
 
-  <td data-sort="<%= persona.updated_at %>">
+  <td data-sort="<%= persona.updated_at.to_i %>">
     <strong>Edited <%= distance_of_time_in_words(persona.updated_at, DateTime.now) %> ago.</strong>
     <div class="activity-subtext">
       <%= persona.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC

@@ -965,6 +965,11 @@ th {
   text-align: left;
 }
 
+.sortable:hover {
+  cursor: pointer;
+  font-weight: 500;
+}
+
 .app-section {
   padding: 3rem 4rem;
 }

@@ -5,7 +5,7 @@ class SurveyItemsController < ApplicationController
     @survey_items = @project.active_fields.all
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count
-    @identies_count = Identity.count
+    @identities_count = Identity.count
     @coded_experiences_count = CodedExperience.count
   end
 

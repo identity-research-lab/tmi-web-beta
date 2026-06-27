@@ -5,10 +5,9 @@
 
   <td data-sort-index="<%= survey_item.label %>">
     <%= survey_item.label %>
-  </td>
-
-  <td>
-    <%= survey_item.prompt %>
+    <p>
+      <%= survey_item.prompt %>
+    </p>
   </td>
 
   <% responses_count = survey_item.survey_responses.count %>
@@ -17,7 +16,6 @@
       <span class="tag dark"><%= responses_count %></span>
     </div>
   </td>
-
 
   <% coded_experiences_count = survey_item.coded_experiences.count %>
   <td data-sort-index="<%= coded_experiences_count %>">

@@ -1054,7 +1054,7 @@ th.sort-desc span::after {
 
 .response-table th:nth-child(1),
 .response-table td:nth-child(1) {
-  width: 22%;
+  width: 5%;
 }
 
 .response-table th:nth-child(2),
@@ -1064,6 +1064,16 @@ th.sort-desc span::after {
 
 .response-table th:nth-child(3),
 .response-table td:nth-child(3) {
+  width: 10%;
+}
+
+.response-table th:nth-child(4),
+.response-table td:nth-child(4) {
+  width: 10%;
+}
+
+.response-table th:last-child,
+.response-table td:last-child {
   width: 28%;
 }
 

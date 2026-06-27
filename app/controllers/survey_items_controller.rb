@@ -2,11 +2,23 @@ class SurveyItemsController < ApplicationController
 
   def index
     @project = Project.last
-    @survey_items = @project.active_fields.all
+    @survey_items = @project.active_fields.all.sort{|a,b| a.formatted_identifier <=> b.formatted_identifier }
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count
     @identities_count = Identity.count
     @coded_experiences_count = CodedExperience.count
+  end
+
+  def show
+    @survey_item = SurveyItem.find(params[:id])
+    @project = @survey_item.project
+    @survey_responses = @survey_item.survey_responses.sort{|a,b| a.persona.formatted_identifier <=> b.persona.formatted_identifier}
+    @memos = @survey_item.memos.order(created_at: :desc)
+    @coded_experiences_count = @survey_item.coded_experiences.count
+
+    # TODO categories
+    @categories_count = 0
+    @categories = []
   end
 
   def update

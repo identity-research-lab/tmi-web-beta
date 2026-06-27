@@ -1,31 +1,19 @@
-<%= turbo_frame_tag "frame-survey-responses" do %>
-
-  <% if @project.refresh_in_progress %>
-    <p>
-      Survey responses loading in progress. This may take several minutes depending on the size of your dataset. Started <%= distance_of_time_in_words(@project.refresh_started_at, DateTime.now, include_seconds: true) %> ago.
-    </p>
-    <%= link_to "Refresh Status", edit_project_path(@project), id: "refresh-status", class: "hidden" %>
-
-    <div class="progress"></div>
-    <script language="javascript">
-      setTimeout(() => {
-        const elem = document.getElementById('refresh-status')
-        elem.click()
-      }, 5000);  // Waits for 5000 milliseconds (5 seconds)
-    </script>
-  <% else %>
-    <p>
-      Survey responses were last refreshed <%= distance_of_time_in_words(@project.refreshed_at || DateTime.now, DateTime.now) %> ago.
-    </p>
-
-    <ul class="dashboard-actions">
-      <li>
-        <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses }" } do |f| %>
-          <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
-          <%= f.submit "Load Responses", class: "button small secondary" %>
+<tr>
+  <td>
+    <span class="survey-item-name"><%= survey_response.persona.formatted_identifier %></span>
+    <span class="survey-item-type">Participant case record</span>
+  </td>
+  <td>
+    <p class="verbatim-response"><%= survey_response.value %></p>
+  </td>
+  <td>
+    <div class="codes-editor">
+      <div class="code-tags">
+        <% survey_response.coded_experiences.each do |code| %>
+          <span class="tag"><%= code.name %></span>
         <% end %>
-      </li>
-    </ul>
-  <% end %>
-
-<% end %>
+      </div>
+      <button class="add-code-link">Edit codes</button>
+    </div>
+  </td>
+</tr>

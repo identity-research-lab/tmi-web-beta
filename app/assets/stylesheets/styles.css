@@ -1043,6 +1043,11 @@ th.sort-desc span::after {
   padding: 1.25rem 1rem;
 }
 
+.case-table tr:hover,
+.response-table tr:hover {
+  background: var(--surface-soft);
+}
+
 .response-table td {
   line-height: 1.6;
 }

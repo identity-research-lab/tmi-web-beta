@@ -1,0 +1,138 @@
+<%- title "Survey Item: #{@survey_item.label}" %>
+
+<section class="app-header">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Question</span>
+    </div>
+    <h1 class="app-title"><%= @survey_item.formatted_identifier %>: <%= @survey_item.label %></h1>
+    <p class="app-description">
+      Review all participant responses associated with this survey item. Revise researcher-applied codes, add analytical memos, and explore cross-case patterns, frequencies, and emergent thematic relationships.
+    </p>
+  </div>
+
+  <div>
+
+  <aside class="app-header-panel" aria-label="Relational analysis tools">
+    <div class="app-panel-title">
+      Relational Analysis
+    </div>
+    <a href="#" class="button small secondary dashboard-template-button">
+      Open Survey Item Graph
+    </a>
+    <div class="case-subtext">
+      Cypher:
+      <a href="#" class="cypher-link">
+        <%= @survey_item.graph_query[:query] %>
+      </a>
+      <button class="copy-query-button" aria-label="Copy Cypher query">⧉</button>
+    </div>
+    </aside>
+
+  </div>
+
+</section>
+
+<section class="app-module-summary">
+  <div>
+    <div class="app-label">Survey Question</div>
+      <p class="app-description" style="margin-top:0;">
+        <%= @survey_item.prompt %>
+      </p>
+  </div>
+</section>
+
+<section class="app-module-summary">
+  <div>
+    <div class="app-label">Survey Item Coding Status</div>
+    <div class="app-meta-grid">
+      <div class="app-meta-item">
+        <span class="app-meta-label">Participant Responses</span>
+        <span class="app-meta-value"><%= @survey_responses.count %></span>
+      </div>
+      <div class="app-meta-item">
+        <span class="app-meta-label">Codes Applied</span>
+        <span class="app-meta-value"><%= @coded_experiences_count %></span>
+      </div>
+      <div class="app-meta-item">
+        <span class="app-meta-label">Categories</span>
+        <span class="app-meta-value"><%= @categories_count %> attached</span>
+      </div>
+      <div class="app-meta-item">
+        <span class="app-meta-label">Last Activity</span>
+        <span class="app-meta-value"><%= @survey_item.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="app-layout">
+
+  <div class="app-main">
+
+    <div class="workspace-title-row">
+      <div>
+      <h2 class="workspace-title">Workspace–Edit Codes Here</h2>
+      <p class="workspace-note">Each row represents one participant response to this survey item.</p>
+      </div>
+    </div>
+
+    <div class="response-table-wrap">
+      <% if @survey_responses.any? %>
+        <table class="response-table">
+          <thead>
+            <tr>
+              <th scope="col">Participant Case</th>
+              <th scope="col">Verbatim Response</th>
+              <th scope="col">Researcher Codes</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tbody>
+            <% @survey_responses.each do |survey_response| %>
+              <%= render partial: "survey_responses/form", locals: { survey_response: survey_response } %>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        No survey responses have been loaded.
+      <% end %>
+    </div>
+  </div>
+  <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
+    <section id="memos" class="sidebar-card white">
+      <div class="sidebar-card-title">Researcher Memos</div>
+      <ul class="memo-feed">
+        <% if @memos.any? %>
+          <% @memos.each do |memo| %>
+            <%= render partial: "memos/show", locals: { memo: memo } %>
+          <% end %>
+        <% else %>
+          <li class="memo-entry">
+            <p class="memo-text">
+              No recent memos.
+            </p>
+          </li>
+        <% end %>
+      </ul>
+      <a href="#" class="button small secondary" style="margin-top:1rem;">Add Memo</a>
+    </section>
+    <section class="sidebar-card">
+      <details class="sidebar-disclosure" open>
+        <summary class="sidebar-card-title disclosure-title">
+          Attached Categories
+        </summary>
+        <% if @categories.any? %>
+          <div class="category-tags collapsed-tags">
+            <% @categories.each do |category| %>
+              <span class="tag"><%= category.name %></span>
+            <% end %>
+          </div>
+        <% else %>
+          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
+        <% end %>
+      </details>
+    </section>
+  </aside>
+</section>

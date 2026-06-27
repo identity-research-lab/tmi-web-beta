@@ -67,6 +67,14 @@ class SurveyItem
     (project.survey_fields.index(self.csv_header) + 1).to_s.rjust(3, "0")
   end
 
+  # Displays the query and its explanation for locating the Case's associated Persona in the graph.
+  def graph_query
+    {
+      explainer: "Access and explore this survey item (and all of its relationships) in the TMI-Graph app.",
+      query: "MATCH (si:SurveyItem)-[]-(n) WHERE si.csv_header=\"#{self.csv_header}\" RETURN p,n"
+    }
+  end
+
   def status
     return "Completed" if self.is_completed?
     return "In Progress" if self.is_coded?

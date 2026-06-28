@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   root "static_pages#home"
   get "about" => "static_pages#about"
+  get "use_cases" => "static_pages#use_cases"
+  get "contribute" => "static_pages#contribute"
+  get "contact" => "static_pages#contact"
  
   resources :projects, except: [:destroy]
   resources :survey_items, except: [:destroy]

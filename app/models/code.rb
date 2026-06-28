@@ -22,6 +22,18 @@ class Code
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
+  def self.experiences
+    where(is_experience: true)
+  end
+  
+  def self.identities
+    where(is_identity: true)
+  end
+  
+  def self.reflections
+    where(is_reflection: true)
+  end
+  
   # Given a dimension, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(dimension)
     codes = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct > 0').order('c DESC').return('c.name, ct')

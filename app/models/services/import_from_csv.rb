@@ -25,7 +25,7 @@ module Services
 				# Create personas from records
 				records.each_with_index do |record, i|
 					persona = Persona.find_by(participant_id: record[project.participant_id_field])
-					persona ||= Persona.create!(participant_id: record[project.participant_id_field], identifier: persona_index_base + i)
+					persona ||= Persona.create!(participant_id: record[project.participant_id_field], identifier: (persona_index_base + i).to_s.rjust(4, "0"))
 					survey_items.each do |survey_item|
 						next unless value = record[survey_item.csv_header]
 						survey_response = SurveyResponse.find_or_initialize_by(

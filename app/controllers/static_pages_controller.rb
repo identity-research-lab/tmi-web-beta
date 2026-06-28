@@ -6,4 +6,13 @@ class StaticPagesController < ApplicationController
   def about
   end
 
+  def contact
+  end
+  
+  def contribute
+  end
+
+  def use_cases
+  end
+  
 end

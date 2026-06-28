@@ -1,4 +1,4 @@
-<%- title "Case: Persona #{@persona.formatted_identifier}" %>
+<%- title "Case: #{@persona.formatted_identifier}" %>
 
 <section class="app-header">
 
@@ -6,7 +6,7 @@
     <div class="app-label">
       <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Case</span>
     </div>
-    <h1 class="app-title">Participant Case: Persona <%= @persona.formatted_identifier %></h1>
+    <h1 class="app-title">Participant Case: <%= @persona.formatted_identifier %></h1>
     <p class="app-description">
       Review this participant’s verbatim survey responses across the full survey while revising codes and adding analytical memos.
     </p>

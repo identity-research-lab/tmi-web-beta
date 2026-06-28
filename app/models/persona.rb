@@ -21,7 +21,7 @@ class Persona
   has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
-
+  
   def self.completed
     where(is_completed: true)
   end
@@ -38,12 +38,12 @@ class Persona
   def graph_query
     {
       explainer: "Access and explore this case (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
-      query: "MATCH (p:Persona)-[]-(n) WHERE p.participant_id=\"#{self.participant_id}\" RETURN p,n"
+      query: "MATCH (p:Persona)-[]-(n) WHERE p.identifier=\"#{self.identifier}\" RETURN p,n"
     }
   end
 
   def formatted_identifier
-    self.identifier.to_s.rjust(4, "0")
+    "Persona #{self.identifier}"
   end
 
   def status

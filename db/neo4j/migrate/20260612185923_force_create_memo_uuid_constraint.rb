@@ -1,6 +1,6 @@
 class ForceCreateMemoUuidConstraint < ActiveGraph::Migrations::Base
   def up
-    add_constraint :Memo, :uuid, force: true
+#    add_constraint :Memo, :uuid, force: true
   end
 
   def down

@@ -1,8 +1,15 @@
 <tr>
-  <td>
-    <span class="survey-item-name"><%= survey_response.persona.formatted_identifier %></span>
-    <span class="survey-item-type">Participant case record</span>
+  <% if embedded_in == "survey_item" %>
+    <td>
+      <span class="survey-item-name"><%= link_to survey_response.persona.formatted_identifier, survey_response.persona %></span>
+      <span class="survey-item-type">Participant case record</span>
+    </td>
+  <% else %>
+    <td>
+    <span class="survey-item-name"><%= link_to survey_response.survey_item.formatted_identifier, survey_response.survey_item %>: <%= survey_response.survey_item.label %></span>
+    <span class="survey-item-type">Survey Item</span>
   </td>
+  <% end %>
   <td>
     <p class="verbatim-response"><%= survey_response.value %></p>
   </td>

@@ -1,7 +1,7 @@
 class PersonasController < ApplicationController
 
   def index
-    @personas = Persona.all
+    @personas = Persona.all.order(:identifier)
     @project = Project.last
     @case_count = Persona.count
     @uncoded_case_count = Persona.uncoded.count
@@ -14,6 +14,10 @@ class PersonasController < ApplicationController
   def show
     @persona = Persona.find(params[:id])
     @survey_responses = @persona.survey_responses
+    @project = Project.last
+    @coded_experiences_count = @persona.coded_experiences.count
+    @categories = @persona.categories
+    @memos = @persona.memos
   end
 
   def edit

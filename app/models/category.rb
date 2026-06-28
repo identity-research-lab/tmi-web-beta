@@ -16,6 +16,7 @@ class Category
 
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_many :out, :coded_experiences, type: :Contains, model_class: "CodedExperience"
+  has_many :in, :personas, type: :RelatesTo, model_class: "Persona"
   has_many :in, :themes, type: :EmergesFrom, model_class: "Theme"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 

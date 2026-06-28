@@ -1,6 +1,6 @@
 class ForceCreateEventUuidConstraint < ActiveGraph::Migrations::Base
   def up
-    add_constraint :Event, :uuid, force: true
+#    add_constraint :Event, :uuid, force: true
   end
 
   def down

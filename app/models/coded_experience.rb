@@ -16,6 +16,7 @@ class CodedExperience
   has_many :in, :categories, type: :Contains, model_class: "Category"
   has_many :in, :survey_items, type: :AssociatedWith, model_class: "SurveyItem"
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
+  has_many :in, :coded_experiences, type: :Experiences, model_class: "CodedExperience"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 

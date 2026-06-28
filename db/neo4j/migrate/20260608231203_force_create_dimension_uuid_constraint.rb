@@ -1,6 +1,6 @@
 class ForceCreateDimensionUuidConstraint < ActiveGraph::Migrations::Base
   def up
-    add_constraint :Dimension, :uuid, force: true
+#    add_constraint :Dimension, :uuid, force: true
   end
 
   def down

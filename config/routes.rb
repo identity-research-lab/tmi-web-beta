@@ -11,9 +11,9 @@ Rails.application.routes.draw do
 
   root "static_pages#home"
   get "about" => "static_pages#about"
-
-  resources :projects
-  resources :survey_items
-  resources :personas, only: [:index, :edit, :update]
+ 
+  resources :projects, except: [:destroy]
+  resources :survey_items, except: [:destroy]
+  resources :personas, except: [:destroy]
 
 end

@@ -1,6 +1,6 @@
 class ForceCreateSurveyItemUuidConstraint < ActiveGraph::Migrations::Base
   def up
-    add_constraint :SurveyItem, :uuid, force: true
+#    add_constraint :SurveyItem, :uuid, force: true
   end
 
   def down

@@ -104,20 +104,7 @@
   <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
     <section id="memos" class="sidebar-card white">
       <div class="sidebar-card-title">Researcher Memos</div>
-      <ul class="memo-feed">
-        <% if @memos.any? %>
-          <% @memos.each do |memo| %>
-            <%= render partial: "memos/show", locals: { memo: memo } %>
-          <% end %>
-        <% else %>
-          <li class="memo-entry">
-            <p class="memo-text">
-              No recent memos.
-            </p>
-          </li>
-        <% end %>
-      </ul>
-      <a href="#" class="button small secondary" style="margin-top:1rem;">Add Memo</a>
+      <%= render partial: "memos/feed", locals: { memos: @memos, new_memo: Memo.new(survey_item: @survey_item) } %>
     </section>
     <section class="sidebar-card">
       <details class="sidebar-disclosure" open>

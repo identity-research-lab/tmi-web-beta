@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   get "use_cases" => "static_pages#use_cases"
   get "contribute" => "static_pages#contribute"
   get "contact" => "static_pages#contact"
- 
+
+  resources :memos
   resources :projects, except: [:destroy]
   resources :survey_items, except: [:destroy]
   resources :personas, except: [:destroy]

@@ -34,16 +34,17 @@
 </nav>
 
 <nav class="content-nav" aria-label="Active project navigation">
+  <% active_nav = content_for?(:active_nav) && content_for(:active_nav) %>
 	<ul>
 		<li><span class="tabs-label">Active Project → </span></li>
-		<li><%= link_to "Dashboard", projects_path %></li>
-		<li><%= link_to "Cases", personas_path %></li>
-		<li><%= link_to "Survey Items", survey_items_path %></li>
-		<li><a href="#">Code Metrics</a></li>
-		<li><a href="#">Codes</a></li>
-		<li><a href="#">Categories</a></li>
-		<li><a href="#">Themes</a></li>
-		<li><a href="#">Graph</a></li>
+		<li class="<%= active_nav == "dashboard" ? 'active-nav' : '' %>"><%= link_to "Dashboard", projects_path %></li>
+		<li class="<%= active_nav == "cases" ? 'active-nav' : '' %>"><%= link_to "Cases", personas_path %></li>
+		<li class="<%= active_nav == "survey_items" ? 'active-nav' : '' %>"><%= link_to "Survey Items", survey_items_path %></li>
+		<li class="<%= active_nav == "code_metrics" ? 'active-nav' : '' %>"><a href="#">Code Metrics</a></li>
+		<li class="<%= active_nav == "codes" ? 'active-nav' : '' %>"><a href="#">Codes</a></li>
+		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><a href="#">Categories</a></li>
+		<li class="<%= active_nav == "themes" ? 'active-nav' : '' %>"><a href="#">Themes</a></li>
+		<li class="<%= active_nav == "graph" ? 'active-nav' : '' %>"><a href="#">Graph</a></li>
 	</ul>
 </nav>
 

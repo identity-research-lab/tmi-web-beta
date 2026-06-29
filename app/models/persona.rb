@@ -14,13 +14,13 @@ class Persona
   validates :identifier, presence: true
   validates :identifier, uniqueness: true
 
+  has_many :out, :categories, type: :Contains, model_class: "Category"
+  has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
+  has_many :out, :events, type: :HasEvent, model_class: "Event"
+  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_many :out, :identities, type: :IdentifiesWith, model_class: "Code"
   has_many :out, :experiences, type: :Experiences, model_class: "Code"
   has_many :out, :reflections, type: :ReflectsOn, model_class: "Code"
-#  has_many :out, :categories, type: :Contains, model_class: "Category"
-#  has_many :out, :survey_responses, type: :RespondsWith, model_class: "SurveyResponse"
-#  has_many :out, :events, type: :HasEvent, model_class: "Event"
-#  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   
   def self.completed
     where(is_completed: true)

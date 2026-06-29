@@ -1,0 +1,117 @@
+<%- title "Case: #{@persona.formatted_identifier}" %>
+<%- active_nav "cases" %>
+
+<section class="app-header">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Case</span>
+    </div>
+    <h1 class="app-title">Participant Case: <%= @persona.formatted_identifier %></h1>
+    <p class="app-description">
+      Review this participant’s verbatim survey responses across the full survey while revising codes and adding analytical memos.
+    </p>
+  </div>
+
+  <div>
+
+  <aside class="app-header-panel" aria-label="Relational analysis tools">
+    <div class="app-panel-title">
+      Relational Analysis
+    </div>
+    <a href="#" class="button small secondary dashboard-template-button">
+      Open Persona Graph
+    </a>
+    <div class="case-subtext">
+      Cypher:
+      <a href="#" class="cypher-link">
+        <%= @persona.graph_query[:query] %>
+      </a>
+      <button class="copy-query-button" aria-label="Copy Cypher query">⧉</button>
+    </div>
+    </aside>
+
+  </div>
+
+</section>
+
+<section class="app-module-summary">
+  <div>
+    <div class="app-label">Participant Coding Status</div>
+    <div class="app-meta-grid">
+      <div class="app-meta-item">
+        <span class="app-meta-label">Survey Responses</span>
+        <span class="app-meta-value"><%= @survey_responses.count %></span>
+      </div>
+      <div class="app-meta-item">
+        <span class="app-meta-label">Codes Applied</span>
+        <span class="app-meta-value"><%= @coded_experiences_count %></span>
+      </div>
+      <div class="app-meta-item">
+        <span class="app-meta-label">Categories</span>
+        <span class="app-meta-value"><%= @categories.count %> attached</span>
+      </div>
+      <div class="app-meta-item">
+        <span class="app-meta-label">Last Activity</span>
+        <span class="app-meta-value"><%= @persona.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="app-layout">
+
+  <div class="app-main">
+
+    <div class="workspace-title-row">
+      <div>
+      <h2 class="workspace-title">Workspace–Edit Codes Here</h2>
+      <p class="workspace-note">Survey items remain connected to participant language and interpreted researcher-applied codes.</p>
+      </div>
+    </div>
+
+    <div class="response-table-wrap">
+      <% if @survey_responses.any? %>
+        <table class="response-table">
+          <thead>
+            <tr>
+              <th scope="col">Survey Item</th>
+              <th scope="col">Verbatim Response</th>
+              <th scope="col">Researcher Codes</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tbody>
+            <% @survey_responses.each do |survey_response| %>
+              <%= render partial: "survey_responses/form", locals: { survey_response: survey_response, embedded_in: "persona" } %>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        No survey responses have been loaded.
+      <% end %>
+    </div>
+  </div>
+  <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
+    <section id="memos" class="sidebar-card white">
+      <div class="sidebar-card-title">Researcher Memos</div>
+      <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo } %>
+    </section>
+    <section class="sidebar-card">
+      <details class="sidebar-disclosure" open>
+        <summary class="sidebar-card-title disclosure-title">
+          Attached Categories
+        </summary>
+        <% if @categories.any? %>
+          <div class="category-tags collapsed-tags">
+            <% @categories.each do |category| %>
+              <span class="tag"><%= category.name %></span>
+            <% end %>
+          </div>
+        <% else %>
+          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
+        <% end %>
+      </details>
+    </section>
+  </aside>
+</section>

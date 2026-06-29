@@ -26,7 +26,7 @@ class Memo
     case self.kind
       when "persona"
         if persona = Persona.find(self.referrent_id)
-          self.persona = p
+          self.persona = persona
         end
       when "project"
         if project = Project.find(self.referrent_id)

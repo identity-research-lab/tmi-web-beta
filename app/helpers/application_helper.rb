@@ -12,4 +12,8 @@ module ApplicationHelper
     content_for(:title_headline) { text }
   end
 
+  def active_nav(text)
+    content_for(:active_nav) { text }
+  end
+  
 end

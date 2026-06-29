@@ -15,7 +15,7 @@ class PersonasController < ApplicationController
     @persona = Persona.find(params[:id])
     @survey_responses = @persona.survey_responses
     @project = Project.last
-    @coded_experiences_count = @persona.codes.experiences.count
+    @coded_experiences_count = @persona.experiences.count
     @categories = @persona.categories
     @memos = @persona.memos
   end

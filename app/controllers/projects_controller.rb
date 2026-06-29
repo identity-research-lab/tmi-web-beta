@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
     @category_count = Category.count
     @theme_count = Theme.count
     @memo_count = Memo.count
-    @memos = Array.new(Memo.all.order(created_at: :desc).limit(3))
+    @memos = Array.new(Memo.all.order(created_at: :desc).limit(4))
     @recent_events = Event.all.order(created_at: :desc).limit(4)
   end
 

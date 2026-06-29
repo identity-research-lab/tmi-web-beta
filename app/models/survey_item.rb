@@ -18,7 +18,7 @@ class SurveyItem
 
   has_many :in, :survey_responses, type: :HasItem, model_class: "SurveyResponse"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
-  has_many :out, :coded_experiences, type: :AssociatedWith, model_class: "CodedExperience"
+  has_many :out, :codes, type: :AssociatedWith, model_class: "Code"
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_one :out, :project, type: :HasProject, model_class: "Project"
 

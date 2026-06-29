@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
     @survey_item_count = SurveyItem.count
     @survey_response_count = SurveyResponse.count
     @survey_response_coded_count = SurveyResponse.coded.count
-    @code_count = CodedExperience.count
+    @code_count = Code.count
     @category_count = Category.count
     @theme_count = Theme.count
     @memo_count = Memo.count

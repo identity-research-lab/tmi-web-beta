@@ -1,4 +1,4 @@
-class CreateCodedExperience < ActiveGraph::Migrations::Base
+class CreateCode < ActiveGraph::Migrations::Base
   def up
     
   end

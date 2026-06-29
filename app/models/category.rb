@@ -15,14 +15,14 @@ class Category
   validates_uniqueness_of :name, scope: :dimension
 
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
-  has_many :out, :coded_experiences, type: :Contains, model_class: "CodedExperience"
+  has_many :out, :codes, type: :Contains, model_class: "Code"
   has_many :in, :personas, type: :RelatesTo, model_class: "Persona"
   has_many :in, :themes, type: :EmergesFrom, model_class: "Theme"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   # Generates a hash with the unique category name as the key and the count of its associated coded experiences as a value.
   def self.histogram(dimension)
-    categories = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:CONTAINS]-(coded_experienece:Code)} AS ct').return("c.name, ct").order('ct DESC')
+    categories = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:CONTAINS]-(code:Code)} AS ct').return("c.name, ct").order('ct DESC')
     categories.inject({}) {|accumulator,category| accumulator[category.values[0]] ||= 0; accumulator[category.values[0]] += category.values[1]; accumulator}
   end
 

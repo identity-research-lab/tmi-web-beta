@@ -9,13 +9,11 @@ class Event
   validates :description, presence: true
 
   has_one :out, :persona, type: :HasEvent
-  has_one :out, :coded_experience, type: :HasEvent
-  has_one :out, :identity, type: :HasEvent
-  has_one :out, :reflection, type: :HasEvent
+  has_one :out, :code, type: :HasEvent
   has_one :out, :project, type: :HasEvent
 
   def referrent
-    @referrent ||= self.persona || self.coded_experience || self.reflection || self.project
+    @referrent ||= self.persona || self.code || self.project
   end
   
 end

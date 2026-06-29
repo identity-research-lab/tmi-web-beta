@@ -2,7 +2,7 @@ class Code
   include ActiveGraph::Node
 
   property :name
-  property :dimension_name
+  property :dimension
   property :is_reflection, default: false
   property :is_identity, default: false
   property :is_experience, default: false
@@ -11,10 +11,9 @@ class Code
 
   before_validation :sanitize
   validates :name, presence: true
-  validates :dimension_name, presence: true
-  validates_uniqueness_of :name, scope: :dimension_name
+  validates :dimension, presence: true
+  validates_uniqueness_of :name, scope: :dimension
 
-#  has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_many :in, :personas, type: :AssociatedWith, model_class: "Persona"
   has_many :in, :categories, type: :Contains, model_class: "Category"
   has_many :in, :survey_items, type: :AssociatedWith, model_class: "SurveyItem"

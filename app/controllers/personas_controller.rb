@@ -7,7 +7,7 @@ class PersonasController < ApplicationController
     @uncoded_case_count = Persona.uncoded.count
     @in_progress_case_count = Persona.in_progress.count
     @completed_case_count = Persona.completed.count
-    @code_count = CodedExperience.count
+    @code_count = Code.count
     @category_count = Category.count
   end
 
@@ -15,7 +15,7 @@ class PersonasController < ApplicationController
     @persona = Persona.find(params[:id])
     @survey_responses = @persona.survey_responses
     @project = Project.last
-    @coded_experiences_count = @persona.coded_experiences.count
+    @coded_experiences_count = @persona.codes.experiences.count
     @categories = @persona.categories
     @memos = @persona.memos
   end

@@ -5,8 +5,8 @@ class SurveyItemsController < ApplicationController
     @survey_items = @project.active_fields.all.sort{|a,b| a.formatted_identifier <=> b.formatted_identifier }
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count
-    @identities_count = Identity.count
-    @coded_experiences_count = CodedExperience.count
+    @identities_count = Code.identities.count
+    @coded_experiences_count = Code.experiences.count
   end
 
   def show

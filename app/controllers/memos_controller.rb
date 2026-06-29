@@ -1,17 +1,13 @@
 class MemosController < ApplicationController
 
   def create
-    success = Memo.create(params[:memo_params])
+    @memo = Memo.create!(memo_params)
+    @memos = @memo.referrent && @memo.referrent.memos.order(:created_at) || []
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("frame-memo-form", partial: "/memo/form", locals: { 
-          memo: Memo.new(
-            persona_id: memo_params[:persona_id],
-            code_id: memo_params[:code_id],
-            project_id: memo_params[:project_id],
-            survey_item_id: memo_params[:survey_item_id],
-            survey_response_id: memo_params[:survey_response_id]
-          ), success: success 
+        render turbo_stream: turbo_stream.replace("memo-feed", partial: "/memos/feed", locals: { 
+          memo: Memo.new(kind: @memo.kind, referrent_id: @memo.referrent_id),
+          memos: @memos
         })
       end
     end
@@ -20,7 +16,7 @@ class MemosController < ApplicationController
   private
 
   def memo_params
-    params.require(:memo).permit(:persona_id, :code_id, :survey_item_id, :survey_response_id, :project_id)
+    params.require(:memo).permit(:text, :kind, :referrent_id)
   end
 
 end

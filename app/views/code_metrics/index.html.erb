@@ -25,21 +25,20 @@
 </section>
 
 <% if @survey_items.any? %>
+
   <section class="survey-code-selector">
     <div class="survey-code-control">
       <label for="survey-item-codes" class="code-metrics-label">
         Choose Survey Item Codes To Review
       </label>
-      <%= select_tag :survey_item, options_from_collection_for_select(@survey_items, 'id', 'formatted_identifier'), { include_blank: "Select..." } %>
-    </div>
+
+      <%= form_with url: code_metrics_path, format: :turbo_stream, data: { turbo_stream: true }, id: "survey-item-select" do %>
+        <%= select_tag :survey_item_id, options_from_collection_for_select(@survey_items, 'id', 'formatted_identifier'), { include_blank: "Select..." } %>
+      <% end %>
       
-    <div class="survey-question-preview">
-      <div class="code-metrics-label">
-        Associated Survey Question
-      </div>
-      <p>
-        TODO
-      </p>
     </div>
+  
+    <%= turbo_frame_tag "survey-item-codes", locals: { survey_item: nil } %>
+
   </section>
 <% end %>

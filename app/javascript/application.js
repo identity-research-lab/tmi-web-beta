@@ -5,10 +5,12 @@ import { copyToClipboard } from "copy_to_clipboard"
 import { setupMobileNav } from "mobile_navigation"
 import { handleSchemaForms } from "schema_editing"
 import { sortTable } from "sort_table"
+import { handleSurveyItemSelect } from "code_metrics"
 
 document.addEventListener("turbo:load", () => {
   setupMobileNav()
   handleSchemaForms()
+  handleSurveyItemSelect()
 })
 
 window.copyToClipboard = copyToClipboard

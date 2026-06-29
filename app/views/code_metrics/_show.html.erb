@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "survey-item-codes", locals: { survey_item: nil } do %>
+  <div class="survey-question-preview">
+    <div class="code-metrics-label">
+      Associated Survey Question
+    </div>
+    <p>
+      <%= survey_item.prompt %>
+    </p>
+  </div>
+<% end %>

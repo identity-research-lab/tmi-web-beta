@@ -64,7 +64,7 @@ class SurveyItem
   end
 
   def formatted_identifier
-    "Question #{(project.survey_fields.index(self.csv_header) + 1).to_s.rjust(3, "0")}"
+    "Question #{(project.survey_fields.index(self.csv_header) + 1).to_s.rjust(3, "0")}: #{self.label}"
   end
 
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.

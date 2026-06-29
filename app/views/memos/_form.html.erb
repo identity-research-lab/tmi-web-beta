@@ -1,0 +1,7 @@
+<%= form_with model: memo, format: :turbo_stream, class: "memo-form",
+data: { turbo_stream: true } do |f| %>
+  <%= f.text_area :text %>
+  <%= f.hidden_field :kind, value: memo.kind  %>
+  <%= f.hidden_field :referrent_id, value: memo.referrent_id %>
+  <%= f.submit "Add Memo", class: "button small secondary", style:"margin-top:1rem;" %>
+<% end %>

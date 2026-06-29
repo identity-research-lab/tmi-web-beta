@@ -17,7 +17,8 @@ class PersonasController < ApplicationController
     @project = Project.last
     @coded_experiences_count = @persona.experiences.count
     @categories = @persona.categories
-    @memos = @persona.memos
+    @memos = @persona.memos.order(created_at: :desc)
+    @memo = Memo.new(kind: "persona", referrent_id: @persona.id)
   end
 
   def edit

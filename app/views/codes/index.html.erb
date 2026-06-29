@@ -25,28 +25,21 @@
 </section>
 
 <% if @survey_items.any? %>
-  <section class="app-section">
-    <div class="section-label">
-      Survey Items
+  <section class="survey-code-selector">
+    <div class="survey-code-control">
+      <label for="survey-item-codes" class="code-metrics-label">
+        Choose Survey Item Codes To Review
+      </label>
+      <%= select_tag :survey_item, options_from_collection_for_select(@survey_items, 'id', 'formatted_identifier'), { include_blank: "Select..." } %>
     </div>
-    <div class="response-table-wrap">
-      <table class="response-table" id="data-table">
-        <thead>
-          <tr>
-            <th scope="col" class="sortable sort-desc" data-sort-direction="desc" onclick="sortTable(0)"><span class="sort-header">Q#</span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(1)"><span class="sort-header">Question</span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(2)"><span class="sort-header">Responses</span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(3)"><span class="sort-header">Codes</span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(4)"><span class="sort-header">Status</span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(5)"><span class="sort-header">Activity</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @survey_items.each do |survey_item| %>
-            <%= render partial: "survey_items/row", locals: { survey_item: survey_item } %>
-          <% end %>
-        </tbody>
-      </table>
+      
+    <div class="survey-question-preview">
+      <div class="code-metrics-label">
+        Associated Survey Question
+      </div>
+      <p>
+        TODO
+      </p>
     </div>
   </section>
 <% end %>

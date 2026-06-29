@@ -1,16 +1,16 @@
 class Memo
 
-  attr_accessor :referrent_id
-  
   include ActiveGraph::Node
 
   property :text
   property :kind
+  property :referrent_id
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
   validates :text, presence: true
   validates :kind, presence: true
+  validates :referrent_id, presence: true
 
   before_save :attach_referrent
   
@@ -40,8 +40,6 @@ class Memo
   end
   
   def referrent
-    return unless KINDS.include? self.kind
-    return unless self.referrent_id.present?
     self.project || self.persona || self.survey_item
   end
     

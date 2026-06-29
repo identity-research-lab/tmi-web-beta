@@ -2,7 +2,7 @@ class SurveyItemsController < ApplicationController
 
   def index
     @project = Project.last
-    @survey_items = @project.active_fields.all.sort{|a,b| a.formatted_identifier <=> b.formatted_identifier }
+    @survey_items = SurveyItem.active.order(:identifier)
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count
     @identities_count = Code.identities.count

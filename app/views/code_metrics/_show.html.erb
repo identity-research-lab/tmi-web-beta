@@ -6,7 +6,11 @@
       </label>
     
       <%= form_with url: code_metrics_path, format: :turbo_stream, data: { turbo_stream: true }, id: "survey-item-select" do %>
-        <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier'), { include_blank: "Select..." } %>
+        <% if survey_item.present? %>
+          <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier', survey_item.id), { include_blank: "Select..." } %>
+        <% else %>
+          <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier'), { include_blank: "Select..." } %>
+        <% end %>
       <% end %>
     </div>
 

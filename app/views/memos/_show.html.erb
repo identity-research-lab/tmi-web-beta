@@ -1,7 +1,7 @@
 <li class="memo-entry">
   <div class="memo-date"><%= memo.created_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
   <p class="memo-text">
-    <%= link_to memo.referrent.formatted_identifier, memo.referrent %>: 
-    <%= memo.text %>
+    <%= link_to memo.referrent.formatted_identifier, memo.referrent, target: "_top" %>:
+    <p><%= memo.text.truncate(120) %></p>
   </p>
 </li>

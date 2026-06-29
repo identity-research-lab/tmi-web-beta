@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get "contact" => "static_pages#contact"
 
   resources :memos
+  resources :codes
   resources :projects, except: [:destroy]
   resources :survey_items, except: [:destroy]
   resources :personas, except: [:destroy]

@@ -1,0 +1,39 @@
+<tr class="case-row">
+  <td data-sort-index="<%= persona.formatted_identifier %>">
+    <%= link_to "#{persona.formatted_identifier}", persona_path(persona) %>
+  </td>
+
+  <td>
+    <div class="case-subtext">
+      <a href="#" class="cypher-link">
+        <%= persona.graph_query[:query] %>
+      </a>
+      <button class="copy-query-button" aria-label="Copy Cypher query">⧉</button>
+    </div>
+  </td>
+
+  <% coded_experiences_count = persona.experiences.count %>
+  <td data-sort-index="<%= coded_experiences_count %>">
+    <div class="code-tags">
+      <span class="tag dark"><%= coded_experiences_count %></span>
+    </div>
+  </td>
+
+  <td>
+    <div class="category-tags">
+      <span class="tag dark">???</span>
+    </div>
+  </td>
+
+  <td data-sort-index="<%= persona.status %>">
+    <span class="status-pill active"><%= persona.status %></span>
+  </td>
+
+  <td data-sort-index="<%= persona.updated_at.to_i %>">
+    <strong>Edited <%= distance_of_time_in_words(persona.updated_at, DateTime.now) %> ago.</strong>
+    <div class="activity-subtext">
+      <%= persona.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC
+    </div>
+  </td>
+
+</tr>

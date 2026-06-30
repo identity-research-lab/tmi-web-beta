@@ -1,24 +1,24 @@
 @font-face {
-  font-family: 'Roboto-Light';
+  font-family: 'Roboto';
   font-weight: 300;
-  src: url(/assets/Roboto-Light.ttf);
+  src: url(Roboto-Light.ttf);
 }
   
 @font-face {
-  font-family: 'Roboto-Regular';
+  font-family: 'Roboto';
   font-weight: 400;
-  src: url(/assets/Roboto-Regular.ttf);
+  src: url(Roboto-Regular.ttf);
 }
   
 @font-face {
-  font-family: 'Roboto-Medium';
+  font-family: 'Roboto';
   font-weight: 500;
-  src: url(/assets/Roboto-Medium.ttf);
+  src: url(Roboto-Medium.ttf);
 }
   
 @font-face {
-  font-family: 'Roboto-Bold';
+  font-family: 'Roboto';
   font-weight: 700;
-  src: url(/assets/Roboto-Bold.ttf);
+  src: url(Roboto-Bold.ttf);
 }
   

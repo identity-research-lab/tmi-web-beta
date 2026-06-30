@@ -22,6 +22,10 @@ class Project
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
+  def formatted_identifier
+    self.name
+  end
+
   def active_fields
     @active_fields ||= self.survey_items.where(is_active: true)
   end

@@ -22,6 +22,10 @@ class Project
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
+  def formatted_identifier
+    self.name
+  end
+
   def active_fields
     @active_fields ||= self.survey_items.where(is_active: true)
   end
@@ -35,6 +39,15 @@ class Project
       survey_items.find_or_create_by(csv_header: field, identifier: i + 1)
     end
     Event.create(project: self, label: "Survey items", description: "Survey items refreshed from upload.")
+  end
+
+  def progress
+    return 1.0 unless self.refresh_in_progress
+    rows = CSV.parse(self.csv_data, headers: true).count
+    return 0.0 unless rows > 0
+    records = rows * active_fields.count
+    updated = SurveyResponse.as(:s).where('s.updated_at > $date', date: self.refresh_started_at.to_i).count
+    return (updated / records.to_f)
   end
 
   def create_survey_responses_from_csv

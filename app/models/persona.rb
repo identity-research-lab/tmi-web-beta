@@ -21,7 +21,7 @@ class Persona
   has_many :out, :identities, type: :IdentifiesWith, model_class: "Code"
   has_many :out, :experiences, type: :Experiences, model_class: "Code"
   has_many :out, :reflections, type: :ReflectsOn, model_class: "Code"
-  
+
   def self.completed
     where(is_completed: true)
   end
@@ -43,7 +43,7 @@ class Persona
   end
 
   def formatted_identifier
-    "Persona #{self.identifier}"
+    "Persona #{self.identifier.to_s.rjust(3, "0")}"
   end
 
   def status

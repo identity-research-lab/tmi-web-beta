@@ -6,6 +6,10 @@
     </p>
     <%= link_to "Refresh Status", edit_project_path(@project), id: "refresh-status", class: "hidden" %>
 
+    <div class="frequency-bar-track">
+      <div class="frequency-bar" style="width:<%= (@project.progress * 100).round(0) %>%;"></div>
+    </div>
+
     <div class="progress"></div>
     <script language="javascript">
       setTimeout(() => {

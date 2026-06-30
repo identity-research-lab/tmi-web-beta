@@ -1491,6 +1491,11 @@ th.sort-desc span::after {
   background: var(--black);
 }
 
+.bargraph-bar {
+  height: 100%;
+  background: var(--black);
+}
+
 /* REPRESENTATIVE EXCERPTS */
 
 .excerpt-list {

@@ -2,7 +2,7 @@ class MemosController < ApplicationController
 
   def create
     @memo = Memo.create!(memo_params)
-    @memos = @memo.referrent && @memo.referrent.memos.order(:created_at) || []
+    @memos = @memo.referrent && @memo.referrent.memos.order(created_at: :desc) || []
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("memo-feed", partial: "/memos/feed", locals: { 

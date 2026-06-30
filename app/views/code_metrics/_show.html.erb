@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "survey-item-codes", locals: { survey_item: nil } do %>
+<%= turbo_frame_tag "survey-item-codes" do %>
   <section class="survey-code-selector">
     <div class="survey-code-control">
       <label for="survey-item-codes" class="code-metrics-label">
@@ -25,7 +25,7 @@
       </div>
     <% end %>
   </section>
-
+  
   <% if survey_item.present? %>      
     <section class="code-metrics-summary">
       <div>
@@ -35,94 +35,91 @@
         <div class="code-metrics-grid">
         
         <div class="code-metrics-item">
-          <span class="code-metrics-label">Survey Item</span>
-          <span class="code-metrics-value">Q05 of Q29 · LabelWhatever</span>
-        </div>
-        
-        <div class="code-metrics-item">
           <span class="code-metrics-label">Responses</span>
-          <span class="code-metrics-value">214</span>
+          <span class="code-metrics-value"><%= survey_item.survey_responses.count %></span>
         </div>
         
         <div class="code-metrics-item">
           <span class="code-metrics-label">Unique Codes</span>
-          <span class="code-metrics-value">66</span>
+          <span class="code-metrics-value"><%= survey_item.codes.count %></span>
         </div>
         
         <div class="code-metrics-item">
           <span class="code-metrics-label">Last Updated</span>
-          <span class="code-metrics-value">May 14, 2026 · 4:22 PM</span>
+          <span class="code-metrics-value"><%= survey_item.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
         </div>
       </div>
     </section>
-    
+
     <section class="code-metrics-layout">
       <div class="code-metrics-main">
         <div id="code-frequencies" class="workspace-title-row">
-        <div>
-          <h2 class="workspace-title">Code Frequencies</h2>
-          <p class="workspace-note">
-            Frequency indicates how often a researcher-applied code appears across responses to the selected survey item. Metrics do not determine interpretive significance.
-          </p>
-        </div>
-      </div>
-    
-      <div class="frequency-toolbar">
-        <div class="frequency-toolbar-left">
-          <span class="code-metrics-label">Display</span>
-          <select id="code-frequency-count" class="app-select">
-            <option>10 codes</option>
-            <option>20 codes</option>
-            <option>30 codes</option>
-            <option>All codes</option>
-          </select>
+          <div>
+            <h2 class="workspace-title">
+              Code Frequencies
+            </h2>
+            <p class="workspace-note">
+              Frequency indicates how often a researcher-applied code appears across responses to the selected survey item. Metrics do not determine interpretive significance.
+            </p>
+          </div>
         </div>
     
-        <div class="frequency-toolbar-right">
-          <a href="#" class="button small">Frequency ▼</a>
-          <a href="#" class="button small secondary">Alphabetical ▲</a>
+        <div class="frequency-toolbar">
+      
+          <div class="frequency-toolbar-left">
+            <span class="code-metrics-label">Display</span>
+            <select id="code-frequency-count" class="app-select">
+              <option>10 codes</option>
+              <option>20 codes</option>
+              <option>30 codes</option>
+              <option>All codes</option>
+            </select>
+          </div>
+          
+          <div class="frequency-toolbar-right">
+            <a href="#" class="button small">
+              Frequency ▼
+            </a>
+            <a href="#" class="button small secondary">
+              Alphabetical ▲
+            </a>
+          </div>
+
         </div>
-      </div>
-  
-      <div class="overview-card">
-        <div class="frequency-list">
-          <div class="frequency-row">
-            <div class="frequency-label">
-              <span>middle class</span>
-              <strong>137</strong>
+    
+        <div class="overview-card">
+          
+          <div class="frequency-list">
+
+            <div class="frequency-row">
+              <div class="frequency-label">
+                <span>middle class</span>
+                <strong>137</strong>
+              </div>
+              <div class="frequency-bar-track">
+                <div class="frequency-bar" style="width:100%;"></div>
+              </div>
             </div>
-            <div class="frequency-bar-track">
-              <div class="frequency-bar" style="width:100%;"></div>
-            </div>
-          </div>  
-        </div>
+          </div>
+
         <p>
           <a href="#" class="button small secondary">Show all 66 codes</a>
         </p>
       </div>
-      
+
       <div id="representative-excerpts" class="workspace-title-row overview-spaced">
         <div>
-          <h2 class="workspace-title">Representative Excerpts</h2>
+          <h2 class="workspace-title">
+            Representative Excerpts
+          </h2>
           <p class="workspace-note">
             Excerpts reconnect code frequency to participant language and preserve qualitative context.
           </p>
-    
-          <div class="section-inline-control">
-            <label for="excerpt-count" class="code-metrics-label">
-              Display
-            </label>
-            <select id="excerpt-count" class="app-select">
-              <option>5 excerpts</option>
-              <option>10 excerpts</option>
-              <option>15 excerpts</option>
-            </select>
-          </div>
         </div>
       </div>
     
       <div class="excerpt-list">
-        
+    
         <article class="excerpt-card">
           <div class="excerpt-meta">
             <span class="tag dark">middle class</span>
@@ -132,27 +129,27 @@
             “Lorem ipsum dolor sit amet, consectetur adipiscing elit.”
           </p>
         </article>
-    
       </div>
+    </div>
+
+    <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
+
+      <section id="memos" class="sidebar-card white">
+        <div class="sidebar-card-title">Researcher Memos</div>
+        <%= render partial: "memos/feed", locals: { memos: survey_item.memos.order(created_at: :desc), memo: Memo.new(kind: "survey_item", referrent_id: survey_item.id) } %>
+      </section>
+      <section class="sidebar-card">
+        <details class="sidebar-disclosure" open>
+          <summary class="sidebar-card-title disclosure-title">
+            Attached Categories
+          </summary>
+          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
+        </details>
+      </section>
     
-      <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
-        <section id="memos" class="sidebar-card white">
-          <div class="sidebar-card-title">
-            Researcher Memos
-          </div>
-        </section>
-      
-        <section class="sidebar-card">
-          <details class="sidebar-disclosure" open>
-            <summary class="sidebar-card-title disclosure-title">
-              Associated Categories
-            </summary>
-            <div class="empty-state">
-              No associated categories yet. Categories will appear as analysis progresses.
-            </div>
-          </details>
-        </section>
-      </aside>
+    </aside>
+    
     </section>
+
   <% end %>
 <% end %>

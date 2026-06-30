@@ -43,10 +43,11 @@ class Project
 
   def progress
     return 1.0 unless self.refresh_in_progress
-    row_count = CSV.parse(self.csv_data, headers: true).count
-    return 0.0 unless row_count > 0
+    rows = CSV.parse(self.csv_data, headers: true).count
+    return 0.0 unless rows > 0
+    records = rows * active_fields.count
     updated = SurveyResponse.as(:s).where('s.updated_at > $date', date: self.refresh_started_at.to_i).count
-    return (updated / row_count.to_f)
+    return (updated / records.to_f)
   end
 
   def create_survey_responses_from_csv

@@ -1,0 +1,29 @@
+<%- title "Code Metrics" %>
+<%- active_nav "code_metrics" %>
+
+<section class="app-header dashboard-hero">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Question</span>
+    </div>
+    <h1 class="app-title">Code Metrics</h1>
+    <p class="app-description">
+      Review code frequencies, representative excerpts, researcher memos, and attached categories for a selected survey item. This view supports cross-case comparison by showing how participant responses to one question have been coded across the dataset.
+    </p>
+  </div>
+
+  <aside class="app-header-panel" aria-label="Overview information">
+    <div class="app-panel-title">Metrics View</div>
+    <div class="dashboard-upload-actions">
+      <p class="app-description" style="margin-top:0;">
+      Select a survey item below to review its coding metrics. Once selected, this view can show code frequencies, representative excerpts, researcher memos, and attached categories for that question.
+      </p>
+    </div>
+  </aside>
+
+</section>
+
+<% if @survey_items.any? %>
+  <%= render partial: "show", locals: { survey_item: nil, survey_items: @survey_items } %>
+<% end %>

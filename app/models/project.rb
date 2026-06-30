@@ -31,8 +31,8 @@ class Project
   end
 
   def create_survey_items_from_csv
-    survey_fields.each do |field|
-      survey_items.find_or_create_by(csv_header: field)
+    survey_fields.each_with_index do |field,i|
+      survey_items.find_or_create_by(csv_header: field, identifier: i + 1)
     end
     Event.create(project: self, label: "Survey items", description: "Survey items refreshed from upload.")
   end
@@ -42,6 +42,13 @@ class Project
 #    Services::ImportFromCsv.perform(self.id)
     PopulateSurveyResponsesJob.perform_later(project_id: self.id)
     Event.create(project: self, label: "Survey responses", description: "Survey responses import started.")
+  end
+
+  def update_survey_item_identifiers
+    survey_fields.each_with_index do |field,i|
+      survey_item = survey_items.find_by(csv_header: field)
+      survey_item.update_attributes(identifier: i + 1)
+    end
   end
 
 end

@@ -6,6 +6,7 @@ class SurveyItem
   property :prompt
   property :label
   property :csv_header
+  property :identifier
   property :is_participant_identifier, default: false
   property :is_experience, default: false
   property :is_identity, default: false
@@ -27,27 +28,27 @@ class SurveyItem
 
   KINDS = [:participant_identifier, :experience, :identity, :reflection]
 
-  def self.active_items
+  def self.active
     where(is_active: true)
   end
 
-  def self.ignored_items
+  def self.ignored
     where(is_active: false)
   end
 
-  def self.experience_items
+  def self.experience
     where(is_experience: true) || []
   end
 
-  def self.identity_items
+  def self.identity
     where(is_identity: true) || []
   end
 
-  def self.reflection_items
+  def self.reflection
     where(is_reflection: true) || []
   end
 
-  def self.participant_identifier_item
+  def self.participant_identifier
     find_by(is_participant_identifier: true)
   end
 
@@ -64,7 +65,7 @@ class SurveyItem
   end
 
   def formatted_identifier
-    "Question #{(project.survey_fields.index(self.csv_header) + 1).to_s.rjust(3, "0")}"
+    "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
   end
 
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.

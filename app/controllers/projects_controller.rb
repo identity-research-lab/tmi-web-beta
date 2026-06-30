@@ -46,6 +46,8 @@ class ProjectsController < ApplicationController
       @project.create_survey_items_from_csv
     elsif project_params[:refresh_started_at].present?
       @project.create_survey_responses_from_csv
+    elsif project_params[:refresh_in_progress].present?
+      @project.update!(refresh_in_progress: false)
     else
       @project.update!(project_params)
     end
@@ -55,7 +57,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at)
+    params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at, :refresh_in_progress)
   end
 
 end

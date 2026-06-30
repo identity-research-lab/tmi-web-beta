@@ -10,6 +10,15 @@
       <div class="progress-bar" style="width:<%= (@project.progress * 100).round(0) %>%;"></div>
     </div>
 
+    <ul class="dashboard-actions">
+      <li>
+        <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses }" } do |f| %>
+          <%= f.hidden_field :refresh_in_progress, value: false %>
+          <%= f.submit "Cancel", class: "button small secondary" %>
+        <% end %>
+      </li>
+    </ul>
+
     <script language="javascript">
       setTimeout(() => {
         const elem = document.getElementById('refresh-status')

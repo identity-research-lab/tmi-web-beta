@@ -14,23 +14,20 @@
   </div>
 
   <div>
-
-  <aside class="app-header-panel" aria-label="Relational analysis tools">
-    <div class="app-panel-title">
-      Relational Analysis
-    </div>
-    <a href="#" class="button small secondary dashboard-template-button">
-      Open Persona Graph
-    </a>
-    <div class="case-subtext">
-      Cypher:
-      <a href="#" class="cypher-link">
-        <%= @persona.graph_query[:query] %>
+    <aside class="app-header-panel" aria-label="Relational analysis tools">
+      <div class="app-panel-title">
+        Relational Analysis
+      </div>
+      <a href="#" class="button small secondary dashboard-template-button">
+        Open Persona Graph
       </a>
-      <button class="copy-query-button" aria-label="Copy Cypher query">⧉</button>
-    </div>
+      <div class="case-subtext confirmable">
+        Cypher:
+        <span id="confirmation" class="hidden">Copied!</span>
+        <a href="#" id="copy-source" class="cypher-link"><%= @persona.graph_query[:query] %></a>
+        <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
+      </div>
     </aside>
-
   </div>
 
 </section>

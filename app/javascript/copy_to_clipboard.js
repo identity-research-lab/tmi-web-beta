@@ -2,20 +2,22 @@ export function copyToClipboard(elementId) {
   var element = document.getElementById(elementId)
   var textarea = document.createElement('textarea')
   var tooltip = document.getElementById('confirmation')
-  var content = element.textContent
+  var copyIcon = document.getElementById('copy-to-clipboard')
 
-  // Strip last character to avoid copying clipboard icon
-  textarea.value = content.substring(0, content.length - 1)
+  textarea.value = element.textContent
 
   document.body.appendChild(textarea)
   textarea.select()
   document.execCommand('copy')
   document.body.removeChild(textarea)
 
-  tooltip.classList.add("hidden")
+  tooltip.classList.remove("hidden")
   tooltip.classList.remove("appear-disappear")
 
-  setTimeout(function() { tooltip.classList.remove("hidden") }, 200)
+  element.classList.add("hidden")
+  copyIcon.classList.add("hidden")
+  
+  setTimeout(function() { tooltip.classList.add("hidden") }, 1000)
+  setTimeout(function() { element.classList.add("appear"); element.classList.remove("hidden"); copyIcon.classList.add("appear"); copyIcon.classList.remove("hidden") }, 1000)
 
-  tooltip.classList.add("appear-disappear")
 }

@@ -1,6 +1,6 @@
 <tr class="response-row">
   <td data-sort-index="<%= survey_item.formatted_identifier %>">
-    <%= link_to "Q#{survey_item.formatted_identifier}", survey_item_path(survey_item) %>
+    <%= link_to survey_item.identifier.to_s.rjust(3, "0"), survey_item_path(survey_item) %>
   </td>
 
   <td data-sort-index="<%= survey_item.label %>">

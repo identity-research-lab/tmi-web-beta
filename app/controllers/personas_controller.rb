@@ -12,9 +12,10 @@ class PersonasController < ApplicationController
   end
 
   def show
-    @persona = Persona.find(params[:id])
-    @survey_responses = @persona.survey_responses
     @project = Project.last
+    @persona = Persona.find(params[:id])
+    @active_survey_items = @project.active_fields
+    @survey_responses = @persona.survey_responses
     @coded_experiences_count = @persona.experiences.count
     @categories = @persona.categories
     @memos = @persona.memos.order(created_at: :desc)

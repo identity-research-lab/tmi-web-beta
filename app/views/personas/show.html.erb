@@ -80,6 +80,7 @@
           <tbody>
           <tbody>
             <% @survey_responses.each do |survey_response| %>
+              <% next unless @active_survey_items.include? survey_response.survey_item %>
               <%= render partial: "survey_responses/form", locals: { survey_response: survey_response, embedded_in: "persona" } %>
             <% end %>
           </tbody>

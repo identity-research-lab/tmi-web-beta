@@ -1,7 +1,7 @@
 class PersonasController < ApplicationController
 
   def index
-    @personas = Persona.all.order(:identifier)
+    @personas = Persona.as(:persona).query.optional_match('(persona)-[:EXPERIENCES]-(code:code)').return('persona,count(code)').order('persona.identifier')
     @project = Project.last
     @case_count = Persona.count
     @uncoded_case_count = Persona.uncoded.count

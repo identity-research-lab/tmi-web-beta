@@ -65,8 +65,8 @@
           </tr>
         </thead>
         <tbody>
-          <% @personas.each do |persona| %>
-            <%= render partial: "personas/row", locals: { persona: persona } %>
+          <% @personas.each do |record| %>
+            <%= render partial: "personas/row", locals: { persona: record[0], codes_count: record[1] } %>
           <% end %>
         </tbody>
       </table>

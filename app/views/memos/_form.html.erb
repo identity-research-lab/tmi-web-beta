@@ -1,7 +1,18 @@
-<%= form_with model: memo, format: :turbo_stream, class: "memo-form",
-data: { turbo_stream: true } do |f| %>
-  <%= f.text_area :text %>
+<div class="memo-header-row">
+  <div class="memo-date"><%= (memo.updated_at || DateTime.now).strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
+</div>
+<%= form_with model: memo, format: :turbo_stream, class: "memo-form", data: { turbo_stream: true } do |f| %>
+  <p class="memo-text">
+    <%= f.text_area :text %>
+  </p>
   <%= f.hidden_field :kind, value: memo.kind  %>
   <%= f.hidden_field :referrent_id, value: memo.referrent_id %>
-  <%= f.submit "Add Memo", class: "button small secondary", style:"margin-top:1rem;" %>
+  <div class="memo-form">
+    <% if memo.persisted? %>
+      <%= f.submit "Save", class: "button small" %>
+      <%= link_to "Cancel", memo, data: { turbo_stream: true } %>
+    <% else %>
+      <%= f.submit "Add Memo", class: "button small secondary" %>
+    <% end %>
+  </div>
 <% end %>

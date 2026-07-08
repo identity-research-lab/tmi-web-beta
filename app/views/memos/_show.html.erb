@@ -1,5 +1,9 @@
 <li class="memo-entry">
-  <div class="memo-date"><%= memo.created_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
+  <div class="memo-header-row">
+    <div class="memo-date"><%= memo.created_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
+    <%= button_to " ", edit_memo_path(memo), class: "edit-button" %>
+    <%= button_to " ", memo, method: :delete, form: { 'data-turbo-confirm': 'Delete this memo?' }, class: "delete-button" %>
+  </div>
   <p class="memo-text">
     <%= link_to memo.referrent.formatted_identifier, memo.referrent, target: "_top" %>:
     <p><%= memo.text.truncate(120) %></p>

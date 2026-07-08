@@ -46,6 +46,9 @@
         </div>
       </div>
     </aside>
+    <ul class="dashboard-actions">
+      <li><%= link_to "Manage Project Data", edit_project_path(@project), class: "button" %></li>
+    </ul>
   </div>
 
 </section>
@@ -101,20 +104,6 @@
     </div>
   </section>
 <% end %>
-
-<section class="dashboard-section">
-  <div>
-    <div class="app-label">Project Data</div>
-    <h2 class="workspace-title">Upload Survey Responses</h2>
-    <p class="workspace-note">
-      Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv).
-      Return here anytime to merge updated survey responses, add cases, or remap data into the active dataset.
-    </p>
-    <ul class="dashboard-actions">
-      <li><%= link_to "Manage Project Data", edit_project_path(@project), class: "button small secondary" %></li>
-    </ul>
-  </div>
-</section>
 
 <section class="app-layout">
   <div class="app-main">

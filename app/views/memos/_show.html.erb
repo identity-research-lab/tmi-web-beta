@@ -1,11 +1,11 @@
 <%= turbo_frame_tag "memo-#{memo.id}" do %>
   <li class="memo-entry">
+    <%= link_to memo.referrent.formatted_identifier, memo.referrent, target: "_top", class: "memo-title" %>
     <div class="memo-header-row">
       <div class="memo-date"><%= memo.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
       <%= button_to " ", edit_memo_path(memo), method: :get, format: :turbo_stream, data: { turbo_stream: true }, class: "edit-button" %>
       <%= button_to " ", memo, method: :delete, form: { 'data-turbo-confirm': 'Delete this memo?' }, class: "delete-button" %>
     </div>
-    <%= link_to memo.referrent.formatted_identifier, memo.referrent, target: "_top" %>:
     <p class="memo-text">
       <%= memo.text.truncate(120) %>
     </p>

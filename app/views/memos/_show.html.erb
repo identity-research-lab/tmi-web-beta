@@ -5,9 +5,9 @@
       <%= button_to " ", edit_memo_path(memo), method: :get, format: :turbo_stream, data: { turbo_stream: true }, class: "edit-button" %>
       <%= button_to " ", memo, method: :delete, form: { 'data-turbo-confirm': 'Delete this memo?' }, class: "delete-button" %>
     </div>
+    <%= link_to memo.referrent.formatted_identifier, memo.referrent, target: "_top" %>:
     <p class="memo-text">
-      <%= link_to memo.referrent.formatted_identifier, memo.referrent, target: "_top" %>:
-      <p><%= memo.text.truncate(120) %></p>
+      <%= memo.text.truncate(120) %>
     </p>
   </li>
 <% end %>

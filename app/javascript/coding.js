@@ -6,4 +6,14 @@ export function handleCodingForms() {
     if (!form) return
     form.requestSubmit()
   });
+  
+  document.addEventListener("turbo:frame-render", (event) => {
+    const frame = event.target
+    const input = frame.querySelector("input[type='text'], textarea")
+  
+    if (input) {
+      input.focus()
+    }
+  })
+
 }

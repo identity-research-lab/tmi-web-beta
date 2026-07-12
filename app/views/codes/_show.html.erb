@@ -10,7 +10,7 @@
     </div>
     <%= form_with model: Code.new do |f| %>
       <%= f.hidden_field :survey_response, value: survey_response.id %>
-      <%= f.text_field :label, class: "tag tag-entry" %>
+      <%= f.text_field :label, class: "tag tag-entry", id: "label-for-#{survey_response.id}" %>
     <% end %>
   </div>
 <% end %>

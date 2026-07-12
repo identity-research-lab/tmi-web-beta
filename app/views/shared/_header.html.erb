@@ -29,6 +29,7 @@
 		<li><a href="#">Codes</a></li>
 		<li><a href="#">Categories</a></li>
 		<li><a href="#">Themes</a></li>
+    <li><%= link_to "Journal", journal_path(Journal.new) %></li>
 		<li><a href="#">Graph</a></li>
 	</ul>
 </nav>
@@ -44,6 +45,7 @@
 		<li class="<%= active_nav == "codes" ? 'active-nav' : '' %>"><a href="#">Codes</a></li>
 		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><a href="#">Categories</a></li>
 		<li class="<%= active_nav == "themes" ? 'active-nav' : '' %>"><a href="#">Themes</a></li>
+    <li class="<%= active_nav == "journal" ? 'active-nav' : '' %>"><%= link_to "Journal", journal_path(Journal.new) %></li>
 		<li class="<%= active_nav == "graph" ? 'active-nav' : '' %>"><a href="#">Graph</a></li>
 	</ul>
 </nav>

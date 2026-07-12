@@ -15,9 +15,10 @@ Rails.application.routes.draw do
   get "contribute" => "static_pages#contribute"
   get "contact" => "static_pages#contact"
 
-  resources :memos
   resources :code_metrics
+  resources :codes
   resources :journals, only: [:show]
+  resources :memos
   resources :projects, except: [:destroy]
   resources :survey_items, except: [:destroy]
   resources :personas, except: [:destroy]

@@ -1214,6 +1214,10 @@ th.sort-desc span::after {
   color: var(--white);
 }
 
+.tag.deletable:hover {
+  text-decoration: line-through;
+  cursor: pointer;
+}
 .tag.empty {
   border-style: dashed;
   color: var(--text-muted);

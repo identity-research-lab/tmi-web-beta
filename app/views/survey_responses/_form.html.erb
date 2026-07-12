@@ -14,16 +14,6 @@
     <p class="verbatim-response"><%= survey_response.value %></p>
   </td>
   <td>
-    <div class="codes-editor">
-      <div class="code-tags">
-        <% survey_response.codes.each do |code| %>
-          <span class="tag"><%= code.name %></span>
-        <% end %>
-      </div>
-      <%= form_for Code.new do |f| %>
-        <%= f.hidden_field :survey_response, value: survey_response.id %>
-        <%= f.text_field :code_name, class: "tag" %>
-      <% end %>
-    </div>
+    <%= render partial: "codes/show", locals: { survey_response: survey_response } %>
   </td>
 </tr>

@@ -1,0 +1,16 @@
+<%= turbo_frame_tag "codes-for-#{survey_response.id}" do %>
+  <div class="codes-editor">
+    <div class="code-tags">
+      <% survey_response.codes.each do |code| %>
+        <%= form_for code, method: :delete, format: :turbo_stream, data: { turbo_stream: true } do |f| %>
+          <%= f.hidden_field :survey_response, value: survey_response.id %>
+          <%= f.submit code.label, class: "tag deletable" %>
+        <% end %>
+      <% end %>
+    </div>
+    <%= form_for Code.new, format: :turbo_stream, data: { turbo_stream: true } do |f| %>
+      <%= f.hidden_field :survey_response, value: survey_response.id %>
+      <%= f.text_field :label, class: "tag tag-entry" %>
+    <% end %>
+  </div>
+<% end %>

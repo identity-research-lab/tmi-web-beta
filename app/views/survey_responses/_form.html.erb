@@ -22,7 +22,7 @@
       </div>
       <%= form_for Code.new do |f| %>
         <%= f.hidden_field :survey_response, value: survey_response.id %>
-        <%= f.text_field :name, class: "tag" %>
+        <%= f.text_field :code_name, class: "tag" %>
       <% end %>
     </div>
   </td>

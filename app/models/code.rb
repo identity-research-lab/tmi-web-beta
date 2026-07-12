@@ -1,6 +1,8 @@
 class Code
   include ActiveGraph::Node
 
+  attr_accessor :code_name
+  
   property :name
   property :dimension
   property :is_reflection, default: false
@@ -14,9 +16,7 @@ class Code
   validates :dimension, presence: true
   validates_uniqueness_of :name, scope: :dimension
 
-  has_many :in, :personas, type: :AssociatedWith, model_class: "Persona"
   has_many :in, :categories, type: :Contains, model_class: "Category"
-  has_many :in, :survey_items, type: :AssociatedWith, model_class: "SurveyItem"
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"

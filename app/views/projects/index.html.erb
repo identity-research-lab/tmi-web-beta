@@ -137,6 +137,7 @@
     <section id="memos" class="sidebar-card white">
       <div class="sidebar-card-title">Researcher Memos</div>
       <%= render partial: "memos/feed", locals: { memos: @memos, memo: nil } %>
+      <%= link_to "Researcher Journal", journal_path(Journal.new), class: "button" %>
     </section>
   </aside>
 </section>

@@ -63,6 +63,10 @@ class SurveyItem
     where(is_coded: false)
   end
 
+  def codes_count
+    self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").count(:c)
+  end
+  
   def formatted_identifier
     "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
   end

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "codes-for-#{survey_response.id}" do %>
   <div class="codes-editor">
     <div class="code-tags">
-      <% survey_response.codes.each do |code| %>
+      <% survey_response.codes.order(:label).each do |code| %>
         <%= form_with model: code, data: { turbo_stream: true } do |f| %>
           <%= f.hidden_field :survey_response, value: survey_response.id %>
           <%= f.submit code.label, class: "tag deletable" %>

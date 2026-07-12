@@ -1,7 +1,9 @@
 class Code
   include ActiveGraph::Node
 
-  property :name
+  attr_accessor :action
+  
+  property :label
   property :dimension
   property :is_reflection, default: false
   property :is_identity, default: false
@@ -10,14 +12,13 @@ class Code
   property :updated_at, type: DateTime
 
   before_validation :sanitize
-  validates :name, presence: true
+  validates :label, presence: true
   validates :dimension, presence: true
-  validates_uniqueness_of :name, scope: :dimension
+  validates_uniqueness_of :label, scope: :dimension
 
-  has_many :in, :personas, type: :AssociatedWith, model_class: "Persona"
   has_many :in, :categories, type: :Contains, model_class: "Category"
-  has_many :in, :survey_items, type: :AssociatedWith, model_class: "SurveyItem"
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
+  has_many :in, :personas, type: :Experiences, model_class: "Persona"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
@@ -35,10 +36,15 @@ class Code
   
   # Given a dimension, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(dimension)
-    codes = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct > 0').order('c DESC').return('c.name, ct')
+    codes = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct > 0').order('c DESC').return('c.label, ct')
     codes.inject({}) {|accumulator,code| accumulator[code.values[0]] ||= 0; accumulator[code.values[0]] += code.values[1]; accumulator}
   end
 
+  def detach_from(survey_response)
+    self.survey_responses.delete(survey_response)
+    self.personas.delete(survey_response.persona)
+  end
+  
   def kind
     return "experience" if self.is_experience?
     return "identity" if self.is_identity?
@@ -49,7 +55,7 @@ class Code
   private
 
   def sanitize
-    self.name.strip!
+    self.label.strip!
   end
 
 end

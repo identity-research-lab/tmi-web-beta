@@ -15,7 +15,7 @@ class SurveyItemsController < ApplicationController
     @survey_responses = @survey_item.survey_responses.sort{|a,b| a.persona.formatted_identifier <=> b.persona.formatted_identifier}
     @memos = @survey_item.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "survey_item", referrent_id: @survey_item.id)
-    @coded_experiences_count = @survey_item.codes.experiences.count
+    @coded_experiences_count = @survey_item.codes_count
 
     # TODO categories
     @categories_count = 0

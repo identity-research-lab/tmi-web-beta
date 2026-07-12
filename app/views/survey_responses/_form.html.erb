@@ -14,13 +14,6 @@
     <p class="verbatim-response"><%= survey_response.value %></p>
   </td>
   <td>
-    <div class="codes-editor">
-      <div class="code-tags">
-        <% survey_response.codes.each do |code| %>
-          <span class="tag"><%= code.name %></span>
-        <% end %>
-      </div>
-      <button class="add-code-link">Edit codes</button>
-    </div>
+    <%= render partial: "codes/show", locals: { survey_response: survey_response } %>
   </td>
 </tr>

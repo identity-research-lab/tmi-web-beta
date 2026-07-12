@@ -19,7 +19,6 @@ class SurveyItem
 
   has_many :in, :survey_responses, type: :HasItem, model_class: "SurveyResponse"
   has_many :in, :memos, type: :HasMemo, model_class: "Memo"
-  has_many :out, :codes, type: :AssociatedWith, model_class: "Code"
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_one :out, :project, type: :HasProject, model_class: "Project"
 
@@ -64,6 +63,10 @@ class SurveyItem
     where(is_coded: false)
   end
 
+  def codes_count
+    self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").count(:c)
+  end
+  
   def formatted_identifier
     "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
   end

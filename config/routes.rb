@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   resources :memos
   resources :code_metrics
+  resources :journals, only: [:show]
   resources :projects, except: [:destroy]
   resources :survey_items, except: [:destroy]
   resources :personas, except: [:destroy]

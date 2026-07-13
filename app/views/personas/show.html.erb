@@ -29,7 +29,9 @@
       </div>
     </aside>
     <ul class="dashboard-actions">
-      <li><%= button_to "Mark Complete", persona_path(@persona), method: :patch, params: { complete: "complete" }, class: "button" %></li>
+      <% if @persona.status != "Completed" %>
+        <li><%= button_to "Mark Complete", persona_path(@persona), method: :patch, params: { complete: "complete" }, class: "button" %></li>
+      <% end %>
     </ul>
   </div>
 

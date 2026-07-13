@@ -53,8 +53,7 @@ class Persona
   end
 
   def coded!
-    return if self.is_coded
-    update_attributes(is_coded: true)
+    update_attributes(is_coded: true, is_completed: false)
     Event.create(persona: self, label: "Persona #{self.identifier}", description: "Coding started.")
   end
   

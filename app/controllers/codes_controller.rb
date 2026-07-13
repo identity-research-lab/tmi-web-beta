@@ -4,7 +4,7 @@ class CodesController < ApplicationController
     if @survey_response = SurveyResponse.find(code_params[:survey_response])
       @persona = @survey_response.persona
       @persona.coded!
-      @code = Code.find_or_create_by!(label: code_params[:label], dimension: @survey_response.dimension.name)
+      @code = Code.find_or_create_by(label: code_params[:label], dimension: @survey_response.dimension.name)
       @code.survey_responses << @survey_response unless @code.survey_responses.include? @survey_response
       @code.personas << @persona unless @code.personas.include? @persona
       respond_to do |format|

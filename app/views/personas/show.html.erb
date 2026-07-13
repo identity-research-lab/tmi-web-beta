@@ -28,6 +28,9 @@
         <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
       </div>
     </aside>
+    <ul class="dashboard-actions">
+      <li><%= button_to "Mark Complete", persona_path(@persona), method: :patch, params: { complete: "complete" }, class: "button" %></li>
+    </ul>
   </div>
 
 </section>
@@ -36,6 +39,10 @@
   <div>
     <div class="app-label">Participant Coding Status</div>
     <div class="app-meta-grid">
+      <div class="app-meta-item">
+        <span class="app-meta-label">Status</span>
+        <span class="app-meta-value"><%= @persona.status %></span>
+      </div>
       <div class="app-meta-item">
         <span class="app-meta-label">Survey Responses</span>
         <span class="app-meta-value"><%= @survey_responses.count %></span>

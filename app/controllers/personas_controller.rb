@@ -26,22 +26,9 @@ class PersonasController < ApplicationController
   end
 
   def update
-  #   @project = Project.find(params[:id])
-  #   if project_params[:csv_data].present?
-  #     @project.update!(csv_data: String.new(project_params[:csv_data].read, encoding: 'UTF-8'))
-  #     @project.create_survey_items_from_csv
-  #   elsif project_params[:refresh_started_at].present?
-  #     @project.create_survey_responses_from_csv
-  #   else
-  #     @project.update!(project_params)
-  #   end
-  #   redirect_to edit_project_path(@project)
+    @persona = Persona.find(params[:id])
+    @persona.complete! if params[:complete] == "complete"
+    redirect_to @persona
   end
-
-  private
-
-#   def project_params
-#     params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at)
-#   end
 
 end

@@ -74,7 +74,6 @@
           <span class="tag dark"><%= @case_count %> cases</span>
           <span class="tag"><%= @completed_case_count %> coded</span>
           <span class="tag"><%= @in_progress_case_count %> in progress</span>
-          <span class="tag"><%= @uncoded_case_count %> uncoded</span>
         </div>
 
         <%= link_to "Start Coding Cases", personas_path, class: "button small" %>
@@ -95,7 +94,6 @@
         <div class="dashboard-pathway-meta">
           <span class="tag dark"><%= @survey_response_count %> survey responses</span>
           <span class="tag"><%= @survey_response_coded_count %> coded</span>
-          <span class="tag"><%= @survey_response_count - @survey_response_coded_count %> uncoded</span>
         </div>
 
         <%= link_to "Start Coding Survey Item Responses", survey_items_path, class: "button small" %>

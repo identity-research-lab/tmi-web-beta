@@ -22,6 +22,10 @@ class Code
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
+  def self.applied
+    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return(:c)
+  end
+
   def self.experiences
     where(is_experience: true)
   end

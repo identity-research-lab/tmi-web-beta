@@ -1464,6 +1464,9 @@ th.sort-desc span::after {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  height: 40rem;
+  padding: 1rem;
+  overflow: scroll;
 }
 
 .frequency-row {

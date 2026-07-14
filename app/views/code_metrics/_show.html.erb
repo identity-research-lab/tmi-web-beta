@@ -67,13 +67,6 @@
         <div class="frequency-toolbar">
       
           <div class="frequency-toolbar-left">
-            <span class="code-metrics-label">Display</span>
-            <select id="code-frequency-count" class="app-select">
-              <option>10 codes</option>
-              <option>20 codes</option>
-              <option>30 codes</option>
-              <option>All codes</option>
-            </select>
           </div>
           
           <div class="frequency-toolbar-right">
@@ -88,24 +81,21 @@
         </div>
     
         <div class="overview-card">
-          
           <div class="frequency-list">
+            <% survey_item.codes.each do |code| %>
 
-            <div class="frequency-row">
-              <div class="frequency-label">
-                <span>middle class</span>
-                <strong>137</strong>
+              <div class="frequency-row">
+                <div class="frequency-label">
+                  <span><%= code.label %></span>
+                  <strong><%= code.survey_responses.count %></strong>
+                </div>
+                <div class="frequency-bar-track">
+                  <div class="frequency-bar" style="width:100%;"></div>
+                </div>
               </div>
-              <div class="frequency-bar-track">
-                <div class="frequency-bar" style="width:100%;"></div>
-              </div>
-            </div>
+            <% end %>
           </div>
-
-        <p>
-          <a href="#" class="button small secondary">Show all 66 codes</a>
-        </p>
-      </div>
+        </div>
 
       <div id="representative-excerpts" class="workspace-title-row overview-spaced">
         <div>

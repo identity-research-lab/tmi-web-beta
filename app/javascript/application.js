@@ -6,6 +6,7 @@ import { setupMobileNav } from "mobile_navigation"
 import { handleSchemaForms } from "schema_editing"
 import { sortTable } from "sort_table"
 import { handleSurveyItemSelect } from "code_metrics"
+import { sortCodes } from "code_metrics"
 import { handleCodingForms } from "coding"
 
 document.addEventListener("turbo:load", () => {
@@ -17,3 +18,4 @@ document.addEventListener("turbo:load", () => {
 
 window.copyToClipboard = copyToClipboard
 window.sortTable = sortTable
+window.sortCodes = sortCodes

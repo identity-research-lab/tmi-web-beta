@@ -82,15 +82,17 @@
     
         <div class="overview-card">
           <div class="frequency-list">
-            <% survey_item.codes.each do |code| %>
-
-              <div class="frequency-row">
+            <% codes = Code.histogram(survey_item) %>
+            <% codes.each do |code, count| %>
+              <% total_codes = codes.sum{|c| c[1]} %>
+              <% width = count / total_codes.to_f * 100 %>
+              <div class="frequency-row" data-sort-alpha="<%= code.downcase %>" data-sort-frequency-"<%= width.to_s.rjust(3, "0") %>">
                 <div class="frequency-label">
-                  <span><%= code.label %></span>
-                  <strong><%= code.survey_responses.count %></strong>
+                  <span><%= code %></span>
+                  <strong><%= count %></strong>
                 </div>
                 <div class="frequency-bar-track">
-                  <div class="frequency-bar" style="width:100%;"></div>
+                  <div class="frequency-bar" style="width:<%= width %>%;"></div>
                 </div>
               </div>
             <% end %>

@@ -8,7 +8,6 @@ class SurveyResponse
   property :updated_at, type: DateTime
 
   validates :value, presence: true
-  validates :dimension_id, presence: true
     
   has_one :out, :dimension, type: :HasDimension, model_class: "Dimension"
   has_one :out, :survey_item, type: :HasItem, model_class: "SurveyItem"

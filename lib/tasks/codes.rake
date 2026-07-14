@@ -32,29 +32,20 @@ namespace :import do
       end
     end
   
+         
     records.each do |id,codes|
       if persona = Persona.find_by(identifier: id)
-        puts "√ Found persona for identifier #{id}"
         codes.each do |code_item|
-          if survey_response = persona.survey_responses.as(:sr).query.match("(sr)-[]-(d:Dimension)").where("d.name = $name").params(name: code_item[:dimension]).return(:sr).first
-           puts "  √ Found survey response for dimension #{code_item[:dimension]}"
-            # code = Code.find_or_create_by(label: code_item[:label], dimension: code_item[:dimension], is_identity: true)
-            # code.personas << persona
-            # code.survey_responses << survey_response
-          puts "  O Create code with dimension #{code_item[:dimension]} and label '#{code_item[:label]}'"
+          if survey_response = persona.survey_responses.as(:sr).query.match("(sr)-[]-(si:SurveyItem)-[]-(d:Dimension)").where("d.name = $name").where("si.is_experience = true").params(name: code_item[:dimension]).return(:sr).pluck(:sr).first
+            code = Code.find_or_create_by(label: code_item[:label], dimension: code_item[:dimension], is_experience: true)
+            code.personas << persona
+            code.survey_responses << survey_response
             imported_code_count += 1
-          else
-            puts "  X Could not find survey response for dimension #{code_item[:dimension]}!"
-            missing << code_item[:dimension]
           end
         end
-      else
-        puts "X Could not find persona for identifier #{id}!"
-        missing << id
       end
     end
   
-    puts "Missing #{missing.uniq.sort}"
     puts "#{imported_code_count - starting_code_count} new codes imported from #{file_path}."
     
   end

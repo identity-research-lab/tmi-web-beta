@@ -4,7 +4,7 @@
       <label for="survey-item-codes" class="code-metrics-label">
         Choose Survey Item Codes To Review
       </label>
-    
+
       <%= form_with url: code_metrics_path, format: :turbo_stream, data: { turbo_stream: true }, id: "survey-item-select" do %>
         <% if survey_item.present? %>
           <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier', survey_item.id), { include_blank: "Select..." } %>
@@ -14,7 +14,7 @@
       <% end %>
     </div>
 
-    <% if survey_item.present? %>      
+    <% if survey_item.present? %>
       <div class="survey-question-preview">
         <div class="code-metrics-label">
           Associated Survey Question
@@ -25,25 +25,25 @@
       </div>
     <% end %>
   </section>
-  
-  <% if survey_item.present? %>      
+
+  <% if survey_item.present? %>
     <section class="code-metrics-summary">
       <div>
         <div class="app-label">
           Code Metrics
         </div>
         <div class="code-metrics-grid">
-        
+
         <div class="code-metrics-item">
           <span class="code-metrics-label">Responses</span>
           <span class="code-metrics-value"><%= survey_item.survey_responses.count %></span>
         </div>
-        
+
         <div class="code-metrics-item">
           <span class="code-metrics-label">Unique Codes</span>
           <span class="code-metrics-value"><%= survey_item.codes_count %></span>
         </div>
-        
+
         <div class="code-metrics-item">
           <span class="code-metrics-label">Last Updated</span>
           <span class="code-metrics-value"><%= survey_item.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
@@ -63,49 +63,41 @@
             </p>
           </div>
         </div>
-    
+
         <div class="frequency-toolbar">
-      
+
           <div class="frequency-toolbar-left">
-            <span class="code-metrics-label">Display</span>
-            <select id="code-frequency-count" class="app-select">
-              <option>10 codes</option>
-              <option>20 codes</option>
-              <option>30 codes</option>
-              <option>All codes</option>
-            </select>
           </div>
-          
+
           <div class="frequency-toolbar-right">
-            <a href="#" class="button small">
-              Frequency ▼
+            <a class="sortable sort-desc button small" data-sort-direction="asc" onclick="sortCodes(0)">
+              <span>Frequency</span>
             </a>
-            <a href="#" class="button small secondary">
-              Alphabetical ▲
+            <a class="sortable button small secondary" data-sort-direction="desc" onclick="sortCodes(1)">
+              <span>Alphabetical</span>
             </a>
           </div>
 
         </div>
-    
+
         <div class="overview-card">
-          
-          <div class="frequency-list">
-
-            <div class="frequency-row">
-              <div class="frequency-label">
-                <span>middle class</span>
-                <strong>137</strong>
+          <div id="frequency-list" class="frequency-list">
+            <% codes = Code.histogram(survey_item) %>
+            <% codes.each do |code, count| %>
+              <% total_codes = codes.sum{|c| c[1]} %>
+              <% width = count / total_codes.to_f * 100 %>
+              <div class="frequency-row" data-sort-alpha="<%= code.downcase %>" data-sort-frequency="<%= width %>">
+                <div class="frequency-label">
+                  <span><%= code %></span>
+                  <strong><%= count %></strong>
+                </div>
+                <div class="frequency-bar-track">
+                  <div class="frequency-bar" style="width:<%= width %>%;"></div>
+                </div>
               </div>
-              <div class="frequency-bar-track">
-                <div class="frequency-bar" style="width:100%;"></div>
-              </div>
-            </div>
+            <% end %>
           </div>
-
-        <p>
-          <a href="#" class="button small secondary">Show all 66 codes</a>
-        </p>
-      </div>
+        </div>
 
       <div id="representative-excerpts" class="workspace-title-row overview-spaced">
         <div>
@@ -117,9 +109,9 @@
           </p>
         </div>
       </div>
-    
+
       <div class="excerpt-list">
-    
+
         <article class="excerpt-card">
           <div class="excerpt-meta">
             <span class="tag dark">middle class</span>
@@ -146,9 +138,9 @@
           <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
         </details>
       </section>
-    
+
     </aside>
-    
+
     </section>
 
   <% end %>

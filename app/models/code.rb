@@ -38,10 +38,10 @@ class Code
     where(is_reflection: true)
   end
   
-  # Given a dimension, generates a hash with each unique Codes as a key and the counts of its uses as a value.
-  def self.histogram(dimension)
-    codes = where(dimension: dimension).query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct > 0').order('c DESC').return('c.label, ct')
-    codes.inject({}) {|accumulator,code| accumulator[code.values[0]] ||= 0; accumulator[code.values[0]] += code.values[1]; accumulator}
+  # Given a dimension, generates a hash with each unique Code as a key and the count of its uses as a value.
+  def self.histogram(survey_item)
+    codes = survey_item.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").with("c, count(c) AS ct").return('c.label, ct').order("ct DESC")
+    codes.to_h { |code| [code[0], code[1]] }
   end
 
   def detach_from(survey_response)

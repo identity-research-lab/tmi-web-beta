@@ -63,6 +63,10 @@ class SurveyItem
     where(is_coded: false)
   end
 
+  def codes
+    self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").return(:c).pluck(:c)
+  end
+  
   def codes_count
     self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").count(:c)
   end

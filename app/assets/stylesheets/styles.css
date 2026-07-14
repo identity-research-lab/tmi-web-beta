@@ -992,11 +992,11 @@ th {
   font-weight: 500;
 }
 
-th.sort-asc span::after {
+.sort-asc span::after {
   content: " ⏶";
 }
 
-th.sort-desc span::after {
+.sort-desc span::after {
   content: " ▾";
 }
 
@@ -1464,6 +1464,9 @@ th.sort-desc span::after {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  height: 40rem;
+  padding: 1rem;
+  overflow: scroll;
 }
 
 .frequency-row {

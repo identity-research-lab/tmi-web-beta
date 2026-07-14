@@ -47,7 +47,7 @@
     <div class="app-meta-grid">
       <div class="app-meta-item">
         <span class="app-meta-label">Participant Responses</span>
-        <span class="app-meta-value"><%= @survey_responses.count %></span>
+        <span class="app-meta-value"><%= @survey_responses.count %> (<%= @survey_item.percentage_of_participants %>%)</span>
       </div>
       <div class="app-meta-item">
         <span class="app-meta-label">Codes Applied</span>

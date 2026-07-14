@@ -7,9 +7,9 @@
 
       <%= form_with url: code_metrics_path, format: :turbo_stream, data: { turbo_stream: true }, id: "survey-item-select" do %>
         <% if survey_item.present? %>
-          <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier', survey_item.id), { include_blank: "Select..." } %>
+          <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier', survey_item.id), { include_blank: "Select...", onchange: "blur();" } %>
         <% else %>
-          <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier'), { include_blank: "Select..." } %>
+          <%= select_tag :survey_item_id, options_from_collection_for_select(survey_items, 'id', 'formatted_identifier'), { include_blank: "Select...", onchange: "blur();" } %>
         <% end %>
       <% end %>
     </div>
@@ -36,12 +36,12 @@
 
         <div class="code-metrics-item">
           <span class="code-metrics-label">Responses</span>
-          <span class="code-metrics-value"><%= survey_item.survey_responses.count %></span>
+          <span class="code-metrics-value"><%= survey_item.survey_responses.count %> (<%= survey_item.percentage_of_participants %>%)</span>
         </div>
 
         <div class="code-metrics-item">
           <span class="code-metrics-label">Unique Codes</span>
-          <span class="code-metrics-value"><%= survey_item.codes_count %></span>
+          <span class="code-metrics-value"><%= survey_item.codes_count %> (<%= survey_item.percentage_of_codes %>%)</span>
         </div>
 
         <div class="code-metrics-item">
@@ -111,16 +111,19 @@
       </div>
 
       <div class="excerpt-list">
-
-        <article class="excerpt-card">
-          <div class="excerpt-meta">
-            <span class="tag dark">middle class</span>
-            <span class="case-subtext">Persona_014</span>
-          </div>
-          <p class="excerpt-text">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit.”
-          </p>
-        </article>
+        <% survey_item.survey_responses.limit(5).each do |survey_response| %>
+          <% next unless code = survey_response.codes.limit(5).to_a.sample %>
+          <article class="excerpt-card">
+            <div class="excerpt-meta">
+              <span class="tag dark"><%= code.label %></span>
+              <% persona = survey_response.persona %>
+              <span class="case-subtext"><%= link_to persona.formatted_identifier, persona, target: "_top" %></span>
+            </div>
+            <p class="excerpt-text">
+              "<%= survey_response.value %>"
+            </p>
+          </article>
+        <% end %>
       </div>
     </div>
 

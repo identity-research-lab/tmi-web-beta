@@ -6,9 +6,10 @@
     </td>
   <% else %>
     <td>
-    <span class="survey-item-name"><%= link_to survey_response.survey_item.formatted_identifier, survey_response.survey_item %></span>
-    <span class="survey-item-type">Survey Item</span>
-  </td>
+      <% survey_item = survey_response.survey_item %>
+      <span class="survey-item-name"><%= link_to survey_item.formatted_identifier, survey_item %></span>
+      <span class="survey-item-type">Survey Item (<%= survey_item.formatted_kind %>)</span>
+    </td>
   <% end %>
   <td>
     <p class="verbatim-response"><%= survey_response.value %></p>

@@ -66,7 +66,13 @@ class SurveyItem
   def codes_count
     self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").count(:c)
   end
-  
+
+  def formatted_kind
+    return "Experience" if self.is_experience?
+    return "Identity" if self.is_identity?
+    return "Reflection" if self.is_reflection?
+    return ""
+  end  
   def formatted_identifier
     "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
   end

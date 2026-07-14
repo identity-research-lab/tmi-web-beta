@@ -21,12 +21,12 @@ export function sortCodes(index) {
   })
 
   // toggle
-  if (sortDirection == "desc") {
-    controls[index].dataset.sortDirection = "asc"
+  if (sortDirection == "asc") {
+    controls[index].dataset.sortDirection = "desc"
     controls[index].classList.add("sort-asc")
     controls[index].classList.remove("sort-desc")
   } else {
-    controls[index].dataset.sortDirection = "desc"
+    controls[index].dataset.sortDirection = "asc"
     controls[index].classList.add("sort-desc")
     controls[index].classList.remove("sort-asc")
   }

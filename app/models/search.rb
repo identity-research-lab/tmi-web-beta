@@ -10,7 +10,7 @@ class Search
 
   def results
     return [] unless self.query.present?
-    @results ||= { responses: response_results, codes: code_results, memos: memo_results, personas: persona_results }
+    @results ||= { responses: response_results, codes: code_results, memos: memo_results }
   end
   
   def code_results
@@ -21,11 +21,6 @@ class Search
   def memo_results
     return [] unless self.query.present?
     @memo_results ||= Memo.as(:m).where("toLower(m.text) CONTAINS toLower($text)", text: self.query)
-  end
-  
-  def persona_results
-    return [] unless self.query.present?
-    @persona_results ||= Persona.as(:p).where("p.participant_id = $text OR p.identifier = $text", text: self.query)
   end
   
   def response_results

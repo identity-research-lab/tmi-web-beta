@@ -12,6 +12,7 @@
   --gray-100: #eeeeee;
   --gray-300: #cfcfcf;
   --gray-600: #555;
+  --green-highlight: #e8fabe;
   --text: var(--black);
   --text-muted: var(--gray-600);
   --text-soft: #222;
@@ -122,6 +123,10 @@ a {
   align-items: center;
   gap: 2.5rem;
   font-size: 0.8rem;
+}
+
+.highlight {
+  background-color: var(--green-highlight);
 }
 
 /* BUTTONS */

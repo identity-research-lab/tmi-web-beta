@@ -7,4 +7,17 @@ export function handleSchemaForms() {
       form.submit()
     }
   });
+
+  document.querySelectorAll(".project-field-switch input").forEach((toggle) => {
+    const status = toggle.closest(".project-field-status").querySelector(".project-field-status-text");
+  
+    const updateStatus = () => {
+      status.textContent = toggle.checked ? "Active" : "Inactive";
+      toggle.closest("tr").classList.toggle("is-inactive", !toggle.checked);
+    };
+  
+    toggle.addEventListener("change", updateStatus);
+    updateStatus();
+  });
+
 }

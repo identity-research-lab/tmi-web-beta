@@ -46,6 +46,7 @@
 		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><a href="#">Categories</a></li>
 		<li class="<%= active_nav == "themes" ? 'active-nav' : '' %>"><a href="#">Themes</a></li>
     <li class="<%= active_nav == "journal" ? 'active-nav' : '' %>"><%= link_to "Journal", journal_path(Journal.new) %></li>
+    <li class="<%= active_nav == "search" ? 'active-nav' : '' %>"><%= link_to "Search", searches_path %></li>
 		<li class="<%= active_nav == "graph" ? 'active-nav' : '' %>"><a href="#">Graph</a></li>
 	</ul>
 </nav>

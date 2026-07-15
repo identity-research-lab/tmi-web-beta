@@ -8,7 +8,7 @@
     </div>
     <h1 class="app-title">Search</h1>
     <p class="app-description">
-      Instructions.
+      <span class="highlight">Instr</span>uctions.
     </p>
   </div>
 </section>
@@ -50,8 +50,3 @@
   <% end %>
 </section>
 
-<% if @search.results.any? %>
-  <script language="javascript">
-    highlightSearchTerm('<%= @search.query %>');
-  </script>
-<% end %>

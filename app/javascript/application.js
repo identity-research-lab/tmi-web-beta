@@ -15,6 +15,7 @@ document.addEventListener("turbo:load", () => {
   handleSchemaForms()
   handleCodingForms()
   handleSurveyItemSelect()
+  highlightSearchTerm()
 })
 
 window.copyToClipboard = copyToClipboard

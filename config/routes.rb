@@ -19,8 +19,9 @@ Rails.application.routes.draw do
   resources :codes
   resources :journals, only: [:show]
   resources :memos
-  resources :projects, except: [:destroy]
-  resources :survey_items, except: [:destroy]
   resources :personas, except: [:destroy]
+  resources :projects, except: [:destroy]
+  resources :searches, except: [:destroy, :update]
+  resources :survey_items, except: [:destroy]
 
 end

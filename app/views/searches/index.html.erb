@@ -1,0 +1,52 @@
+<%- title "Search" %>
+<%- active_nav "search" %>
+
+<section class="app-header dashboard-hero">
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Search</span>
+    </div>
+    <h1 class="app-title">Search</h1>
+    <p class="app-description">
+      Instructions.
+    </p>
+  </div>
+</section>
+
+<section class="dashboard-section">
+  <div>
+    <h2 class="workspace-title">Full text search</h2>
+    <%= form_with model: Search.new(@search.query), data: {turbo: false} do |f| %>
+      <%= f.text_field :query %>
+      <%= f.submit "Search", id: "button button-secondary small" %>
+    <% end %>
+  </div>
+</section>
+
+<section class="app-section">
+  <div class="section-label">
+    <%= @search.response_results.count %> <%= "Survey Response".pluralize(@search.response_results.count) %>
+  </div>
+  <% @search.response_results.each do |survey_response| %>
+    <%= render partial: "searches/response_row", locals: { survey_response: survey_response } %>
+  <% end %>
+</section>
+
+<section class="app-section">
+  <div class="section-label">
+    <%= @search.memo_results.count %> <%= "Memo".pluralize(@search.memo_results.count) %>
+  </div>
+  <% @search.memo_results.each do |memo| %>
+    <%= render partial: "searches/memo_row", locals: { memo: memo } %>
+  <% end %>
+</section>
+
+<section class="app-section">
+  <div class="section-label">
+    <%= @search.code_results.count %> <%= "Code".pluralize(@search.code_results.count) %>
+  </div>
+  <% @search.code_results.each do |code| %>
+    <%= render partial: "searches/code_row", locals: { code: code } %>
+  <% end %>
+</section>
+

@@ -1,0 +1,11 @@
+<article class="excerpt-card">
+  <div class="excerpt-meta">
+    <% survey_response = code.survey_responses.first %>
+    <% survey_item = survey_response.survey_item %>
+    <span class="case-subtext"><%= link_to survey_item.formatted_identifier, survey_item %></span>
+  </div>
+  <p class="excerpt-text">
+    "<%= survey_response.value %>"
+  </p>
+  <div class="tag"><%= code.label %></div>
+</article>

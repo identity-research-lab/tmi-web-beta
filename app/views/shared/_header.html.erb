@@ -43,7 +43,7 @@
 		<li class="<%= active_nav == "survey_items" ? 'active-nav' : '' %>"><%= link_to "Survey Items", survey_items_path %></li>
 		<li class="<%= active_nav == "code_metrics" ? 'active-nav' : '' %>"><%= link_to "Code Metrics", code_metrics_path %></li>
 		<li class="<%= active_nav == "codes" ? 'active-nav' : '' %>"><a href="#">Codes</a></li>
-		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><a href="#">Categories</a></li>
+		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><%= link_to "Categories", categories_path %></li>
 		<li class="<%= active_nav == "themes" ? 'active-nav' : '' %>"><a href="#">Themes</a></li>
     <li class="<%= active_nav == "journal" ? 'active-nav' : '' %>"><%= link_to "Journal", journal_path(Journal.new) %></li>
     <li class="<%= active_nav == "search" ? 'active-nav' : '' %>"><%= link_to "Search", searches_path %></li>

@@ -54,28 +54,31 @@
  </section>
 
  <section aria-labelledby="create-category-title" class="category-create-section stripe-background">
-   <form aria-label="Create a new project category" class="category-create-grid" id="create-category-form">
+
+   <%= form_with model: Category.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "create-category-form", aria: { label: "Create a new project category" } do %>
     <div class="category-create-panel category-create-name">
-     <h2 class="category-create-title" id="create-category-title">
-    Name New Category
-     </h2>
-     <input aria-label="New category name" autocomplete="off" class="app-input category-create-input" id="new-category-name" name="category_name" placeholder="Enter a new category name" required="" type="text"/>
-    </div>
-    <div class="category-create-panel category-create-description">
-     <h2 class="category-create-title" id="describe-category-title">
-    Describe New Category
-     </h2>
-     <textarea aria-label="New category description" class="category-create-textarea" id="new-category-memo" name="category_description" placeholder="Describe the new category. This description can be revised later."></textarea>
-    </div>
-    <div class="category-create-panel category-create-action">
-     <h2 class="category-create-title" id="commit-category-title">
-    Commit New Category
-     </h2>
-     <button class="button small category-create-button" type="submit">
-    Add New Project Category
-     </button>
-    </div>
-   </form>
+    <h2 class="category-create-title" id="create-category-title">
+   Name New Category
+    </h2>
+    <%= f.text_field :name, autocomplete: "off", class: "app-input category-create-input", placeholder: "Enter a new category name" %>
+   </div>
+   <div class="category-create-panel category-create-description">
+    <h2 class="category-create-title" id="describe-category-title">
+   Describe New Category
+    </h2>
+    <%= f.text_area :description, class: "category-create-textarea", placeholder: "Describe the new category. This description can be revised later." %>
+   </div>
+   <div class="category-create-panel category-create-action">
+    <h2 class="category-create-title" id="commit-category-title">
+   Commit New Category
+    </h2>
+    <%= f.submit "Add New Project Category", class: "button small category-create-button" %>
+   Add New Project Category
+    </button>
+   </div>
+
+   <% end %>
+
   </section>
 
   <section class="app-section bordered-top categories-list-section">

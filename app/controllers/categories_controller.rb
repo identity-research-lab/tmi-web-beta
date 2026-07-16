@@ -8,4 +8,15 @@ class CategoriesController < ApplicationController
     @uncategorized_code_count = Code.uncategorized.count
   end
 
+  def create
+    @category = Category.find_or_create_by(category_params)
+    @categories = Category.all
+  end
+
+  private
+
+  def category_params
+    params.require(:category).permit(:name, :description)
+  end
+
 end

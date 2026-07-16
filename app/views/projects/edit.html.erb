@@ -46,6 +46,10 @@
   </div>
 </section>
 
+<section class="app-section project-data-section">
+  <%= render partial: "survey_responses/apply", locals: { project: @project } %> 
+</section>
+
 <section class="app-section project-data-section hide-on-refresh">
   <div class=" workspace-title-row">
     <div>
@@ -80,11 +84,6 @@
   </div>
 
 </section>
-
-<section class="app-section project-data-section">
-  <%= render partial: "survey_responses/apply", locals: { project: @project } %> 
-</section>
-
 
 <section class="hide-on-refresh app-section bordered-top project-data-section project-step-preview <%= @project.refresh_in_progress? ? 'hidden' : '' %>" aria-labelledby="organize-fields-title">
   <div class="workspace-title-row">

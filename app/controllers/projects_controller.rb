@@ -44,7 +44,9 @@ class ProjectsController < ApplicationController
     if project_params[:csv_data].present?
       @project.update!(csv_data: String.new(project_params[:csv_data].read, encoding: 'UTF-8'))
       @project.create_survey_items_from_csv
+      @project.update_attributes(has_pending_changes: true)
     elsif project_params[:refresh_started_at].present?
+      @project.update_attributes(has_pending_changes: true)
       @project.create_survey_responses_from_csv
     elsif project_params[:refresh_in_progress].present?
       @project.update!(refresh_in_progress: false)
@@ -57,7 +59,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at, :refresh_in_progress)
+    params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at, :refresh_in_progress, :has_pending_changes)
   end
 
 end

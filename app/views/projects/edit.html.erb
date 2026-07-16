@@ -4,59 +4,153 @@
 <section class="app-header dashboard-hero">
   <div class="app-header-copy">
     <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+      <%= @project.name %> · <span class="app-label-dense">Data Setup</span>
     </div>
-    <h1 class="app-title">Project Data</h1>
+    <h1 class="app-title">Manage Project Data</h1>
     <p class="app-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Bring your research data into your TMI-WEB project and organize it for analysis. Choose a locally stored CSV file and organize your analysis schema. Data and settings can be updated as your project evolves.
     </p>
   </div>
-  <div>
-    <a href="#" class="button small secondary dashboard-template-button">
-      Download TMI-WEB Survey Template
-    </a>
+  <aside class="app-header-panel" aria-label="Project data status">
+    <div class="app-panel-title">Project Data Status</div>
+    <div class="project-data-status empty">
+      <span class="status-pill active">Not Started</span>
+      <p>Data has not been added to this project.</p>
+    </div>
+  </aside>
+</section>
+
+<section class="project-data-overview" aria-label="Manage project data overview">
+  <div class="project-data-overview-item">
+    <%= image_tag "noun-check-4798340.svg", alt: "", class: "project-data-overview-icon", aria: { hidden: "true"} %>
+    <div class="project-data-overview-text">
+      <span class="project-data-overview-label">Project Data</span>
+      <strong>Add or replace the project CSV file.</strong>
+    </div>
+  </div>
+  
+  <div class="project-data-overview-item">
+    <%= image_tag "noun-check-4798340.svg", alt: "", class: "project-data-overview-icon", aria: { hidden: "true"} %>
+    <div class="project-data-overview-text">
+      <span class="project-data-overview-label">Analysis Schema</span>
+      <strong>Customize how project fields are labeled and analyzed.</strong>
+    </div>
+  </div>
+  
+  <div class="project-data-overview-item">
+    <%= image_tag "noun-check-4798340.svg", alt: "", class: "project-data-overview-icon", aria: { hidden: "true"} %>
+    <div class="project-data-overview-text">
+      <span class="project-data-overview-label">Apply Changes</span>
+      <strong>Commit any pending data or schema updates to the project.</strong>
+    </div>
   </div>
 </section>
 
-<section class="dashboard-section">
-  <div>
-    <h2 class="workspace-title">Upload Survey Data</h2>
-    <p class="workspace-note">
-      Make sure that your data file includes a participant_id column with a unique identifier for each row.
-    </p>
-    <ul class="dashboard-actions">
-      <li>
-        <%= form_with model: @project do |f| %>
-          <%= f.file_field :csv_data, accept: ".csv,text/csv" %><br />
-          <%= f.submit "Upload", class: "button small secondary" %>
-        <% end  %>
-      </li>
-    </ul>
-  </div>
+<section class="app-section project-data-section">
+  <%= render partial: "survey_responses/apply", locals: { project: @project } %> 
 </section>
 
-<% if @project.survey_items.any? %>
-  <section class="dashboard-section">
+<section class="app-section project-data-section hide-on-refresh">
+  <div class=" workspace-title-row">
     <div>
-      <h2 class="workspace-title">Import Survey Responses</h2>
-      <p class="workspace-note">
-        Once your survey fields are configured, you can load survey responses into the graph.
-      </p>
-      <%= render partial: "survey_responses/refresh", locals: { project: @project } %>
-    </div>
-  </section>
-<% end %>
-
-<section class="dashboard-section">
-  <div>
-    <h2 class="workspace-title">Configure Survey Fields</h2>
+    <h2 class="workspace-title">Project Data File</h2>
     <p class="workspace-note">
-      Configure how TMI-WEB maps columns in your uploaded data file to fields in the database.
+      Choose the CSV file containing your survey, interview, or other structured research data. 
+      Each row must represent one participant or case, and the file must include a unique <code>participant_id</code> column. 
+      TMI-WEB reads the selected file locally on this device. Selecting or replacing a file does not update the project until changes are applied.
     </p>
-    <div class="schema-grid">
-      <% @project.survey_items.order(:csv_header).each do |survey_item| %>
-        <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
-      <% end %>
     </div>
   </div>
+
+  <div>
+    <%= form_with model: @project do |f| %>
+      <%= f.file_field :csv_data, accept: ".csv,text/csv", aria: { describedby: "project-file-requirements project-file-name" } %>
+      <%= f.hidden_field :has_pending_changes, value: true %>
+      <%= f.submit "Load", class: "button small secondary" %>
+    <% end  %>
+  </div>
+  
+  <div class="project-change-summary has-changes <%= @project.has_pending_changes? ? '' : 'hidden' %>" aria-label="Apply project data changes">
+    <div class="project-change-summary-copy">
+      <span class="project-change-status">Project data changes pending</span>
+      <p>Selecting or replacing a CSV file creates a pending project change. Apply when you are ready to update the project.</p>
+    </div>
+    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.hidden_field :has_pending_changes, value: true %>
+      <%= f.hidden_field :refresh_in_progress, value: true %>
+      <%= f.submit "Apply Data Changes", class: "project-apply-button" %>
+    <% end %>
+  </div>
+
 </section>
+
+<section class="hide-on-refresh app-section bordered-top project-data-section project-step-preview <%= @project.refresh_in_progress? ? 'hidden' : '' %>" aria-labelledby="organize-fields-title">
+  <div class="workspace-title-row">
+    <div>
+      <h2 class="workspace-title" id="organize-fields-title">Customize Project Analysis Schema</h2>
+      <p class="workspace-note">
+        After a valid CSV is added to the project, its source columns can be labeled, organized into particular dimensions, and included or excluded from analysis.
+      </p>
+    </div>
+  </div>
+  
+  <div class="project-change-summary has-changes changes-pending hidden" aria-label="Apply analysis schema changes">
+    <div class="project-change-summary-copy">
+      <span class="project-change-status">Analysis schema changes pending</span>
+      <p>
+        Changes to labels, dimensions, or analysis states must be applied before they affect the project. Apply when you are ready to update the project.
+      </p>
+      <p>
+         Project data was last refreshed <%= distance_of_time_in_words(@project.refreshed_at || DateTime.now, DateTime.now) %> ago.
+      </p>
+    </div>
+    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.submit "Apply Project Changes", class: "project-apply-button" %>
+    <% end %>
+  </div>
+  
+  <div class="project-field-table-shell">
+    <div class="project-field-table-wrap">
+    <table class="project-field-table">
+      <colgroup>
+        <col class="project-field-col-source">
+        <col class="project-field-col-label">
+        <col class="project-field-col-question">
+        <col class="project-field-col-dimension">
+        <col class="project-field-col-status">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">CSV Header</th>
+          <th scope="col">New Label</th>
+          <th scope="col">Interview or Survey Question</th>
+          <th scope="col">Assigned Dimension</th>
+          <th scope="col">State in Analysis</th>
+        </tr>
+      </thead>
+    </table>
+    <% @project.survey_items.order(:csv_header).each do |survey_item| %>
+      <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
+    <% end %>
+  </div>
+  
+  <div class="project-change-summary has-changes changes-pending hidden" aria-label="Apply analysis schema changes">
+    <div class="project-change-summary-copy">
+      <span class="project-change-status">Analysis schema changes pending</span>
+      <p>
+        Changes to labels, dimensions, or analysis states must be applied before they affect the project. Apply when you are ready to update the project.
+      </p>
+      <p>
+         Project data was last refreshed <%= distance_of_time_in_words(@project.refreshed_at || DateTime.now, DateTime.now) %> ago.
+      </p>
+    </div>
+    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.submit "Apply Project Changes", class: "project-apply-button" %>
+    <% end %>
+  </div>
+
+</section>
+

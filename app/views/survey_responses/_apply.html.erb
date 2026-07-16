@@ -1,0 +1,68 @@
+<%= turbo_frame_tag "frame-survey-responses" do %>
+  <% if project.refresh_in_progress %> 
+    <div class="project-change-summary" aria-label="Apply analysis schema changes">
+      <div class="project-change-summary-copy">
+        <span class="project-change-status">Changes being applied</span>
+        <p>
+          Survey responses are being updated. This may take several minutes depending on the size of your dataset.
+        </p>
+        <p>
+          Started <%= distance_of_time_in_words(project.refresh_started_at, DateTime.now, include_seconds: true) %> ago.
+        </p>
+        <div class="progress-bar-track">
+          <div class="progress-bar" style="width:<%= project.progress %>%;"></div>
+        </div>
+      </div>   
+      <%= link_to "Refresh Status", edit_project_path(project), id: "refresh-status", class: "hidden" %>
+      <%= form_with model: project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+        <%= f.hidden_field :refresh_in_progress, value: false %>
+        <%= f.submit "Cancel", class: "project-apply-button" %>
+      <% end %>
+      <script language="javascript">
+        document.querySelectorAll('.hide-on-refresh').forEach((elem) => {
+          elem.classList.add("hidden")
+        })
+        
+        document.querySelectorAll('.changes-pending').forEach((elem) => {
+          elem.classList.add("hidden")
+        })
+        
+        document.querySelectorAll('.has-changes').forEach((elem) => {
+          elem.classList.add("hidden")
+        })
+        
+        setTimeout(() => {
+          const elem = document.getElementById('refresh-status')
+          if (!elem) return
+          elem.click()
+        }, 5000);  // Waits for 5000 milliseconds (5 seconds)
+      </script>
+    </div>
+  <% else %>
+  
+    <script language="javascript">
+      <% if !project.has_pending_changes %>
+        document.querySelectorAll('.has-changes').forEach((elem) => {
+          elem.classList.add("hidden")
+        })
+      <% end %>
+      document.querySelectorAll('.hide-on-refresh').forEach((elem) => {
+        elem.classList.remove("hidden")
+      })
+      document.querySelectorAll('.changes-applied').forEach((elem) => {
+        elem.classList.remove("hidden")
+      })
+    </script>
+
+    <div class="project-change-summary has-changes changes-applied" aria-label="Analysis schema changes applied">
+      <div class="project-change-summary-copy">
+        <span class="project-change-status">Changes applied</span>
+        <p>
+          Project data was last updated <%= distance_of_time_in_words(project.refreshed_at || DateTime.now, DateTime.now) %> ago.
+        </p>
+      </div>
+    </div>
+    
+  <% end %>
+
+<% end %>

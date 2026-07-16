@@ -1,34 +1,66 @@
 <%= form_with model: survey_item, format: :turbo_stream, class: "survey-item-form",
 data: { turbo_stream: true } do |f| %>
 
-  <div class="schema-row">
-    <div class="schema-cell form-group"><label>CSV header</label><%= survey_item.csv_header %></div>
-    <div class="schema-cell form-group">
-        <label for="label">Label</label>
-      <%= f.text_field :label, value: survey_item.label %>
-    </div>
-    <div class="schema-cell form-group">
-      <label for="prompt">Prompt</label>
-      <%= f.text_area :prompt, value: survey_item.prompt %>
-    </div>
-    <div class="schema-cell">
-      <div class="form-group">
-        <label for="dimension">Dimension</label>
-        <%= f.select :dimension_id, options_from_collection_for_select(dimensions, 'id', 'name', survey_item.dimension_id), include_blank: true %>
-      </div>
-      <div class="radio-row">
-        <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>
-      </div>
-      <div class="radio-row">
-        <%= f.radio_button :item_kind, "identity", checked: survey_item.is_identity %><%= f.label :item_kind_identity, "identity" %>
-      </div>
-      <div class="radio-row">
-        <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
-      </div>
-    </div>
-    <div class="schema-cell form-group">
-      <label for="is_active">Active</label>
-      <%= f.checkbox :is_active, checked: survey_item.is_active %>
-    </div>
-  </div>
+  <table class="project-field-table">
+    <thead>
+      <colgroup>
+        <col class="project-field-col-source">
+        <col class="project-field-col-label">
+        <col class="project-field-col-question">
+        <col class="project-field-col-dimension">
+        <col class="project-field-col-status">
+      </colgroup>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="CSV Header">
+          <span class="project-field-cell-label">CSV Header</span>
+          <span class="project-field-source"><%= survey_item.csv_header %></span>
+        </td>
+        <td data-label="New label">
+          <span class="project-field-cell-label">New Label</span>
+          <label class="hidden" for="field-label-age-given">New label for <%= survey_item.csv_header %></label>
+          <%= f.text_field :label, value: survey_item.label %>
+        </td>
+        <td data-label="Interview or Survey Question">
+          <span class="project-field-cell-label">Interview or Survey Question</span>
+          <label class="hidden" for="field-question-age-given">Interview or Survey Question for <%= survey_item.csv_header %></label>
+          <%= f.text_area :prompt, value: survey_item.prompt %>
+        </td>
+        <td data-label="Assigned Dimension">
+          <div>
+            <span class="project-field-cell-label">Assigned Dimension</span>
+            <div class="project-field-group">
+              <%= f.select :dimension_id, options_from_collection_for_select(dimensions, 'id', 'name', survey_item.dimension_id), include_blank: true %>
+            </div>
+          </div>
+          <div style="margin-top: 1rem;">
+            <span class="project-field-cell-label">Question Type</span>
+            <div class="project-field-group">
+            <div class="radio-row">
+              <%= f.radio_button :item_kind, "experience", checked: survey_item.is_experience %><%= f.label :item_kind_experience, "experience" %>
+            </div>
+            <div class="radio-row">
+              <%= f.radio_button :item_kind, "identity", checked: survey_item.is_identity %><%= f.label :item_kind_identity, "identity" %>
+            </div>
+            <div class="radio-row">
+              <%= f.radio_button :item_kind, "reflection", checked: survey_item.is_reflection %><%= f.label :item_kind_reflection, "reflection" %>
+            </div>
+          </div>
+        </td>
+        <td data-label="State in Analysis">
+          <span class="project-field-cell-label">Visibility in Analysis</span>
+          <div class="project-field-status">
+            <span class="project-field-status-text"><%= survey_item.is_active? ? "Visible" : "Hidden" %></span>
+            <label class="project-field-switch">
+              <%= f.checkbox :is_active, checked: survey_item.is_active, aria: { label: "Set the visibility of this field" } %>
+              <span class="project-field-slider" aria-hidden="true"></span>
+            </label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>    
+
 <% end %>
+  

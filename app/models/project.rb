@@ -48,8 +48,7 @@ class Project
     return 100 unless self.refresh_in_progress
     records = rows * active_fields.count
     updated = SurveyResponse.as(:s).where('s.updated_at > $date', date: self.refresh_started_at.to_i).count
-    percentage = (updated / records.to_f * 100).round(0)
-    return percentage > 0 ? percentage : 50
+    return (updated / records.to_f * 100).round(0)
   end
 
   def create_survey_responses_from_csv

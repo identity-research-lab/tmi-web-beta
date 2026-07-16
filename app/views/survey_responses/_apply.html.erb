@@ -49,18 +49,19 @@
       document.querySelectorAll('.hide-on-refresh').forEach((elem) => {
         elem.classList.remove("hidden")
       })
+      document.querySelectorAll('.changes-applied').forEach((elem) => {
+        elem.classList.remove("hidden")
+      })
     </script>
 
-    <% if !project.has_pending_changes && project.refreshed_at >= DateTime.now - 5.minutes %>
-      <div class="project-change-summary has-changes changes-applied" aria-label="Analysis schema changes applied">
-        <div class="project-change-summary-copy">
-          <span class="project-change-status">Changes applied</span>
-          <p>
-            Project data was last updated <%= distance_of_time_in_words(project.refreshed_at || DateTime.now, DateTime.now) %> ago.
-          </p>
-        </div>
+    <div class="project-change-summary has-changes changes-applied" aria-label="Analysis schema changes applied">
+      <div class="project-change-summary-copy">
+        <span class="project-change-status">Changes applied</span>
+        <p>
+          Project data was last updated <%= distance_of_time_in_words(project.refreshed_at || DateTime.now, DateTime.now) %> ago.
+        </p>
       </div>
-    <% end %>
+    </div>
     
   <% end %>
 

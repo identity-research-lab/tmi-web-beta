@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "contribute" => "static_pages#contribute"
   get "contact" => "static_pages#contact"
 
+  resources :categories
   resources :code_metrics
   resources :codes
   resources :journals, only: [:show]

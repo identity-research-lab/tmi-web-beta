@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
       @project.create_survey_items_from_csv
       @project.update_attributes(has_pending_changes: true)
     elsif project_params[:refresh_started_at].present?
-      @project.update_attributes(has_pending_changes: true)
+      @project.update_attributes(has_pending_changes: false)
       @project.create_survey_responses_from_csv
     elsif project_params[:refresh_in_progress].present?
       @project.update!(refresh_in_progress: false)

@@ -38,6 +38,7 @@ module Services
 						survey_response.value = value
 						survey_response.save!
 					end
+          persona.touch
 				end
 				project.update_attributes(refreshed_at: DateTime.now, refresh_in_progress: false)
 				Event.create(project: project, label: "Survey responses", description: "Survey responses import completed, #{records.count} cases refreshed.")

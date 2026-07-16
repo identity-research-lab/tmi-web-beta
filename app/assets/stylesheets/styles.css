@@ -1362,7 +1362,7 @@ th {
 }
 
 .project-change-summary-copy {
-  min-width: 0;
+  min-width: 50rem;
 }
 
 .project-change-status {

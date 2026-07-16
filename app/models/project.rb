@@ -13,6 +13,7 @@ class Project
   property :refresh_started_at, type: DateTime
   property :refreshed_at, type: DateTime
   property :refresh_in_progress, type: Boolean, default: false
+  property :has_pending_changes, type: Boolean, default: false
 
   validates :name, presence: true
   validates :name, uniqueness: true
@@ -42,12 +43,13 @@ class Project
   end
 
   def progress
-    return 1.0 unless self.refresh_in_progress
     rows = CSV.parse(self.csv_data, headers: true).count
-    return 0.0 unless rows > 0
+    return 0 unless rows > 0
+    return 100 unless self.refresh_in_progress
     records = rows * active_fields.count
     updated = SurveyResponse.as(:s).where('s.updated_at > $date', date: self.refresh_started_at.to_i).count
-    return (updated / records.to_f)
+    percentage = (updated / records.to_f * 100).round(0)
+    return percentage > 0 ? percentage : 50
   end
 
   def create_survey_responses_from_csv

@@ -46,8 +46,8 @@
   </div>
 </section>
 
-<section class="app-section project-data-section">
-  <div class="workspace-title-row">
+<section class="app-section project-data-section hide-on-refresh">
+  <div class=" workspace-title-row">
     <div>
     <h2 class="workspace-title">Project Data File</h2>
     <p class="workspace-note">
@@ -61,21 +61,32 @@
   <div>
     <%= form_with model: @project do |f| %>
       <%= f.file_field :csv_data, accept: ".csv,text/csv", aria: { describedby: "project-file-requirements project-file-name" } %>
+      <%= f.hidden_field :has_pending_changes, value: true %>
       <%= f.submit "Load", class: "button small secondary" %>
     <% end  %>
   </div>
   
-  <div class="project-change-summary has-changes" aria-label="Apply project data changes">
+  <div class="project-change-summary has-changes <%= @project.has_pending_changes? ? '' : 'hidden' %>" aria-label="Apply project data changes">
     <div class="project-change-summary-copy">
       <span class="project-change-status">Project data changes pending</span>
       <p>Selecting or replacing a CSV file creates a pending project change. Apply when you are ready to update the project.</p>
     </div>
-    <button class="project-apply-button" type="button">Apply Project Changes</button>
+    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.hidden_field :has_pending_changes, value: true %>
+      <%= f.hidden_field :refresh_in_progress, value: true %>
+      <%= f.submit "Apply Data Changes", class: "project-apply-button" %>
+    <% end %>
   </div>
 
 </section>
 
-<section class="app-section bordered-top project-data-section project-step-preview" aria-labelledby="organize-fields-title">
+<section class="app-section project-data-section">
+  <%= render partial: "survey_responses/apply", locals: { project: @project } %> 
+</section>
+
+
+<section class="hide-on-refresh app-section bordered-top project-data-section project-step-preview <%= @project.refresh_in_progress? ? 'hidden' : '' %>" aria-labelledby="organize-fields-title">
   <div class="workspace-title-row">
     <div>
       <h2 class="workspace-title" id="organize-fields-title">Customize Project Analysis Schema</h2>
@@ -85,30 +96,62 @@
     </div>
   </div>
   
-  <%= render partial: "survey_responses/apply", locals: { project: @project } %>
-
-<div class="project-field-table-shell">
-  <div class="project-field-table-wrap">
-  <table class="project-field-table">
-    <colgroup>
-      <col class="project-field-col-source">
-      <col class="project-field-col-label">
-      <col class="project-field-col-question">
-      <col class="project-field-col-dimension">
-      <col class="project-field-col-status">
-    </colgroup>
-    <thead>
-      <tr>
-        <th scope="col">CSV Header</th>
-        <th scope="col">New Label</th>
-        <th scope="col">Interview or Survey Question</th>
-        <th scope="col">Assigned Dimension</th>
-        <th scope="col">State in Analysis</th>
-      </tr>
-    </thead>
-  </table>
-  <% @project.survey_items.order(:csv_header).each do |survey_item| %>
-    <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
-  <% end %>
+  <div class="project-change-summary has-changes changes-pending hidden" aria-label="Apply analysis schema changes">
+    <div class="project-change-summary-copy">
+      <span class="project-change-status">Analysis schema changes pending</span>
+      <p>
+        Changes to labels, dimensions, or analysis states must be applied before they affect the project. Apply when you are ready to update the project.
+      </p>
+      <p>
+         Project data was last refreshed <%= distance_of_time_in_words(@project.refreshed_at || DateTime.now, DateTime.now) %> ago.
+      </p>
+    </div>
+    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.submit "Apply Project Changes", class: "project-apply-button" %>
+    <% end %>
+  </div>
+  
+  <div class="project-field-table-shell">
+    <div class="project-field-table-wrap">
+    <table class="project-field-table">
+      <colgroup>
+        <col class="project-field-col-source">
+        <col class="project-field-col-label">
+        <col class="project-field-col-question">
+        <col class="project-field-col-dimension">
+        <col class="project-field-col-status">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col">CSV Header</th>
+          <th scope="col">New Label</th>
+          <th scope="col">Interview or Survey Question</th>
+          <th scope="col">Assigned Dimension</th>
+          <th scope="col">State in Analysis</th>
+        </tr>
+      </thead>
+    </table>
+    <% @project.survey_items.order(:csv_header).each do |survey_item| %>
+      <%= render partial: "survey_items/form", locals: { survey_item: survey_item, dimensions: @dimensions_for_select } %>
+    <% end %>
+  </div>
+  
+  <div class="project-change-summary has-changes changes-pending hidden" aria-label="Apply analysis schema changes">
+    <div class="project-change-summary-copy">
+      <span class="project-change-status">Analysis schema changes pending</span>
+      <p>
+        Changes to labels, dimensions, or analysis states must be applied before they affect the project. Apply when you are ready to update the project.
+      </p>
+      <p>
+         Project data was last refreshed <%= distance_of_time_in_words(@project.refreshed_at || DateTime.now, DateTime.now) %> ago.
+      </p>
+    </div>
+    <%= form_with model: @project, format: :turbo_stream, data: { turbo_stream: true, turbo_frame: "frame-survey-responses" } do |f| %>
+      <%= f.hidden_field :refresh_started_at, value: DateTime.now %>
+      <%= f.submit "Apply Project Changes", class: "project-apply-button" %>
+    <% end %>
+  </div>
 
 </section>
+

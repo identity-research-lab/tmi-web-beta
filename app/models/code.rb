@@ -2,7 +2,7 @@ class Code
   include ActiveGraph::Node
 
   attr_accessor :action
-  
+
   property :label
   property :dimension
   property :is_reflection, default: false
@@ -26,18 +26,26 @@ class Code
     Code.as(:c).query.match("(c)-[]-(SurveyItem)").return(:c)
   end
 
+  def self.categorized
+    Code.as(:c).query.match("(c)-[]-(:Category)").return(:c)
+  end
+
+  def self.uncategorized
+    Code.as(:c).query.where("NOT EXISTS { (c)-[]-(:Category) }").return(:c)
+  end
+
   def self.experiences
     where(is_experience: true)
   end
-  
+
   def self.identities
     where(is_identity: true)
   end
-  
+
   def self.reflections
     where(is_reflection: true)
   end
-  
+
   # Given a dimension, generates a hash with each unique Code as a key and the count of its uses as a value.
   def self.histogram(survey_item)
     codes = survey_item.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").with("c, count(c) AS ct").return('c.label, ct').order("ct DESC")
@@ -48,14 +56,14 @@ class Code
     self.survey_responses.delete(survey_response)
     self.personas.delete(survey_response.persona)
   end
-  
+
   def kind
     return "experience" if self.is_experience?
     return "identity" if self.is_identity?
     return "reflection" if self.is_reflection?
     return "unknown"
   end
-  
+
   private
 
   def sanitize

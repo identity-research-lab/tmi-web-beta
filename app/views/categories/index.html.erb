@@ -19,34 +19,34 @@
    <div class="app-stats-grid">
     <div class="app-stat">
      <span class="app-stat-value">
-      XX
+        <%= @categories.count %>
      </span>
      <span class="app-stat-label">
-      Categories
+    Categories
      </span>
     </div>
     <div class="app-stat">
      <span class="app-stat-value">
-      XXXX
+        <%= @code_count %>
      </span>
      <span class="app-stat-label">
-      Project Codes
+    Project Codes
      </span>
     </div>
     <div class="app-stat">
      <span class="app-stat-value">
-      XXXX
+      <%= @categorized_code_count %>
      </span>
      <span class="app-stat-label">
-      Categorized Codes
+    Categorized Codes
      </span>
     </div>
     <div class="app-stat">
      <span class="app-stat-value">
-      XXX
+      <%= @uncategorized_code_count %>
      </span>
      <span class="app-stat-label">
-      Uncategorized Codes
+    Uncategorized Codes
      </span>
     </div>
    </div>
@@ -54,72 +54,49 @@
  </section>
 
  <section aria-labelledby="create-category-title" class="category-create-section stripe-background">
-   <form aria-label="Create a new project category" class="category-create-grid" id="create-category-form">
+
+   <%= form_with model: Category.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "create-category-form", aria: { label: "Create a new project category" } do |f| %>
+
     <div class="category-create-panel category-create-name">
-     <h2 class="category-create-title" id="create-category-title">
-      Name New Category
-     </h2>
-     <input aria-label="New category name" autocomplete="off" class="app-input category-create-input" id="new-category-name" name="category_name" placeholder="Enter a new category name" required="" type="text"/>
+      <h2 class="category-create-title" id="create-category-title">
+    Name New Category
+      </h2>
+      <%= f.text_field :name, autocomplete: "off", class: "app-input category-create-input", placeholder: "Enter a new category name" %>
     </div>
     <div class="category-create-panel category-create-description">
-     <h2 class="category-create-title" id="describe-category-title">
-      Describe New Category
-     </h2>
-     <textarea aria-label="New category description" class="category-create-textarea" id="new-category-memo" name="category_description" placeholder="Describe the new category. This description can be revised later."></textarea>
+      <h2 class="category-create-title" id="describe-category-title">
+    Describe New Category
+      </h2>
+      <%= f.text_area :description, class: "category-create-textarea", placeholder: "Describe the new category. This description can be revised later." %>
     </div>
     <div class="category-create-panel category-create-action">
-     <h2 class="category-create-title" id="commit-category-title">
-      Commit New Category
-     </h2>
-     <button class="button small category-create-button" type="submit">
-      Add New Project Category
-     </button>
+      <h2 class="category-create-title" id="commit-category-title">
+    Commit New Category
+      </h2>
+      <%= f.submit "Add New Project Category", class: "button small category-create-button" %>
+      </button>
     </div>
-   </form>
+
+   <% end %>
+
   </section>
 
+<% if @categories.any? %>
   <section class="app-section bordered-top categories-list-section">
-   <div class="workspace-title-row">
-    <div>
-     <h2 class="workspace-title">
-      Explore Current Project Categories
-     </h2>
-     <p class="workspace-note">
-      Current categories can be edited, renamed, or deleted.
-     </p>
-    </div>
-   </div>
-   <div class="category-list-grid">
-    <article aria-labelledby="category-card-title-1" class="category-overview-card">
-     <div class="category-overview-card-header">
+    <div class="workspace-title-row">
       <div>
-       <h3 class="category-overview-card-title" id="category-card-title-1">
-        Something
-       </h3>
-       <div class="case-subtext">
-        Edited today &middot; 2:22 PM
-       </div>
+        <h2 class="workspace-title">
+          Explore Current Project Categories
+        </h2>
+        <p class="workspace-note">
+          Current categories can be edited, renamed, or deleted.
+        </p>
       </div>
-     </div>
-     <div class="category-overview-card-meta">
-      <span class="tag dark">
-       23 codes added
-      </span>
-     </div>
-     <p class="category-overview-card-memo">
-      Lorem ipsum is a standard placeholder text used in typography...
-     </p>
-     <div class="category-overview-card-actions">
-      <a class="button small" href="07category-template.html">
-       Edit Category
-      </a>
-      <a class="button small secondary" href="#">
-       Rename
-      </a>
-      <a class="button small delete-button" href="#">
-       Delete
-      </a>
-     </div>
-    </article>
-  </div>
-</section>
+    </div>
+    <div class="category-list-grid">
+      <% @categories.each do |category| %>
+        <%= render partial: "categories/card", locals: { category: category } %>
+      <% end %>
+    </div>
+  </section>
+<% end %>

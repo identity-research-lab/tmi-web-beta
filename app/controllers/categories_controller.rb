@@ -9,8 +9,33 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.find_or_create_by(category_params)
+    @category = Category.find_or_create_by(name: category_params[:name])
+    @category.description = category_params[:description]
+    @category.save!
     @categories = Category.all
+    redirect_to categories_path
+  end
+
+  def show
+    @category = Category.find(params[:id])
+  end
+  
+  def destroy
+    @category = Category.find(params[:id])
+    @category.destroy
+    redirect_to categories_path
+  end
+  
+  def update
+    @category = Category.find(params[:id])
+    # make changes
+    success = @category.save
+  
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("XXX", partial: "/categories/yyy", locals: { category: @category, success: success })
+      end
+    end
   end
 
   private

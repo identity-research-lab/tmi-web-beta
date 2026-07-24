@@ -50,10 +50,23 @@
 		<li class="<%= active_nav == "graph" ? 'active-nav' : '' %>"><a href="#">Graph</a></li>
 	</ul>
 </nav>
-
-<%- if content_for?(:title_label) %>
-	<section class="subpage-header">
-		<div class="subpage-label"><%= content_for?(:title_label) ? content_for(:title_label) : "" %></div>
-		<h2 class="subpage-title"><%= content_for?(:title_headline) ? content_for(:title_headline) : content_for(:title) %></h2>
-	</section>
-<%- end %>
+<nav class="content-nav" aria-label="Active project navigation">
+	<div class="tabs">
+		<div class="nav-group" role="group" aria-label="Project">
+			<%= link_to "Dashboard", projects_path, class: active_nav == "dashboard" ? 'active-nav' : '' %>
+			<%= link_to "Manage Project Data", edit_project_path, class: active_nav == "project-data" ? 'active-nav' : '' %>
+		</div>
+		<div class="nav-group" role="group" aria-label="Coding pathways">
+			<%= link_to "Code Individual Cases", personas_path, class: active_nav == "cases" ? 'active-nav' : '' %>
+			<%= link_to "Code Responses by Question", survey_items_path, class: active_nav == "survey-items" ? 'active-nav' : '' %>
+		</div>
+		<div class="nav-group" role="group" aria-label="Analysis">
+			<a href="#">Codes</a>
+			<%= link_to "Categories", categories_path, class: active_nav == "codes" ? 'active-nav' : '' %>
+			<a href="#">Themes</a>
+		</div>
+		<div class="nav-group" role="group" aria-label="Visualization">
+			<span class="unavailable-link" aria-disabled="true" title="This feature is not available in the current prototype">Launch Graph <span aria-hidden="true">↗</span></span>
+		</div>
+	</div>
+</nav>

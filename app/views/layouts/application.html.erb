@@ -17,12 +17,23 @@
   </head>
 
   <body>
-    <main class="page">
+    <div class="page">
       <%= render "shared/header" %>
-      <div id="veil">
+
+      <main>
+
+<%- if content_for?(:title_label) %>
+        <section class="subpage-header">
+          <div class="subpage-label"><%= content_for?(:title_label) ? content_for(:title_label) : "" %></div>
+          <h2 class="subpage-title"><%= content_for?(:title_headline) ? content_for(:title_headline) : content_for(:title) %></h2>
+        </section>
+      <%- end %>
+
+
+
         <%= yield %>
-        <%= render "shared/footer" %>
-      </div>
-    </main>
+      </main>
+      <%= render "shared/footer" %>
+    </div>
   </body>
 </html>

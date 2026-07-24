@@ -1,7 +1,5 @@
 # A Category is a label applied to a group of related Codes within a provided dimension.
 # For example, a category may refer to a subset of the codes related to "age".
-# Categories are machine-derived. As such, they are influenced by biases in external training data.
-# Careful human discernment of categories is required to identify and address these biases.
 class Category
 
   include ActiveGraph::Node
@@ -18,5 +16,6 @@ class Category
   has_many :in, :personas, type: :RelatesTo, model_class: "Persona"
   has_many :in, :themes, type: :EmergesFrom, model_class: "Theme"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
+  has_one :out, :researcher, type: :Categorizes, model_class: "Researcher"
 
 end

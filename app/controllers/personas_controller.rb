@@ -18,7 +18,7 @@ class PersonasController < ApplicationController
     @active_survey_items = @project.active_fields
     @survey_responses = @persona.survey_responses.as(:sr).query.match("(sr)-[]-(si:SurveyItem)").order("si.identifier").return(:sr).pluck(:sr)
     @coded_experiences_count = @persona.experiences.count
-    @categories = @persona.categories
+    @categories = []
     @memos = @persona.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "persona", referrent_id: @persona.id)
   end

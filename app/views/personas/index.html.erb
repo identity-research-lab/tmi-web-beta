@@ -5,49 +5,105 @@
 
   <div class="app-header-copy">
     <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+      <%= @project.name %> · <span class="app-label-dense">Participant-centered coding pathway</span>
     </div>
-    <h1 class="app-title">All Participant Cases</h1>
+    <h1 class="app-title">Individual cases</h1>
     <p class="app-description">
-      Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+      Go deep into individual cases (personas). Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full interview or survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
     </p>
   </div>
 
   <div>
-    <aside class="app-header-panel" aria-label="Project status summary">
-      <div class="app-panel-title">Dataset Status</div>
-      <div class="app-stats-grid">
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @case_count %></span>
-          <span class="app-stat-label">Cases</span>
+    <% unless @project.has_pending_changes? %>
+      <aside class="app-header-panel" aria-label="Project status summary">
+        <div class="app-panel-title">Dataset Status</div>
+        <div class="app-stats-grid">
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @case_count %></span>
+            <span class="app-stat-label">Cases</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @uncoded_case_count %></span>
+            <span class="app-stat-label">Uncoded</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @in_progress_case_count %></span>
+            <span class="app-stat-label">In Progress</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @completed_case_count %></span>
+            <span class="app-stat-label">Completed</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @code_count %></span>
+            <span class="app-stat-label">Applied Codes</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value">
+              <% if @last_activity > DateTime.now - 1.day %>
+                <%= distance_of_time_in_words(@last_activity, DateTime.now) %> ago
+              <% else %>
+                <%= @last_activity.strftime("%B %e, %Y") %>
+              <% end %>
+            </span>
+            <span class="app-stat-label">Latest Activity</span>
+          </div>
         </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @uncoded_case_count %></span>
-          <span class="app-stat-label">Uncoded</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @in_progress_case_count %></span>
-          <span class="app-stat-label">In Progress</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @completed_case_count %></span>
-          <span class="app-stat-label">Completed</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @code_count %></span>
-          <span class="app-stat-label">Applied Codes</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @category_count %></span>
-          <span class="app-stat-label">Categories</span>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    <% end %>
   </div>
 
 </section>
 
-<% if @personas.any? %>
+<% if @project.active_fields.count == 0 %>
+  <section class="coding-readiness-gate" data-coding-readiness-states="setup">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data setup required</h2>
+    <p class="workspace-note">Add project data and confirm the analysis schema before entering the Cases coding pathway.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @project.has_pending_changes %>
+  <section class="coding-readiness-gate attention" data-coding-readiness-states="attention">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data needs attention</h2>
+    <p class="workspace-note">Review pending data or schema issues before continuing participant-centered coding.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @personas.any? %>
+
+  <section class="app-toolbar search-toolbar" role="search" aria-label="Search, filter, and sort individual cases">
+    <div class="app-toolbar-left search-controls">
+      <label class="toolbar-field search-field">
+        <span class="toolbar-label search-label">Search cases</span>
+        <input class="app-input search-input" id="case-search" type="search" placeholder="Search case IDs and identity fields" aria-controls="individual-cases-table">
+      </label>
+      <button class="button secondary small search-clear" type="button" aria-controls="individual-cases-table" disabled>
+        Clear search
+      </button>
+      <label class="toolbar-field search-filter">
+        <span class="toolbar-label">Coding status</span>
+        <select class="app-select" id="case-status-filter" aria-controls="individual-cases-table">
+          <option>All cases</option>
+          <option>Not started</option>
+          <option>In progress</option>
+          <option>Complete</option>
+        </select>
+      </label>
+      <label class="toolbar-field search-sort">
+        <span class="toolbar-label">Sort by</span>
+        <select class="app-select" id="case-sort" aria-controls="individual-cases-table">
+          <option>Case ID: A–Z</option>
+          <option>Case ID: Z–A</option>
+          <option>Assigned codes: most to least</option>
+          <option>Assigned codes: least to most</option>
+        </select>
+      </label>
+    </div>
+    <div class="app-toolbar-right">
+      <p class="search-result-count" aria-live="polite"><%= @case_count %> <%= "case".pluralize(@case_count) %></p>
+    </div>
+  </section>
+
   <section class="app-section">
     <div class="section-label">
       Cases / Personas

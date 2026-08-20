@@ -24,6 +24,8 @@
   IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Reflection#uuid_key` FOR (n:`Reflection`) REQUIRE (n.`uuid`)
   IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `NODE_Researcher#uuid_key` FOR (n:`Researcher`) REQUIRE (n.`uuid`)
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_SurveyItem#uuid_key` FOR (n:`SurveyItem`) REQUIRE (n.`uuid`)
   IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_SurveyResponse#uuid_key` FOR (n:`SurveyResponse`) REQUIRE
@@ -68,3 +70,4 @@
 - '20260608032611'
 - '20260608041847'
 - '20260608041855'
+- '20260820191055'

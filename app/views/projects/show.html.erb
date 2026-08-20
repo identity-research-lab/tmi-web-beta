@@ -1,0 +1,187 @@
+<%- title "Project Dashboard" %>
+<%- active_nav "dashboard" %>
+
+<section class="app-header app-header--project">
+
+  <div class="app-header-copy">
+    <div class="app-label">Project Dashboard</div>
+    <h1 class="app-title" id="dashboard-project-name"><%= @project.name %></h1>
+    
+    <p class="app-description">
+      <%= @project.description %>
+    </p>
+    
+    <dl class="dashboard-project-meta">
+      <div><dt>Researcher</dt><dd id="dashboard-project-attribution"><%= @researcher.name %></dd></div>
+      <div><dt>Organization</dt><dd><%= @researcher.affiliation %></dd></div>
+    </dl>
+    
+  </div>
+
+  <div>
+    <aside class="app-header-panel" aria-label="Project status summary">
+      <div class="app-panel-title">Project Status</div>
+      <div class="dashboard-readiness-state" data-dashboard-states="setup">
+        <span class="status-pill"><%= @project.status %></span>
+        
+        <% if @project.status == "Setup required" %>
+          <p>Project data and the analysis schema must be configured before coding can begin.</p>
+          <%= link_to "Manage project data", edit_project_path(@project), class: "button" %>
+        <% elsif @project.status == "Ready for analysis" %>
+          <p>Project data is configured. Choose a coding pathway to begin analysis.</p>
+        <% else %>
+        <% end %>
+      </div>
+    </aside>
+  </div>
+
+</section>
+
+<section class="app-section">
+  <h2 class="section-label">
+    Analysis: coding pathways
+  </h2>
+
+  <% if @survey_response_count == 0 %>
+    <p>Complete project-data setup to unlock the Cases and Responses coding pathways.</p>
+  <% end %>
+
+  <div class="dashboard-pathway-grid">
+    <article class="dashboard-pathway-card">
+      <div class="dashboard-pathway-label">Participant-Centered Thematic Analysis</div>
+      <h2 class="dashboard-pathway-title">Code cases pathway</h2>
+
+      <p class="dashboard-pathway-text">
+        Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+      </p>
+
+      <% if @case_count > 0 %>
+        <div class="dashboard-pathway-meta">
+          <span class="tag dark"><%= @case_count %> cases</span>
+          <span class="tag"><%= @completed_case_count %> coded</span>
+          <span class="tag"><%= @in_progress_case_count %> in progress</span>
+        </div>
+        <%= link_to "Enter cases pathway", personas_path, class: "button dashboard-pathway-action" %>
+      <% else %>
+        <p class="button dashboard-pathway-action">Data Setup required</p>
+      <% end %>
+    </article>
+
+    <article class="dashboard-pathway-card">
+      <div class="dashboard-pathway-label">Question-Centered Thematic Analysis</div>
+      <h2 class="dashboard-pathway-title">Code responses pathway</h2>
+
+      <p class="dashboard-pathway-text">
+        Enter the dataset through individual survey items/questions. Review and code all participant responses associated with a single question, supporting cross-case comparison, thematic pattern recognition, frequency analysis, and emergent interpretive synthesis.
+      </p>
+
+      <% if @case_count > 0 %>
+        <div class="dashboard-pathway-meta">
+          <span class="tag dark"><%= @survey_response_count %> response items</span>
+          <span class="tag"><%= @survey_response_coded_count %> coded</span>
+        </div>
+        <%= link_to "Enter responses pathway", survey_items_path, class: "button dashboard-pathway-action" %>
+      <% else %>
+        <p class="button dashboard-pathway-action">Data Setup required</p>
+      <% end %>
+    </article>
+  </div>
+</section>
+
+<section class="app-section bordered-top">
+  <h2 class="section-label">
+    Current analysis state
+  </h2>
+  <div>
+    <% if @survey_response_count == 0 %>
+      Coding progress will appear after project data has been added and configured.
+    <% elsif @code_count == 0 %>
+      This project is ready for analysis. Coding progress will appear after a pathway has been started.
+    <% end %>
+  </div>
+  
+  <% if @case_count > 0 %>
+
+    <article class="overview-card">
+      <h3 class="workspace-title">
+        Coding progress
+      </h3>
+      <div class="dashboard-metric-list">
+        <div class="dashboard-metric-row">
+          <span>Cases coded</span>
+          <strong><%= @case_count - @uncoded_case_count %> / <%= @case_count %></strong>
+        </div>
+        <div class="frequency-bar-track" role="progressbar" aria-label="Cases coded" aria-valuemin="0" aria-valuemax="<%= @case_count %>" aria-valuenow="<%= @uncoded_case_count %>">
+          <% width = (@case_count - @uncoded_case_count) / @case_count.to_f * 100 %>
+          <div class="frequency-bar" style="width:<%= width %>%;"></div>
+        </div>
+        <div class="dashboard-metric-row">
+          <span>Responses coded</span>
+          <strong><%= @survey_response_coded_count %> / <%= @survey_response_count %></strong>
+        </div>
+        <div class="frequency-bar-track" role="progressbar" aria-label="Responses coded" aria-valuemin="0" aria-valuemax="<%= @survey_response_count %>" aria-valuenow="<%= @survey_response_coded_count %>">
+          <% width = @survey_response_coded_count / @survey_response_count.to_f * 100 %>
+          <div class="frequency-bar" style="width:<%= width %>%;"></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="overview-card">
+      <h3 class="workspace-title">
+        Interpretive elements
+      </h3>
+      <div class="dashboard-metric-list">
+        <div class="dashboard-metric-row">
+          <span>Unique codes</span>
+          <strong><%= @code_count %></strong>
+        </div>
+        <div class="dashboard-metric-row">
+          <span>Categories</span>
+          <strong><%= @category_count %></strong>
+        </div>
+        <div class="dashboard-metric-row">
+          <span>Themes</span>
+          <strong><%= @theme_count %></strong>
+        </div>
+        <div class="dashboard-metric-row">
+          <span>Researcher memos</span>
+          <strong><%= @memos.count %></strong>
+        </div>
+      </div>
+    </article>
+  <% end %>
+</section>
+
+<section class="app-layout">
+  <div class="app-main">
+    <div class="workspace-title-row">
+      <div>
+        <h2 class="workspace-title">
+        Recent Activity
+        </h2>
+        <p class="workspace-note">
+        Track recent coding, memoing, imports, and other activity.
+        </p>
+      </div>
+    </div>
+    <div class="overview-card">
+      <ul class="activity-list">
+          <% if @recent_events.any? %>
+          <% @recent_events.each do |event| %>
+            <%= render partial: "events/show", locals: { event: event } %>
+          <% end %>
+        <% else %>
+          <li class="event-entry">
+            <p class="event-text">
+              No recent events.
+            </p>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
+    <%= render partial: "memos/feed", locals: { memos: @memos, memo: nil } %>
+  </aside>
+</section>
+

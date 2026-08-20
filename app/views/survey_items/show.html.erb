@@ -5,119 +5,133 @@
 
   <div class="app-header-copy">
     <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Question</span>
+      <%= @project.name %> · <span class="app-label-dense">Question-centered coding pathway</span>
     </div>
     <h1 class="app-title"><%= @survey_item.formatted_identifier %>: <%= @survey_item.label %></h1>
     <p class="app-description">
-      Review all participant responses associated with this survey item. Revise researcher-applied codes, add analytical memos, and explore cross-case patterns, frequencies, and emergent thematic relationships.
+      Review all participant responses associated with this question. Revise researcher-applied codes, add analytical memos, and explore cross-case patterns, frequencies, and emergent thematic relationships.
     </p>
   </div>
 
-  <div>
-    <aside class="app-header-panel" aria-label="Relational analysis tools">
-      <div class="app-panel-title">
-        Relational Analysis
-      </div>
-      <a href="#" class="button small secondary dashboard-template-button">
-        Open Survey Item Graph
-      </a>
-      <div class="case-subtext confirmable">
-        Cypher:
-        <span id="confirmation" class="hidden">Copied!</span>
-        <a href="#" id="copy-source" class="cypher-link"><%= @survey_item.graph_query[:query] %></a>
-        <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
-      </div>
-    </aside>
-  </div>
-
+  <% unless @project.has_pending_changes? %>
+    <div>
+      <aside class="app-header-panel" aria-label="Relational analysis tools">
+        <div class="app-panel-title">
+          Relational Analysis
+        </div>
+        <a href="#" class="button small secondary dashboard-template-button">
+          Open Question Graph
+        </a>
+        <div class="case-subtext confirmable">
+          Cypher:
+          <span id="confirmation" class="hidden">Copied!</span>
+          <a href="#" id="copy-source" class="cypher-link"><%= @survey_item.graph_query[:query] %></a>
+          <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
+        </div>
+      </aside>
+    </div>
+  <% end %>
 </section>
 
-<section class="app-module-summary">
-  <div>
-    <div class="app-label">Survey Question</div>
-      <p class="app-description" style="margin-top:0;">
-        <%= @survey_item.prompt %>
-      </p>
-  </div>
-</section>
-
-<section class="app-module-summary">
-  <div>
-    <div class="app-label">Survey Item Coding Status</div>
-    <div class="app-meta-grid">
-      <div class="app-meta-item">
-        <span class="app-meta-label">Participant Responses</span>
-        <span class="app-meta-value"><%= @survey_responses.count %></span>
-      </div>
-      <div class="app-meta-item">
-        <span class="app-meta-label">Codes Applied</span>
-        <span class="app-meta-value"><%= @coded_experiences_count %></span>
-      </div>
-      <div class="app-meta-item">
-        <span class="app-meta-label">Categories</span>
-        <span class="app-meta-value"><%= @categories_count %> attached</span>
-      </div>
-      <div class="app-meta-item">
-        <span class="app-meta-label">Last Activity</span>
-        <span class="app-meta-value"><%= @survey_item.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
+<% if @project.active_fields.count == 0 %>
+  <section class="coding-readiness-gate" data-coding-readiness-states="setup">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data setup required</h2>
+    <p class="workspace-note">Add project data and confirm the analysis schema before entering the Cases coding pathway.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @project.has_pending_changes %>
+  <section class="coding-readiness-gate attention" data-coding-readiness-states="attention">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data needs attention</h2>
+    <p class="workspace-note">Review pending data or schema issues before continuing participant-centered coding.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% else %>
+  <section class="app-module-summary">
+    <div>
+      <div class="app-label">Question</div>
+        <p class="app-description" style="margin-top:0;">
+          <%= @survey_item.prompt %>
+        </p>
+    </div>
+  </section>
+  
+  <section class="app-module-summary">
+    <div>
+      <div class="app-label">Survey Item Coding Status</div>
+      <div class="app-meta-grid">
+        <div class="app-meta-item">
+          <span class="app-meta-label">Participant Responses</span>
+          <span class="app-meta-value"><%= @survey_responses.count %></span>
+        </div>
+        <div class="app-meta-item">
+          <span class="app-meta-label">Codes Applied</span>
+          <span class="app-meta-value"><%= @coded_experiences_count %></span>
+        </div>
+        <div class="app-meta-item">
+          <span class="app-meta-label">Categories</span>
+          <span class="app-meta-value"><%= @categories_count %> attached</span>
+        </div>
+        <div class="app-meta-item">
+          <span class="app-meta-label">Last Activity</span>
+          <span class="app-meta-value"><%= @survey_item.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="app-layout">
-
-  <div class="app-main">
-
-    <div class="workspace-title-row">
-      <div>
-      <h2 class="workspace-title">Workspace–Edit Codes Here</h2>
-      <p class="workspace-note">Each row represents one participant response to this survey item.</p>
+  </section>
+  
+  <section class="app-layout">
+  
+    <div class="app-main">
+  
+      <div class="workspace-title-row">
+        <div>
+        <h2 class="workspace-title">Workspace–Edit Codes Here</h2>
+        <p class="workspace-note">Each row represents one participant response to this survey item.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="response-table-wrap">
-      <% if @survey_responses.any? %>
-        <table class="response-table">
-          <thead>
-            <tr>
-              <th scope="col">Participant Case</th>
-              <th scope="col">Verbatim Response</th>
-              <th scope="col">Researcher Codes</th>
-            </tr>
-          </thead>
-          <tbody>
-          <tbody>
-            <% @survey_responses.each do |survey_response| %>
-              <%= render partial: "survey_responses/form", locals: { survey_response: survey_response, embedded_in: "survey_item" } %>
-            <% end %>
-          </tbody>
-        </table>
-      <% else %>
-        No survey responses have been loaded.
-      <% end %>
-    </div>
-  </div>
-  <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
-    <section id="memos" class="sidebar-card white">
-      <div class="sidebar-card-title">Researcher Memos</div>
-      <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo } %>
-    </section>
-    <section class="sidebar-card">
-      <details class="sidebar-disclosure" open>
-        <summary class="sidebar-card-title disclosure-title">
-          Attached Categories
-        </summary>
-        <% if @categories.any? %>
-          <div class="category-tags collapsed-tags">
-            <% @categories.each do |category| %>
-              <span class="tag"><%= category.name %></span>
-            <% end %>
-          </div>
+  
+      <div class="response-table-wrap">
+        <% if @survey_responses.any? %>
+          <table class="response-table">
+            <thead>
+              <tr>
+                <th scope="col">Participant Case</th>
+                <th scope="col">Verbatim Response</th>
+                <th scope="col">Researcher Codes</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tbody>
+              <% @survey_responses.each do |survey_response| %>
+                <%= render partial: "survey_responses/form", locals: { survey_response: survey_response, embedded_in: "survey_item" } %>
+              <% end %>
+            </tbody>
+          </table>
         <% else %>
-          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
+          No survey responses have been loaded.
         <% end %>
-      </details>
-    </section>
-  </aside>
-</section>
+      </div>
+    </div>
+    <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
+      <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo } %>
+      <section class="sidebar-card">
+        <details class="sidebar-disclosure" open>
+          <summary class="sidebar-card-title disclosure-title">
+            Attached Categories
+          </summary>
+          <% if @categories.any? %>
+            <div class="category-tags collapsed-tags">
+              <% @categories.each do |category| %>
+                <span class="tag"><%= category.name %></span>
+              <% end %>
+            </div>
+          <% else %>
+            <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
+          <% end %>
+        </details>
+      </section>
+    </aside>
+  </section>
+<% end %>

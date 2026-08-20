@@ -11,9 +11,18 @@
 		</div>
 	</div>
 
-	<nav class="top-nav" id="top-nav" aria-label="Utility navigation">
-		<a href="#" class="button">TMI-WEB Instructional Guides</a>
-	</nav>
+  <nav class="top-nav" id="top-nav" aria-label="Utility navigation">
+    <label class="visually-hidden" for="site-search-input">Search TMI-WEB</label>
+
+    <div class="site-search-control">
+      <%= form_with model: Search.new(""), data: {turbo: false} do |f| %>
+        <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "off", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
+        <%= f.submit "Search", class: "site-search-submit" %>
+      <% end %>
+    </div>
+    <%= link_to "TMI-WEB instructional guides", "#", class: "button", target: "_blank", rel: "noopener noreferrer" %>
+  </nav>
+
 	<button class="mobile-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">☰</button>
 </header>
 
@@ -22,7 +31,7 @@
 	<ul>
 		<li><div class="mobile-divider"></div></li>
 		<li><div class="mobile-project-label">Active Project:</div></li>
-		<li><%= link_to "Dashboard", projects_path %></li>
+		<li><%= link_to "Dashboard", project_path(@project) %></li>
 		<li><%= link_to "Cases", personas_path %></li>
 		<li><%= link_to "Survey Items", survey_items_path %></li>
 		<li><a href="#">Code Metrics</a></li>
@@ -36,24 +45,25 @@
 
 <nav class="content-nav" aria-label="Active project navigation">
   <% active_nav = content_for?(:active_nav) && content_for(:active_nav) %>
-	<ul>
-		<li><span class="tabs-label">Active Project → </span></li>
-		<li class="<%= active_nav == "dashboard" ? 'active-nav' : '' %>"><%= link_to "Dashboard", projects_path %></li>
-		<li class="<%= active_nav == "cases" ? 'active-nav' : '' %>"><%= link_to "Cases", personas_path %></li>
-		<li class="<%= active_nav == "survey_items" ? 'active-nav' : '' %>"><%= link_to "Survey Items", survey_items_path %></li>
-		<li class="<%= active_nav == "code_metrics" ? 'active-nav' : '' %>"><%= link_to "Code Metrics", code_metrics_path %></li>
-		<li class="<%= active_nav == "codes" ? 'active-nav' : '' %>"><a href="#">Codes</a></li>
-		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><%= link_to "Categories", categories_path %></li>
-		<li class="<%= active_nav == "themes" ? 'active-nav' : '' %>"><a href="#">Themes</a></li>
-    <li class="<%= active_nav == "journal" ? 'active-nav' : '' %>"><%= link_to "Journal", journal_path(Journal.new) %></li>
-    <li class="<%= active_nav == "search" ? 'active-nav' : '' %>"><%= link_to "Search", searches_path %></li>
-		<li class="<%= active_nav == "graph" ? 'active-nav' : '' %>"><a href="#">Graph</a></li>
-	</ul>
+	<div class="tabs">
+    <div class="nav-group" role="group" aria-label="Project">
+      <%= link_to "Dashboard", project_path(@project), class: active_nav == "dashboard" ? 'active-nav' : '' %>
+      <%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "configure" ? 'active-nav' : '' %>
+    </div>
+    <div class="nav-group" role="group" aria-label="Coding pathways">
+      <%= link_to "Code Individual Cases", personas_path, class: active_nav == "cases" ? 'active-nav' : '' %>
+      <%= link_to "Code Responses by Question", survey_items_path, class: active_nav == "survey_items" ? 'active-nav' : '' %>
+    </div>
+    <div class="nav-group" role="group" aria-label="Analysis">
+      <a href="#">Codes</a>
+      <a href="#">Categories</a>
+      <a href="#">Themes</a>
+    </div>
+    <div class="nav-group" role="group" aria-label="Researcher">
+      <%= link_to "Journal", journal_path(Journal.new) %>
+    </div>
+    <!--div class="nav-group" role="group" aria-label="Visualization">
+      <span class="unavailable-link" aria-disabled="true" title="This feature is not available in the current prototype">Launch Graph <span aria-hidden="true">↗</span></span>
+    </div-->
+  </div>
 </nav>
-
-<%- if content_for?(:title_label) %>
-	<section class="subpage-header">
-		<div class="subpage-label"><%= content_for?(:title_label) ? content_for(:title_label) : "" %></div>
-		<h2 class="subpage-title"><%= content_for?(:title_headline) ? content_for(:title_headline) : content_for(:title) %></h2>
-	</section>
-<%- end %>

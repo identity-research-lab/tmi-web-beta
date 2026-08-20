@@ -8,17 +8,16 @@
     </div>
     <h1 class="app-title">Search</h1>
     <p class="app-description">
-      <span class="highlight">Instr</span>uctions.
     </p>
   </div>
 </section>
 
-<section class="dashboard-section">
+<section class="app-section">
   <div>
     <h2 class="workspace-title">Full text search</h2>
     <%= form_with model: Search.new(@search.query), data: {turbo: false} do |f| %>
-      <%= f.text_field :query %>
-      <%= f.submit "Search", id: "button button-secondary small" %>
+      <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "off", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
+      <%= f.submit "Search", class: "site-search-submit" %>
     <% end %>
   </div>
 </section>

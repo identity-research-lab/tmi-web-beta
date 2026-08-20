@@ -4,38 +4,44 @@
 			<div class="footer-heading">TMI-WEB</div>
 			<p class="footer-text">Ethically open sourced with the <%= link_to "Hippocratic License (HL3-CORE)", "https://firstdonoharm.dev/version/3/0/core.html" %>. <a href="https://github.com/identity-research-lab/tmi-web-beta">Source code is freely available for reading, remixing, and reusing.</a></p>
 		</div>
-		<div class="footer-column">
-      <ul>
-        <li class="footer-heading">Active Project</li>
-        <li><%= link_to "Dashboard", projects_path %></li>
-        <li><%= link_to "Cases", personas_path %></li>
-        <li><%= link_to "Survey Items", survey_items_path %></li>
-        <li><%= link_to "Code Metrics", code_metrics_path %></li>
-        <li><%= link_to "Codes", "#" %></li>
-        <li><%= link_to "Categories", "#" %></li>
-        <li><%= link_to "Themes", "#" %></li>
-        <li><%= link_to "Journal", journal_path(Journal.new) %></li>
-        <li><%= link_to "Graph", "#" %></li>
-        <li><%= link_to "Search", "#" %></li>
-      </ul>
-		</div>
+		<nav class="footer-column" aria-label="Active Project">
+    
+      <div class="footer-heading">Active Project</div>
+      <div class="footer-nav-group">
+        <span class="footer-nav-group-label">Project</span>
+        <%= link_to "Dashboard", project_path(@project) %>
+        <%= link_to "Project Data", edit_project_path(@project) %>
+      </div>
+      <div class="footer-nav-group">
+        <span class="footer-nav-group-label">Coding Pathways</span>
+        <%= link_to "Code Individual Cases", personas_path %>
+        <%= link_to "Code Responses by Question", survey_items_path %>
+      </div>
+      <div class="footer-nav-group">
+        <span class="footer-nav-group-label">Analysis</span>
+        <%= link_to "Codes", code_metrics_path %>
+        <%= link_to "Categories", "#" %>
+        <%= link_to "Themes", "#" %>
+      </div>
+      <div class="footer-nav-group">
+        <%= link_to "Journal", journal_path(Journal.new) %>
+        <%= link_to "Search", "#" %>
+      </div>
+		</nav>
 
-		<div class="footer-column">
-      <ul>
-        <li class="footer-heading">Information</li>
-        <li><%= link_to "About", about_path %></li>
-        <li><%= link_to "Use Cases", use_cases_path %></li>
-        <li><%= link_to "Contribute", contribute_path %></li>
-        <li><%= link_to "Contact", contact_path %></li>
-      </ul>
-		</div>
+		<nav class="footer-column" aria-label="Information">
+      <div class="footer-heading">Information</div>
+      <%= link_to "About", about_path %>
+      <%= link_to "Use Cases", use_cases_path %>
+      <%= link_to "Contribute", contribute_path %>
+      <%= link_to "Contact", contact_path %>
+		</nav>
 
     <div class="footer-column">
-      <ul>
-        <li class="footer-heading">Resources</li>
-        <li><%= link_to "Instructional Guides", "#" %></li>
-        <li><%= link_to "Scholarship", "#" %></li>
-      </ul>
+      <div class="footer-heading">Resources</div>
+      <%= link_to "Instructional Guides", "#" %>
+      <%= link_to "Scholarship", "#" %>
+     </ul>
     </div>
 	</div>
 

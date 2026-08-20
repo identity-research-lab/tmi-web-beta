@@ -15,5 +15,9 @@
  *= require fonts
  *= require icons
  *= require styles
+ *= require styles-analysis
+ *= require styles-categories-themes
+ *= require styles-manage-project
+ *= require styles-style-guide
  */
 

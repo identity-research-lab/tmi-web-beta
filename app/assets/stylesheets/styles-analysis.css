@@ -1,0 +1,271 @@
+/*
+ * TMI-WEB coding and metrics styles
+ *
+ * Page-specific presentation for coding pathways and code metrics (pages 07–11).
+ * Shared interface components are defined in styles.css.
+ */
+
+/* Coding readiness */
+
+/* Coding readiness states */
+
+.coding-readiness-page [data-coding-readiness-states] {
+  display: none;
+}
+
+.coding-readiness-page[data-coding-readiness="setup"] [data-coding-readiness-states~="setup"],
+.coding-readiness-page[data-coding-readiness="ready"] [data-coding-readiness-states~="ready"],
+.coding-readiness-page[data-coding-readiness="attention"] [data-coding-readiness-states~="attention"] {
+  display: block;
+}
+
+.coding-readiness-page[data-coding-readiness="ready"] .app-module-summary[data-coding-readiness-states~="ready"],
+.coding-readiness-page[data-coding-readiness="ready"] .app-layout[data-coding-readiness-states~="ready"] {
+  display: grid;
+}
+
+.metrics-state-page [data-metrics-states] {
+  display: none;
+}
+
+.metrics-state-page[data-metrics-state="setup"] [data-metrics-states~="setup"],
+.metrics-state-page[data-metrics-state="empty"] [data-metrics-states~="empty"],
+.metrics-state-page[data-metrics-state="question"] [data-metrics-states~="question"],
+.metrics-state-page[data-metrics-state="case"] [data-metrics-states~="case"] {
+  display: block;
+}
+
+.metrics-state-page[data-metrics-state="question"] .survey-code-selector[data-metrics-states~="question"],
+.metrics-state-page[data-metrics-state="case"] .survey-code-selector[data-metrics-states~="case"],
+.metrics-state-page[data-metrics-state="question"] .code-metrics-layout[data-metrics-states~="question"],
+.metrics-state-page[data-metrics-state="case"] .code-metrics-layout[data-metrics-states~="case"],
+.metrics-state-page[data-metrics-state="question"] .metrics-scope-switcher[data-metrics-states~="question"],
+.metrics-state-page[data-metrics-state="case"] .metrics-scope-switcher[data-metrics-states~="case"] {
+  display: grid;
+}
+
+.metrics-state-page[data-metrics-state="question"] .frequency-list[data-metrics-states~="question"],
+.metrics-state-page[data-metrics-state="case"] .frequency-list[data-metrics-states~="case"] {
+  display: flex;
+}
+
+.metrics-state-page[data-metrics-state="question"] .excerpt-list[data-metrics-states~="question"],
+.metrics-state-page[data-metrics-state="case"] .excerpt-list[data-metrics-states~="case"] {
+  display: grid;
+}
+
+.coding-readiness-gate {
+  padding: 3rem 4rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-page);
+}
+
+.coding-readiness-gate .workspace-note {
+  max-width: 720px;
+  margin-top: 0.75rem;
+}
+
+.metrics-context-panel {
+  box-sizing: border-box;
+  min-height: 11.5rem;
+}
+
+.app-description-flush {
+  margin-top: 0;
+}
+
+.coding-readiness-gate .button {
+  margin-top: 1.5rem;
+}
+
+.coding-readiness-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.coding-readiness-actions .button {
+  margin-top: 0;
+}
+
+.coding-readiness-gate.attention {
+  border-color: var(--status-danger-border);
+  background: var(--status-danger-surface);
+  color: var(--status-danger-text);
+}
+
+@media (max-width: 900px) {
+  .prototype-state-toolbar {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+  }
+
+  .coding-readiness-gate {
+    padding: 2rem 1.5rem;
+  }
+}
+
+.metrics-scope-switcher {
+  grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 4rem;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-page);
+}
+
+.metrics-scope-switcher .workspace-note {
+  margin-top: 0.75rem;
+}
+
+.metrics-scope-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.metrics-scope-button {
+  display: flex;
+  min-height: 112px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  background: var(--surface-subtle);
+  color: var(--text-body);
+  font: inherit;
+  font-size: var(--font-size-body-small);
+  line-height: var(--line-height-body-small);
+  text-align: left;
+  cursor: pointer;
+}
+
+.metrics-scope-button-title {
+  color: var(--text-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+}
+
+.metrics-scope-button.is-selected {
+  border-color: var(--button-primary-background);
+  background: var(--button-primary-background);
+  color: var(--color-gray-350);
+}
+
+.metrics-scope-button.is-selected .metrics-scope-button-title {
+  color: var(--button-primary-text);
+}
+
+.survey-code-selector {
+  display: grid;
+  grid-template-columns:
+    minmax(260px, 0.9fr)
+    minmax(320px, 1.3fr)
+    auto;
+  align-items: start;
+  gap: 2rem;
+  padding: 2rem 4rem;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.survey-code-control,
+.survey-question-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.survey-code-control .app-select {
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.survey-question-preview p {
+  margin: 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body-small);
+  color: var(--text-body);
+}
+
+/* Code metrics */
+
+.code-metrics-summary {
+  padding: 2rem 4rem;
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.code-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 1rem;
+  max-width: 900px;
+  margin-top: 1.5rem;
+}
+
+.code-metrics-item {
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.code-metrics-label {
+  display: block;
+  margin: 0 0 0.35rem;
+}
+
+.code-metrics-value {
+  display: block;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body-small);
+}
+
+.code-metrics-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 2rem;
+  padding: 3rem 4rem;
+}
+
+.code-metrics-main {
+  min-width: 0;
+}
+
+.code-metrics-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .metrics-scope-switcher,
+  .survey-code-selector,
+  .code-metrics-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .metrics-scope-switcher,
+  .survey-code-selector,
+  .code-metrics-summary,
+  .code-metrics-layout {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .code-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .metrics-scope-actions,
+  .code-metrics-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

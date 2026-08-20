@@ -5,41 +5,104 @@
 
   <div class="app-header-copy">
     <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Question</span>
+      <%= @project.name %> · <span class="app-label-dense">Question-centered coding pathway</span>
     </div>
-    <h1 class="app-title">All Survey Items</h1>
+    <h1 class="app-title">Responses by question</h1>
     <p class="app-description">
-      Enter the dataset through individual survey items/questions. Review complete question text, response coverage, coding progress, and cross-case response patterns. Click on an individual survey item to review participant responses, revise codes, and explore emergent thematic relationships across the dataset.
+      Go deep into interview or survey responses. Enter the dataset through the questions. Review complete question text, response coverage, coding progress, and cross-case response patterns. Select a question to review participant responses, revise codes, and explore emergent thematic relationships across the dataset.
     </p>
   </div>
 
   <div>
-    <aside class="app-header-panel" aria-label="Project status summary">
-      <div class="app-panel-title">Dataset Status</div>
-      <div class="app-stats-grid">
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @question_count %></span>
-          <span class="app-stat-label">Questions</span>
+    <% unless @project.has_pending_changes? %>
+      <aside class="app-header-panel" aria-label="Project status summary">
+        <div class="app-panel-title">Response Dataset</div>
+        <div class="app-stats-grid">
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @question_count %></span>
+            <span class="app-stat-label">Questions</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @responses_count %></span>
+            <span class="app-stat-label">Responses</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @identities_count %></span>
+            <span class="app-stat-label">Identity Dimensions</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @coded_experiences_count %></span>
+            <span class="app-stat-label">Coded Experiences</span>
+          </div>
         </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @responses_count %></span>
-          <span class="app-stat-label">Responses</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @identities_count %></span>
-          <span class="app-stat-label">Identity Dimensions</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @coded_experiences_count %></span>
-          <span class="app-stat-label">Coded Experiences</span>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    <% end %>
   </div>
 
 </section>
 
-<% if @survey_items.any? %>
+<% if @project.active_fields.count == 0 %>
+  <section class="coding-readiness-gate" data-coding-readiness-states="setup">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data setup required</h2>
+    <p class="workspace-note">Add project data and confirm the analysis schema before entering the Cases coding pathway.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @project.has_pending_changes %>
+  <section class="coding-readiness-gate attention" data-coding-readiness-states="attention">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data needs attention</h2>
+    <p class="workspace-note">Review pending data or schema issues before continuing participant-centered coding.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @survey_items.any? %>
+ <section class="app-toolbar search-toolbar" role="search" aria-label="Search, filter, and sort responses by question">
+    <div class="app-toolbar-left search-controls">
+      <label class="toolbar-field search-field">
+        <span class="toolbar-label search-label">Search questions</span>
+        <input class="app-input search-input" id="question-search" type="search" placeholder="Search question numbers, titles, and text" aria-controls="responses-by-question-table">
+      </label>
+      <button class="button secondary small search-clear" type="button" aria-controls="responses-by-question-table" disabled>
+        Clear search
+      </button>
+    
+      <label class="toolbar-field search-filter">
+        <span class="toolbar-label">Question type</span>
+        <select class="app-select" id="question-type-filter" aria-controls="responses-by-question-table">
+          <option>All question types</option>
+          <option>Identity dimensions</option>
+          <option>Lived experiences</option>
+          <option>Contexts</option>
+        </select>
+      </label>
+    
+      <label class="toolbar-field search-filter">
+        <span class="toolbar-label">Coding status</span>
+        <select class="app-select" id="question-status-filter" aria-controls="responses-by-question-table">
+          <option>All statuses</option>
+          <option>Not started</option>
+          <option>In progress</option>
+          <option>Complete</option>
+        </select>
+      </label>
+    
+      <label class="toolbar-field search-sort">
+        <span class="toolbar-label">Sort by</span>
+        <select class="app-select" id="question-sort" aria-controls="responses-by-question-table">
+          <option>Question number: low to high</option>
+          <option>Question number: high to low</option>
+          <option>Responses: most to least</option>
+          <option>Responses: least to most</option>
+          <option>Assigned codes: most to least</option>
+          <option>Assigned codes: least to most</option>
+        </select>
+      </label>
+  </div>
+  <div class="app-toolbar-right">
+    <p class="search-result-count" aria-live="polite"><%= @responses_count %> <%= "response".pluralize(@responses_count) %></p>
+  </div>
+ </section>
+
   <section class="app-section">
     <div class="section-label">
       Survey Items

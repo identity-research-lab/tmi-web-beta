@@ -36,37 +36,22 @@
 
 <nav class="content-nav" aria-label="Active project navigation">
   <% active_nav = content_for?(:active_nav) && content_for(:active_nav) %>
-	<ul>
-		<li><span class="tabs-label">Active Project → </span></li>
-		<li class="<%= active_nav == "dashboard" ? 'active-nav' : '' %>"><%= link_to "Dashboard", projects_path %></li>
-		<li class="<%= active_nav == "cases" ? 'active-nav' : '' %>"><%= link_to "Cases", personas_path %></li>
-		<li class="<%= active_nav == "survey_items" ? 'active-nav' : '' %>"><%= link_to "Survey Items", survey_items_path %></li>
-		<li class="<%= active_nav == "code_metrics" ? 'active-nav' : '' %>"><%= link_to "Code Metrics", code_metrics_path %></li>
-		<li class="<%= active_nav == "codes" ? 'active-nav' : '' %>"><a href="#">Codes</a></li>
-		<li class="<%= active_nav == "categories" ? 'active-nav' : '' %>"><%= link_to "Categories", categories_path %></li>
-		<li class="<%= active_nav == "themes" ? 'active-nav' : '' %>"><a href="#">Themes</a></li>
-    <li class="<%= active_nav == "journal" ? 'active-nav' : '' %>"><%= link_to "Journal", journal_path(Journal.new) %></li>
-    <li class="<%= active_nav == "search" ? 'active-nav' : '' %>"><%= link_to "Search", searches_path %></li>
-		<li class="<%= active_nav == "graph" ? 'active-nav' : '' %>"><a href="#">Graph</a></li>
-	</ul>
-</nav>
-<nav class="content-nav" aria-label="Active project navigation">
 	<div class="tabs">
-		<div class="nav-group" role="group" aria-label="Project">
-			<%= link_to "Dashboard", projects_path, class: active_nav == "dashboard" ? 'active-nav' : '' %>
-			<%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "project-data" ? 'active-nav' : '' %>
-		</div>
-		<div class="nav-group" role="group" aria-label="Coding pathways">
-			<%= link_to "Code Individual Cases", personas_path, class: active_nav == "cases" ? 'active-nav' : '' %>
-			<%= link_to "Code Responses by Question", survey_items_path, class: active_nav == "survey-items" ? 'active-nav' : '' %>
-		</div>
-		<div class="nav-group" role="group" aria-label="Analysis">
-			<a href="#">Codes</a>
-			<%= link_to "Categories", categories_path, class: active_nav == "codes" ? 'active-nav' : '' %>
-			<a href="#">Themes</a>
-		</div>
-		<div class="nav-group" role="group" aria-label="Visualization">
-			<span class="unavailable-link" aria-disabled="true" title="This feature is not available in the current prototype">Launch Graph <span aria-hidden="true">↗</span></span>
-		</div>
-	</div>
+    <div class="nav-group" role="group" aria-label="Project">
+      <%= link_to "Dashboard", projects_path, class: active_nav == "dashboard" ? 'active-nav' : '' %>
+      <%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "dashboard" ? 'active-nav' : '' %>
+    </div>
+    <div class="nav-group" role="group" aria-label="Coding pathways">
+      <%= link_to "Code Individual Cases", personas_path, class: active_nav == "cases" ? 'active-nav' : '' %>
+      <%= link_to "Code Responses by Question", survey_items_path, class: active_nav == "survey_items" ? 'active-nav' : '' %>
+    </div>
+    <div class="nav-group" role="group" aria-label="Analysis">
+      <a href="11code-metrics.html">Codes</a>
+      <a href="12categories.html">Categories</a>
+      <a href="14themes.html">Themes</a>
+    </div>
+    <div class="nav-group" role="group" aria-label="Search">
+      <%= link_to "Search", searches_path, class: active_nav == "search" ? 'active-nav' : '' %>
+    </div>
+  </div>
 </nav>

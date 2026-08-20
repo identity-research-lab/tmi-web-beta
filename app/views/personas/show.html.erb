@@ -115,10 +115,7 @@
       </div>
     </div>
     <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
-      <section id="memos" class="sidebar-card white">
-        <div class="sidebar-card-title">Researcher Memos</div>
-        <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo } %>
-      </section>
+      <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo } %>
       <section class="sidebar-card">
         <details class="sidebar-disclosure" open>
           <summary class="sidebar-card-title disclosure-title">

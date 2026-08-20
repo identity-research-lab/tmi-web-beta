@@ -180,11 +180,8 @@
       </ul>
     </div>
   </div>
-    <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
-    <section id="memos" class="sidebar-card white">
-      <div class="sidebar-card-title">Researcher Memos</div>
-      <%= render partial: "memos/feed", locals: { memos: @memos, memo: nil } %>
-    </section>
+  <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
+    <%= render partial: "memos/feed", locals: { memos: @memos, memo: nil } %>
   </aside>
 </section>
 

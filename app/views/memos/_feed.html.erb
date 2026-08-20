@@ -1,20 +1,19 @@
 <%= turbo_frame_tag "memo-feed" do %>
-  <ul class="memo-feed">
+  <section id="memos" class="sidebar-card white researcher-memos">
+    <h2 class="sidebar-card-title">Researcher memos</h2>
     <% if memos.present? %>
       <% memos.each do |existing_memo| %>
         <%= render partial: "memos/show", locals: { memo: existing_memo } %>
       <% end %>
     <% else %>
-      <li class="memo-entry">
+      <div class="memo-entry">
         <p class="memo-text">
           No recent memos.
         </p>
-      </li>
+      </div>
     <% end %>
     <% if memo.present? %>
-      <li class="memo-entry">
-        <%= render partial: "/memos/form", locals: { memo: memo } %>
-      </li>
+      <%= render partial: "/memos/form", locals: { memo: memo } %>
     <% end %>
-  </ul>
+  </section>
 <% end %>

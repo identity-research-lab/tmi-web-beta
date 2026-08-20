@@ -79,7 +79,7 @@
       var(--color-gray-040) 24px,
       var(--color-gray-075) 24px,
       var(--color-gray-075) 48px
-    );
+    ) !important;
 }
 
 /* Dashboard prototype states */

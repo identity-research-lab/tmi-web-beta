@@ -1,54 +1,64 @@
 <%- title "Project Dashboard" %>
 <%- active_nav "dashboard" %>
 
-<section class="app-header dashboard-hero">
+<section class="app-header app-header--project">
 
   <div class="app-header-copy">
-    <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
-    </div>
-    <h1 class="app-title">Project Dashboard</h1>
+    <div class="app-label">Project Dashboard</div>
+    <h1 class="app-title" id="dashboard-project-name"><%= @project.name %></h1>
+    
     <p class="app-description">
-      Welcome to your TMI-WEB project dashboard. All TMI-WEB projects begin with the <a href="">TMI-WEB Survey Template</a>. The template can be used with survey platforms such as Google Forms, Qualtrics, or custom survey systems, and supports intersectional analysis by organizing identity dimensions, experiences, and contextual research data into a shared project structure.
+      <%= @project.description %>
     </p>
-    <p class="app-description">
-      Use this dashboard to start a new project by uploading a TMI-WEB Survey Template (csv), merge updated project data into an active project, review the current state of analysis, enter the dataset through <a href="">participant-centered coding workflows</a> or <a href="">question-centered coding workflows</a>, or continue developing interpretive elements such as codes, categories, themes, and analytical memos.
-    </p>
+    
+    <dl class="dashboard-project-meta">
+      <div><dt>Researcher</dt><dd id="dashboard-project-attribution"><%= @researcher.name %></dd></div>
+      <div><dt>Organization</dt><dd><%= @researcher.affiliation %></dd></div>
+    </dl>
+    
   </div>
 
   <div>
     <aside class="app-header-panel" aria-label="Project status summary">
-      <div class="app-panel-title">Active Project Status</div>
-      <div class="app-stats-grid">
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @case_count %></span>
-          <span class="app-stat-label">Cases</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @survey_response_count %></span>
-          <span class="app-stat-label">Unique Responses</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @code_count %></span>
-          <span class="app-stat-label">Applied Codes</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @category_count %></span>
-          <span class="app-stat-label">Categories</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @theme_count %></span>
-          <span class="app-stat-label">Themes</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @memo_count %></span>
-          <span class="app-stat-label">Researcher memos</span>
-        </div>
+      <div class="app-panel-title">Project Status</div>
+      <div class="dashboard-readiness-state" data-dashboard-states="setup">
+        <span class="status-pill"><%= @project.status %></span>
+        
+        <% if @project.status == "Setup required" %>
+          <p>Project data and the analysis schema must be configured before coding can begin.</p>
+          <%= link_to "Manage project data", edit_project_path(@project), class: "button" %>
+        <% elsif @project.status == "Ready for analysis" %>
+          <p>Project data is configured. Choose a coding pathway to begin analysis.</p>
+        <% else %>
+          <div class="app-stats-grid">
+            <div class="app-stat">
+              <span class="app-stat-value"><%= @case_count %></span>
+              <span class="app-stat-label">Cases</span>
+            </div>
+            <div class="app-stat">
+              <span class="app-stat-value"><%= @survey_response_count %></span>
+              <span class="app-stat-label">Unique Responses</span>
+            </div>
+            <div class="app-stat">
+              <span class="app-stat-value"><%= @code_count %></span>
+              <span class="app-stat-label">Applied Codes</span>
+            </div>
+            <div class="app-stat">
+              <span class="app-stat-value"><%= @category_count %></span>
+              <span class="app-stat-label">Categories</span>
+            </div>
+            <div class="app-stat">
+              <span class="app-stat-value"><%= @theme_count %></span>
+              <span class="app-stat-label">Themes</span>
+            </div>
+            <div class="app-stat">
+              <span class="app-stat-value"><%= @memo_count %></span>
+              <span class="app-stat-label">Researcher memos</span>
+            </div>
+          </div>
+        <% end %>
       </div>
     </aside>
-    <ul class="dashboard-actions">
-      <li><%= link_to "Manage Project Data", edit_project_path(@project), class: "button" %></li>
-    </ul>
   </div>
 
 </section>

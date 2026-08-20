@@ -48,7 +48,7 @@
 	<div class="tabs">
     <div class="nav-group" role="group" aria-label="Project">
       <%= link_to "Dashboard", project_path(@project), class: active_nav == "dashboard" ? 'active-nav' : '' %>
-      <%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "dashboard" ? 'active-nav' : '' %>
+      <%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "configure" ? 'active-nav' : '' %>
     </div>
     <div class="nav-group" role="group" aria-label="Coding pathways">
       <%= link_to "Code Individual Cases", personas_path, class: active_nav == "cases" ? 'active-nav' : '' %>
@@ -58,6 +58,12 @@
       <a href="11code-metrics.html">Codes</a>
       <a href="12categories.html">Categories</a>
       <a href="14themes.html">Themes</a>
+    </div>
+    <div class="nav-group" role="group" aria-label="Researcher">
+      <%= link_to "Journal", journal_path(Journal.new) %>
+    </div>
+    <div class="nav-group" role="group" aria-label="Visualization">
+      <span class="unavailable-link" aria-disabled="true" title="This feature is not available in the current prototype">Launch Graph <span aria-hidden="true">↗</span></span>
     </div>
   </div>
 </nav>

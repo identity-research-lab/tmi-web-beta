@@ -9,7 +9,7 @@ class PersonasController < ApplicationController
     @completed_case_count = Persona.completed.count
     @code_count = Code.count
     @last_active_code = Code.all.order(:updated_at).limit(1).first
-    @last_activity = @last_active_code && @last_active_code.updated_at || @project.updated_at
+    @last_activity = [@last_active_code && @last_active_code.updated_at || @project.updated_at, @project.updated_at].sort.last
   end
 
   def show

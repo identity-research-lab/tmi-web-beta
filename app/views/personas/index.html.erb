@@ -14,46 +14,62 @@
   </div>
 
   <div>
-    <aside class="app-header-panel" aria-label="Project status summary">
-      <div class="app-panel-title">Dataset Status</div>
-      <div class="app-stats-grid">
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @case_count %></span>
-          <span class="app-stat-label">Cases</span>
+    <% unless @project.has_pending_changes? %>
+      <aside class="app-header-panel" aria-label="Project status summary">
+        <div class="app-panel-title">Dataset Status</div>
+        <div class="app-stats-grid">
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @case_count %></span>
+            <span class="app-stat-label">Cases</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @uncoded_case_count %></span>
+            <span class="app-stat-label">Uncoded</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @in_progress_case_count %></span>
+            <span class="app-stat-label">In Progress</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @completed_case_count %></span>
+            <span class="app-stat-label">Completed</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value"><%= @code_count %></span>
+            <span class="app-stat-label">Applied Codes</span>
+          </div>
+          <div class="app-stat">
+            <span class="app-stat-value">
+              <% if @last_activity > DateTime.now - 1.day %>
+                <%= distance_of_time_in_words(@last_activity, DateTime.now) %> ago
+              <% else %>
+                <%= @last_activity.strftime("%B %e, %Y") %>
+              <% end %>
+            </span>
+            <span class="app-stat-label">Latest Activity</span>
+          </div>
         </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @uncoded_case_count %></span>
-          <span class="app-stat-label">Uncoded</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @in_progress_case_count %></span>
-          <span class="app-stat-label">In Progress</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @completed_case_count %></span>
-          <span class="app-stat-label">Completed</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value"><%= @code_count %></span>
-          <span class="app-stat-label">Applied Codes</span>
-        </div>
-        <div class="app-stat">
-          <span class="app-stat-value">
-            <% if @last_activity > DateTime.now - 1.day %>
-              <%= @last_activity.strftime("%I:%M %p") %> UTC
-            <% else %>
-              <%= @last_activity.strftime("%B %e, %Y") %>
-            <% end %>
-          </span>
-          <span class="app-stat-label">Latest Activity</span>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    <% end %>
   </div>
 
 </section>
 
-<% if @personas.any? %>
+<% if @project.active_fields.count == 0 %>
+  <section class="coding-readiness-gate" data-coding-readiness-states="setup">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data setup required</h2>
+    <p class="workspace-note">Add project data and confirm the analysis schema before entering the Cases coding pathway.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @project.has_pending_changes %>
+  <section class="coding-readiness-gate attention" data-coding-readiness-states="attention">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data needs attention</h2>
+    <p class="workspace-note">Review pending data or schema issues before continuing participant-centered coding.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @personas.any? %>
   <section class="app-section">
     <div class="section-label">
       Cases / Personas

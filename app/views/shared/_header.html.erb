@@ -11,9 +11,18 @@
 		</div>
 	</div>
 
-	<nav class="top-nav" id="top-nav" aria-label="Utility navigation">
-		<a href="#" class="button">TMI-WEB Instructional Guides</a>
-	</nav>
+  <nav class="top-nav" id="top-nav" aria-label="Utility navigation">
+    <label class="visually-hidden" for="site-search-input">Search TMI-WEB</label>
+
+    <div class="site-search-control">
+      <%= form_with model: Search.new(""), data: {turbo: false} do |f| %>
+        <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "off", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
+        <%= f.submit "Search", class: "site-search-submit" %>
+      <% end %>
+    </div>
+    <%= link_to "TMI-WEB instructional guides", "#", class: "button", target: "_blank", rel: "noopener noreferrer" %>
+  </nav>
+
 	<button class="mobile-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="top-nav">☰</button>
 </header>
 
@@ -49,9 +58,6 @@
       <a href="11code-metrics.html">Codes</a>
       <a href="12categories.html">Categories</a>
       <a href="14themes.html">Themes</a>
-    </div>
-    <div class="nav-group" role="group" aria-label="Search">
-      <%= link_to "Search", searches_path, class: active_nav == "search" ? 'active-nav' : '' %>
     </div>
   </div>
 </nav>

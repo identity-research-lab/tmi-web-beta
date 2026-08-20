@@ -301,6 +301,9 @@ p {
   font-size: var(--font-size-navigation);
 }
 
+.highlight {
+  background-color: var(--color-olive-400);
+}
 button,
 input,
 select,

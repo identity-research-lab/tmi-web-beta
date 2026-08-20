@@ -59,7 +59,7 @@ class Project
   end
 
   def status
-    return "Setup required" unless active_fields.any?
+    return "Setup required" unless active_fields.any? && SurveyResponse.count > 0
     return "Ready for analysis" unless Code.count > 0
     return "Analysis underway"
   end

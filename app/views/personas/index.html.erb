@@ -70,6 +70,40 @@
     <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
   </section>
 <% elsif @personas.any? %>
+
+  <section class="app-toolbar search-toolbar" role="search" aria-label="Search, filter, and sort individual cases">
+    <div class="app-toolbar-left search-controls">
+      <label class="toolbar-field search-field">
+        <span class="toolbar-label search-label">Search cases</span>
+        <input class="app-input search-input" id="case-search" type="search" placeholder="Search case IDs and identity fields" aria-controls="individual-cases-table">
+      </label>
+      <button class="button secondary small search-clear" type="button" aria-controls="individual-cases-table" disabled>
+        Clear search
+      </button>
+      <label class="toolbar-field search-filter">
+        <span class="toolbar-label">Coding status</span>
+        <select class="app-select" id="case-status-filter" aria-controls="individual-cases-table">
+          <option>All cases</option>
+          <option>Not started</option>
+          <option>In progress</option>
+          <option>Complete</option>
+        </select>
+      </label>
+      <label class="toolbar-field search-sort">
+        <span class="toolbar-label">Sort by</span>
+        <select class="app-select" id="case-sort" aria-controls="individual-cases-table">
+          <option>Case ID: A–Z</option>
+          <option>Case ID: Z–A</option>
+          <option>Assigned codes: most to least</option>
+          <option>Assigned codes: least to most</option>
+        </select>
+      </label>
+    </div>
+    <div class="app-toolbar-right">
+      <p class="search-result-count" aria-live="polite"><%= @case_count %> <%= "case".pluralize(@case_count) %></p>
+    </div>
+  </section>
+
   <section class="app-section">
     <div class="section-label">
       Cases / Personas

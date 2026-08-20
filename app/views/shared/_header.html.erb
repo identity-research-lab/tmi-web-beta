@@ -54,7 +54,7 @@
 	<div class="tabs">
 		<div class="nav-group" role="group" aria-label="Project">
 			<%= link_to "Dashboard", projects_path, class: active_nav == "dashboard" ? 'active-nav' : '' %>
-			<%= link_to "Manage Project Data", edit_project_path, class: active_nav == "project-data" ? 'active-nav' : '' %>
+			<%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "project-data" ? 'active-nav' : '' %>
 		</div>
 		<div class="nav-group" role="group" aria-label="Coding pathways">
 			<%= link_to "Code Individual Cases", personas_path, class: active_nav == "cases" ? 'active-nav' : '' %>

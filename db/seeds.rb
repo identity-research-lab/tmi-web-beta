@@ -11,3 +11,8 @@
 ["Age", "Class", "Race/Ethnicity", "Religion", "Disability", "Neurodiversity", "Gender", "LGBTQIA+ Status", "Pronouns", "Identity"].each do |dimension_name|
   Dimension.find_or_create_by!(name: dimension_name)
 end
+
+researcher = Researcher.create
+project = Project.create(researcher: researcher)
+
+

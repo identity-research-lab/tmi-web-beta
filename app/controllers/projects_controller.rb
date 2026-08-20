@@ -20,6 +20,8 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    @project = Project.last
+    @project ||= Project.create
   end
 
   def edit

@@ -22,7 +22,7 @@
 	<ul>
 		<li><div class="mobile-divider"></div></li>
 		<li><div class="mobile-project-label">Active Project:</div></li>
-		<li><%= link_to "Dashboard", projects_path %></li>
+		<li><%= link_to "Dashboard", project_path(@project) %></li>
 		<li><%= link_to "Cases", personas_path %></li>
 		<li><%= link_to "Survey Items", survey_items_path %></li>
 		<li><a href="#">Code Metrics</a></li>
@@ -38,7 +38,7 @@
   <% active_nav = content_for?(:active_nav) && content_for(:active_nav) %>
 	<div class="tabs">
     <div class="nav-group" role="group" aria-label="Project">
-      <%= link_to "Dashboard", projects_path, class: active_nav == "dashboard" ? 'active-nav' : '' %>
+      <%= link_to "Dashboard", project_path(@project), class: active_nav == "dashboard" ? 'active-nav' : '' %>
       <%= link_to "Manage Project Data", edit_project_path(@project), class: active_nav == "dashboard" ? 'active-nav' : '' %>
     </div>
     <div class="nav-group" role="group" aria-label="Coding pathways">

@@ -1,8 +1,6 @@
 class ProjectsController < ApplicationController
 
-  def index
-    @project = Project.last
-    @project ||= Project.create
+  def show
     @case_count = Persona.count
     @uncoded_case_count = Persona.uncoded.count
     @in_progress_case_count = Persona.in_progress.count
@@ -18,20 +16,11 @@ class ProjectsController < ApplicationController
     @recent_events = Event.all.order(created_at: :desc).limit(4)
   end
 
-  def show
-    @project = Project.find(params[:id])
-    @project = Project.last
-    @project ||= Project.create
-  end
-
   def edit
-    @project = Project.find(params[:id])
     @dimensions_for_select = Dimension.all.order(:name)
   end
 
   def create
-    @project = Project.last
-    @project ||= Project.new
     @project.csv_data = String.new(project_params[:csv_data].read, encoding: 'UTF-8')
     if @project.save
       redirect_to project_path(@project)
@@ -42,7 +31,6 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project = Project.find(params[:id])
     if project_params[:csv_data].present?
       @project.update!(csv_data: String.new(project_params[:csv_data].read, encoding: 'UTF-8'))
       @project.create_survey_items_from_csv

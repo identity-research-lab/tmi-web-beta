@@ -8,7 +8,8 @@ class PersonasController < ApplicationController
     @in_progress_case_count = Persona.in_progress.count
     @completed_case_count = Persona.completed.count
     @code_count = Code.count
-    @category_count = Category.count
+    @last_active_code = Code.all.order(:updated_at).limit(1).first
+    @last_activity = @last_active_code && @last_active_code.updated_at || @project.updated_at
   end
 
   def show

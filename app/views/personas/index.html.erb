@@ -5,11 +5,11 @@
 
   <div class="app-header-copy">
     <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Dashboard</span>
+      <%= @project.name %> · <span class="app-label-dense">Participant-centered coding pathway</span>
     </div>
-    <h1 class="app-title">All Participant Cases</h1>
+    <h1 class="app-title">Individual cases</h1>
     <p class="app-description">
-      Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+      Go deep into individual cases (personas). Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full interview or survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
     </p>
   </div>
 
@@ -38,8 +38,14 @@
           <span class="app-stat-label">Applied Codes</span>
         </div>
         <div class="app-stat">
-          <span class="app-stat-value"><%= @category_count %></span>
-          <span class="app-stat-label">Categories</span>
+          <span class="app-stat-value">
+            <% if @last_activity > DateTime.now - 1.day %>
+              <%= @last_activity.strftime("%I:%M %p") %> UTC
+            <% else %>
+              <%= @last_activity.strftime("%B %e, %Y") %>
+            <% end %>
+          </span>
+          <span class="app-stat-label">Latest Activity</span>
         </div>
       </div>
     </aside>

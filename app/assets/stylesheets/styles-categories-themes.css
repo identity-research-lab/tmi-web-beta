@@ -21,7 +21,7 @@
   background: var(--surface);
 }
 
-.categories-page .category-create-section {
+.category-create-section {
   background: var(--surface);
 }
 
@@ -79,7 +79,7 @@
   gap: 0.65rem;
 }
 
-.categories-page .category-create-label {
+.category-create-label {
   margin: 0;
   color: var(--text-muted);
 }
@@ -967,7 +967,7 @@
 }
 
 /* Workspace typography and target sizes */
-.categories-page .workspace-title,
+.workspace-title,
 .category-detail-page .work-area-heading h2 {
   font-size: var(--font-size-section-title);
   font-weight: var(--font-weight-semibold);
@@ -975,13 +975,13 @@
   letter-spacing: var(--letter-spacing-card-heading);
 }
 
-.categories-page .workspace-note,
+.workspace-note,
 .category-detail-page .work-area-heading p {
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
 }
 
-.categories-page .category-create-help,
+.category-create-help,
 .category-detail-page .origins-cell {
   font-size: var(--font-size-body-small);
   font-weight: var(--font-weight-regular);
@@ -1058,11 +1058,11 @@
 }
 
 /* Library controls and states */
-.categories-page .category-create-layout-single {
+.category-create-layout-single {
   display: block;
 }
 
-.categories-page .category-create-feedback {
+.category-create-feedback {
   margin: 0 1.5rem 1.5rem;
   padding: 0.75rem 1rem;
   border: 1px solid var(--status-info-border);
@@ -1071,7 +1071,7 @@
   font-size: var(--font-size-body-small);
 }
 
-.categories-page .category-library-layout {
+.category-library-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, 0.32fr);
   align-items: start;
@@ -1079,29 +1079,29 @@
   margin-top: 1.5rem;
 }
 
-.categories-page .category-library-memos {
+.category-library-memos {
   min-width: 0;
   grid-column: 2;
   grid-row: 1;
 }
 
-.categories-page .category-library-layout > .category-library-shell {
+.category-library-layout > .category-library-shell {
   grid-column: 1;
   grid-row: 1;
 }
 
-.categories-page .category-library-toolbar {
+.category-library-toolbar {
   margin-bottom: 0.75rem;
   padding: 1rem;
   border: 1px solid var(--border-ui);
   background: var(--surface-subtle);
 }
 
-.categories-page .category-library-clear-search {
+.category-library-clear-search {
   min-height: 44px;
 }
 
-.categories-page .category-library-checkbox {
+.category-library-checkbox {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -1110,60 +1110,60 @@
   font-size: var(--font-size-body-small);
 }
 
-.categories-page .category-library-checkbox input {
+.category-library-checkbox input {
   width: 1.1rem;
   height: 1.1rem;
 }
 
-.categories-page .category-library-status {
+.category-library-status {
   margin: 0;
   color: var(--text-muted);
   font-size: var(--font-size-body-small);
 }
 
-.categories-page .category-pagination {
+.category-pagination {
   margin-top: 1.5rem;
 }
 
-.categories-page .category-pagination .pagination-button:disabled {
+.category-pagination .pagination-button:disabled {
   cursor: not-allowed;
   opacity: 0.4;
 }
 
-.categories-page .category-library-empty {
+.category-library-empty {
   padding: 2.5rem;
   border: 1px dashed var(--border-default);
   background: var(--surface-subtle);
   text-align: center;
 }
 
-.categories-page .category-library-empty p {
+.category-library-empty p {
   margin: 0 0 1.25rem;
   color: var(--text-muted);
 }
 
-.categories-page .category-library-checkbox input:focus-visible {
+.category-library-checkbox input:focus-visible {
   outline: 3px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
 @media (max-width: 900px) {
-  .categories-page .category-library-layout {
+  .category-library-layout {
     grid-template-columns: 1fr;
   }
 
-  .categories-page .category-library-memos,
-  .categories-page .category-library-layout > .category-library-shell {
+  .category-library-memos,
+  .category-library-layout > .category-library-shell {
     width: 100%;
     min-width: 0;
     grid-column: 1;
   }
 
-  .categories-page .category-library-layout > .category-library-shell {
+  .category-library-layout > .category-library-shell {
     grid-row: 1;
   }
 
-  .categories-page .category-library-memos {
+  .category-library-memos {
     grid-row: 2;
   }
 }

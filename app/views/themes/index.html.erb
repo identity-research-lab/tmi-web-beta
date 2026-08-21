@@ -1,0 +1,136 @@
+<%- title "Themes" %>
+<%- active_nav "themes" %>
+
+<section class="app-header dashboard-hero">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Theme Development</span>
+    </div>
+    <h1 class="app-title">Themes</h1>
+    <p class="app-description">
+      Create, review, revise, and remove themes. Themes bring related analytical categories together into higher-level interpretive findings.
+    </p>
+  </div>
+  <aside aria-label="Theme status" class="app-header-panel">
+   <div class="app-panel-title">
+    Theme Status
+   </div>
+   <div class="app-stats-grid">
+    <div class="app-stat">
+     <span class="app-stat-value">
+        <%= @themes.count %>
+     </span>
+     <span class="app-stat-label">
+    Themes
+     </span>
+    </div>
+    <div class="app-stat">
+     <span class="app-stat-value">
+        <%= @categories_count %>
+     </span>
+     <span class="app-stat-label">
+    Project categories
+     </span>
+    </div>
+    <div class="app-stat">
+     <span class="app-stat-value">
+      <%= @assigned_categories_count %>
+     </span>
+     <span class="app-stat-label">
+     Categories assigned to themes
+     </span>
+    </div>
+    <div class="app-stat">
+     <span class="app-stat-value">
+      <%= @unassigned_category_count %>
+     </span>
+     <span class="app-stat-label">
+      Categories not yet assigned
+     </span>
+    </div>
+   </div>
+  </aside>
+ </section>
+
+ <section aria-labelledby="create-theme-title" class="category-create-section">
+
+  <div class="category-create-layout category-create-layout-single">
+    <div class="category-create-workspace">
+    <div class="workspace-title-row category-create-intro-row">
+    <div>
+    <h2 class="workspace-title" id="create-theme-title">
+      Create a new project theme
+    </h2>
+      <p class="workspace-note">
+        Name and describe a theme now, Add and organize categories after it has been created.
+      </p>
+    </div>
+  </div>
+
+ <%= form_with model: Theme.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-form", id: "create-theme-form", aria: { label: "Create a new project theme", describedby: "category-form-note" } do |f| %>
+    <div class="category-create-fields">
+      <div class="category-create-panel category-create-name">
+        <label class="app-label category-create-label" for="new-theme-name">New theme name</label>
+        <%= f.text_field :name, id: "new-theme-name", class: "app-input category-create-input", placeholder: "Enter a theme name", aria: { describedby: "new-category-name-help new-category-name-error" } %>
+        <p class="form-help" id="new-theme-name-help">Required. Use a concise interpretive name that distinguishes this theme from related findings.</p>
+      </div>
+      <div class="category-create-panel category-create-description">
+        <label class="app-label category-create-label" for="new-theme-description">Description</label>
+        <%= f.text_area :description, id: "new-theme-memo", class: "category-create-textarea", placeholder: "Describe the theme and the kinds of categories it may bring together.", aria: { describedby: "new-theme-description-help" } %>
+        <p class="form-help" id="new-theme-description-help">Optional. Explain the theme’s interpretation and the kinds of categories it may connect.</p>
+      </div>
+  </div>
+  <div class="category-create-footer">
+    <%= f.submit "Create new project theme", class: "button apply small category-create-button" %>
+  </div>
+<% end %>
+   
+   <p aria-live="polite" class="category-create-feedback form-success" id="category-create-feedback" hidden role="status" tabindex="-1"></p>
+  </div>
+</section>
+ 
+
+<% if @themes.any? %>
+  <section class="app-section bordered-top themes-list-section">
+    <div class="workspace-title-row">
+      <div>
+        <h2 class="workspace-title">
+          Current themes
+        </h2>
+        <p class="workspace-note">
+          Review theme descriptions and assigned categories. Open a theme to revise its details or manage its categories.
+        </p>
+      </div>
+    </div>
+
+    <div class="category-library-layout">
+
+      <%= render partial: "memos/feed", locals: { memos: Memo.all.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
+
+      <div class="category-library-shell">
+        <div aria-label="Search, filter, and sort themes" class="category-library-toolbar search-toolbar" role="search">
+          <div class="search-controls">
+            <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search themes</span>
+              <input aria-controls="category-list" class="app-input search-input" id="category-search" placeholder="Search names and descriptions" type="search"/>
+            </label>
+            <button aria-controls="category-list" class="button secondary small category-library-clear-search search-clear" disabled id="clear-category-search" type="button">Clear search</button>
+            <label class="toolbar-field search-sort"><span class="toolbar-label">Sort by</span>
+              <select aria-controls="category-list" class="app-select" id="category-sort">
+                <option value="name-asc">Name: A–Z</option>
+                <option value="name-desc">Name: Z–A</option>
+              </select>
+            </label>
+            <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only themes with no assigned categories</label>
+          </div>
+          <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%= pluralize(@themes.count, "theme", ) %></p>
+        </div>
+        <div class="category-list-grid" id="category-list">
+          <% @themes.each do |theme| %>
+            <%= render partial: "themes/card", locals: { theme: theme } %>
+          <% end %>
+        </div>
+      </div>     
+    </div>
+  </section>
+<% end %>

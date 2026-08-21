@@ -1,0 +1,18 @@
+<article aria-labelledby="category-card-title-1" class="category-overview-card" data-code-count="23" data-name="Belonging and affinity">
+  <div class="category-overview-card-content">
+    <h3 class="category-overview-card-title">
+      <%= theme.name %>
+    </h3>
+    <p class="category-overview-card-memo">
+      <%= theme.description %>
+    </p>
+    <div class="category-workspace-footer">
+      <span class="count-badge">
+        <%= "#{theme.categories.count} code".pluralize(theme.categories.count) %> added
+      </span>
+    </div>
+  </div>
+  <div class="category-overview-card-actions">
+    <%= link_to "Manage theme", theme_path(theme), class: "button apply small" %>
+  </div>
+</article>

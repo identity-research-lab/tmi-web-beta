@@ -132,7 +132,7 @@
             </label>
             <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only categories with no assigned codes</label>
           </div>
-          <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status">6 categories</p>
+          <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%= pluralize(@categories.count, "category") %></p>
         </div>
         <div class="category-list-grid" id="category-list">
           <% @categories.each do |category| %>

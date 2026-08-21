@@ -18,4 +18,12 @@ class Category
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :Categorizes, model_class: "Researcher"
 
+  def self.assigned
+    Category.as(:c).query.match("(c)-[]-(:Theme)").return(:c)
+  end
+  
+  def self.unassigned
+    Category.as(:c).query.where("NOT EXISTS { (c)-[]-(:Theme) }").return(:c)
+  end
+  
 end

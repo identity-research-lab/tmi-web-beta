@@ -24,5 +24,5 @@ Rails.application.routes.draw do
   resources :projects, except: [:destroy]
   resources :searches, except: [:destroy, :update]
   resources :survey_items, except: [:destroy]
-
+  resources :themes
 end

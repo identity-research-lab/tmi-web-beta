@@ -1,0 +1,145 @@
+<%- title "Themes" %>
+<%- active_nav "themes" %>
+
+<section class="app-header dashboard-hero">
+
+  <div class="app-header-copy">
+    <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Theme Development</span>
+    </div>
+    <h1 class="app-title">Themes</h1>
+    <p class="app-description">
+      Create, review, revise, and remove analytical themes. Themes organize related researcher-applied codes into higher-level concepts that can later support theme development.
+    </p>
+  </div>
+  <aside aria-label="Theme status" class="app-header-panel">
+   <div class="app-panel-title">
+    Theme Status
+   </div>
+   <div class="app-stats-grid">
+    <div class="app-stat">
+     <span class="app-stat-value">
+        <%= @themes.count %>
+     </span>
+     <span class="app-stat-label">
+    Themes
+     </span>
+    </div>
+    <div class="app-stat">
+     <span class="app-stat-value">
+        <%= @code_count %>
+     </span>
+     <span class="app-stat-label">
+    Project Codes
+     </span>
+    </div>
+    <div class="app-stat">
+     <span class="app-stat-value">
+      <%= @categorized_code_count %>
+     </span>
+     <span class="app-stat-label">
+     Codes assigned to themes
+     </span>
+    </div>
+    <div class="app-stat">
+     <span class="app-stat-value">
+      <%= @uncategorized_code_count %>
+     </span>
+     <span class="app-stat-label">
+      Codes not yet assigned
+     </span>
+    </div>
+   </div>
+  </aside>
+ </section>
+
+ <section aria-labelledby="create-category-title" class="category-create-section">
+
+    <div class="category-create-layout category-create-layout-single">
+      <div class="category-create-workspace">
+      <div class="workspace-title-row category-create-intro-row">
+      <div>
+      <h2 class="workspace-title" id="create-category-title">
+        Create a new project category
+      </h2>
+        <p class="workspace-note">Name and describe a category now. Add and organize codes after it has been created.</p>
+      </div>
+    </div>
+
+   <%= form_with model: Theme.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "create-category-form", aria: { label: "Create a new project category", describedby: "category-form-note" } do |f| %>
+
+     <div class="category-create-fields">
+       <div class="category-create-panel category-create-name">
+         <%= f.label :name, "New category name", class: "app-label category-create-label", for: "new-category-name" %>
+         <%= f.text_field :name, id: "new-category-name", class: "app-input category-create-input", placeholder: "Enter a category name", autocomplete: "off", required: true, aria: { describedby: "new-category-name-help new-category-name-error" } %>
+   
+         <p class="form-help" id="new-category-name-help">Required. Use a concise analytical name that distinguishes this category from related concepts.</p>
+         <p class="form-error" data-error-for="new-category-name" hidden id="new-category-name-error">Enter a category name.</p>
+       </div>
+   
+       <div class="category-create-panel category-create-description">
+         <%= f.label :description, "Description", class: "app-label category-create-label", for: "new-category-memo" %>
+         <%= f.text_area :description, id: "new-category-memo", class: "category-create-textarea", placeholder: "Describe the category and the kinds of codes it may organize.", aria: { describedby: "new-category-memo-help" } %>
+   
+         <p class="form-help" id="new-category-memo-help">
+           Optional. Explain the category’s analytical purpose and the kinds of codes it may organize.
+         </p>
+       </div>
+     </div>
+   
+     <div class="category-create-footer">
+       <%= f.submit "Create new project category", class: "button apply small category-create-button" %>
+     </div>
+   
+   <% end %>
+   
+   <p aria-live="polite" class="category-create-feedback form-success" id="category-create-feedback" hidden role="status" tabindex="-1"></p>
+  </div>
+</section>
+ 
+
+<% if @themes.any? %>
+  <section class="app-section bordered-top themes-list-section">
+    <div class="workspace-title-row">
+      <div>
+        <h2 class="workspace-title">
+          Current themes
+        </h2>
+        <p class="workspace-note">
+          Review category descriptions and assigned codes. Open a category to revise its details or manage its codes.
+        </p>
+      </div>
+    </div>
+
+    <div class="category-library-layout">
+
+      <%= render partial: "memos/feed", locals: { memos: Memo.all.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
+
+      <div class="category-library-shell">
+        <div aria-label="Search, filter, and sort themes" class="category-library-toolbar search-toolbar" role="search">
+          <div class="search-controls">
+            <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search themes</span>
+              <input aria-controls="category-list" class="app-input search-input" id="category-search" placeholder="Search names and descriptions" type="search"/>
+            </label>
+            <button aria-controls="category-list" class="button secondary small category-library-clear-search search-clear" disabled id="clear-category-search" type="button">Clear search</button>
+            <label class="toolbar-field search-sort"><span class="toolbar-label">Sort by</span>
+              <select aria-controls="category-list" class="app-select" id="category-sort">
+                <option value="name-asc">Name: A–Z</option>
+                <option value="name-desc">Name: Z–A</option>
+                <option value="codes-desc">Assigned codes: most to least</option>
+                <option value="codes-asc">Assigned codes: least to most</option>
+              </select>
+            </label>
+            <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only themes with no assigned codes</label>
+          </div>
+          <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status">6 themes</p>
+        </div>
+        <div class="category-list-grid" id="category-list">
+          <% @themes.each do |category| %>
+            <%= render partial: "themes/card", locals: { category: category } %>
+          <% end %>
+        </div>
+      </div>     
+    </div>
+  </section>
+<% end %>

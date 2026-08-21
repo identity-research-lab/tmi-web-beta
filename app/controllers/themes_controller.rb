@@ -2,9 +2,9 @@ class ThemesController < ApplicationController
 
   def index
     @themes = Theme.all
-    @code_count = Code.count
-    @categorized_code_count = Code.categorized.count
-    @uncategorized_code_count = Code.uncategorized.count
+    @categories_count = Category.count
+    @categories_assigned_count = Category.assigned.count
+    @categories_unassigned_count = Category.unassigned.count
   end
 
   def create

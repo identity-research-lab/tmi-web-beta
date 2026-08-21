@@ -11,19 +11,18 @@ export function handleModeSelect() {
   document.querySelectorAll(".metrics-scope-button").forEach((button) => {
     button.addEventListener("click", () => {
       const mode = button.dataset.mode;
-      document.querySelectorAll(".mode-select").forEach((item) => {
-        const isSelected = item === button;
-        item.setAttribute("aria-pressed", String(isSelected));
-        item.classList.toggle("secondary", !isSelected);
-      });
       setMode(mode);
+      button.classList.add("is-selected")
     });
   });
 }
 
 export function setMode(mode) {
-  const persona_mode = document.getElementById("persona-mode")
   const question_mode = document.getElementById("question-mode")
+  const persona_mode = document.getElementById("persona-mode")
+  document.querySelectorAll(".metrics-scope-button").forEach((button) => {
+    button.classList.remove("is-selected")
+  });
   if (mode == "case") { 
     if (persona_mode) { persona_mode.classList.toggle("hidden") }
     if (question_mode) { question_mode.classList.add("hidden") }

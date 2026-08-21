@@ -33,6 +33,14 @@ class Persona
     where(is_coded: false)
   end
 
+  def codes
+    @codes ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").where("p.id = ?", self.id).return(:c)
+  end
+  
+  def codes_count
+    codes.count
+  end
+  
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query
     {

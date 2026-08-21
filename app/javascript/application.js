@@ -5,7 +5,7 @@ import { copyToClipboard } from "copy_to_clipboard"
 import { setupMobileNav } from "mobile_navigation"
 import { handleSchemaForms } from "schema_editing"
 import { sortTable } from "sort_table"
-import { handleSurveyItemSelect } from "code_metrics"
+import { handleMetricsSelect } from "code_metrics"
 import { sortCodes } from "code_metrics"
 import { handleCodingForms } from "coding"
 import { highlightSearchTerm } from "searching"
@@ -14,7 +14,7 @@ document.addEventListener("turbo:load", () => {
   setupMobileNav()
   handleSchemaForms()
   handleCodingForms()
-  handleSurveyItemSelect()
+  handleMetricsSelect()
   highlightSearchTerm()
 })
 

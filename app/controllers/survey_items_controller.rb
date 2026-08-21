@@ -1,7 +1,6 @@
 class SurveyItemsController < ApplicationController
 
   def index
-    @project = Project.last
     @survey_items = SurveyItem.active.order(:identifier)
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count
@@ -11,7 +10,6 @@ class SurveyItemsController < ApplicationController
 
   def show
     @survey_item = SurveyItem.find(params[:id])
-    @project = @survey_item.project
     @survey_responses = @survey_item.survey_responses.sort{|a,b| a.persona.formatted_identifier <=> b.persona.formatted_identifier}
     @memos = @survey_item.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "survey_item", referrent_id: @survey_item.id)

@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "memo-feed" do %>
-  <section id="memos" class="sidebar-card white researcher-memos">
+  <section id="memos" class="sidebar-card white researcher-memos <%= css_class %>">
     <h2 class="sidebar-card-title">Researcher memos</h2>
     <% if memos.present? %>
       <% memos.each do |existing_memo| %>

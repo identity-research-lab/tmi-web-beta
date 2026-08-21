@@ -1,27 +1,18 @@
-<article aria-labelledby="category-card-title-1" class="category-overview-card">
-  <div class="category-overview-card-header">
-    <div>
-      <h3 class="category-overview-card-title" id="category-card-title-1">
-        <%= category.name %>
-      </h3>
-      <div class="case-subtext">
-        Last edited <%= category.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC
-      </div>
+<article aria-labelledby="category-card-title-1" class="category-overview-card" data-code-count="23" data-name="Belonging and affinity">
+  <div class="category-overview-card-content">
+    <h3 class="category-overview-card-title">
+      <%= category.name %>
+    </h3>
+    <p class="category-overview-card-memo">
+      <%= category.description %>
+    </p>
+    <div class="category-workspace-footer">
+      <span class="count-badge">
+        <%= "#{category.codes.count} code".pluralize(category.codes.count) %> added
+      </span>
     </div>
   </div>
-
-  <div class="category-overview-card-meta">
-    <span class="tag dark">
-      <%= "#{category.codes.count} code".pluralize(category.codes.count) %> added
-    </span>
-  </div>
-  
-  <p class="category-overview-card-category">
-    <%= category.description %>
-  </p>
-  
   <div class="category-overview-card-actions">
-    <%= link_to "", category_path(category), class: "edit-icon-button" %>
-    <%= button_to " ", category, method: :delete, form: { 'data-turbo-confirm': 'Delete this category?' }, class: "delete-icon-button" %>
+    <%= link_to "Manage category", category_path(category), class: "button apply small" %>
   </div>
 </article>

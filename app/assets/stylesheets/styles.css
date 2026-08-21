@@ -766,10 +766,10 @@ summary:focus-visible {
   padding-right: 0;
 }
 
-.nav-group:last-child a,
+/* .nav-group:last-child a,
 .nav-group:last-child .unavailable-link {
   font-weight: var(--font-weight-semibold);
-}
+} */
 
 /* Global search control */
 

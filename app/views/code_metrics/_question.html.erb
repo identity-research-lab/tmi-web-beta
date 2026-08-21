@@ -2,7 +2,7 @@
   <section class="survey-code-selector">
     <div class="survey-code-control">
       <label for="survey-item-codes" class="code-metrics-label">
-        Choose Survey Item Codes To Review
+        Choose Question To Review
       </label>
 
       <%= form_with url: code_metrics_path, format: :turbo_stream, data: { turbo_stream: true }, id: "survey-item-select" do %>
@@ -17,7 +17,7 @@
     <% if survey_item.present? %>
       <div class="survey-question-preview">
         <div class="code-metrics-label">
-          Associated Survey Question
+          Associated Question
         </div>
         <p>
           <%= survey_item.prompt %>
@@ -30,7 +30,7 @@
     <section class="code-metrics-summary">
       <div>
         <div class="app-label">
-          Code Metrics
+          Code Occurences
         </div>
         <div class="code-metrics-grid">
 

@@ -45,14 +45,14 @@
   <section class="coding-readiness-gate" data-coding-readiness-states="setup">
     <div class="app-label">Project readiness</div>
     <h2 class="workspace-title">Project data setup required</h2>
-    <p class="workspace-note">Add project data and confirm the analysis schema before entering the Cases coding pathway.</p>
+    <p class="workspace-note">Add project data and confirm the analysis schema before entering the Questions coding pathway.</p>
     <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
   </section>
 <% elsif @project.has_pending_changes %>
   <section class="coding-readiness-gate attention" data-coding-readiness-states="attention">
     <div class="app-label">Project readiness</div>
     <h2 class="workspace-title">Project data needs attention</h2>
-    <p class="workspace-note">Review pending data or schema issues before continuing participant-centered coding.</p>
+    <p class="workspace-note">Review pending data or schema issues before continuing question-centered coding.</p>
     <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
   </section>
 <% elsif @survey_items.any? %>

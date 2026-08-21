@@ -34,8 +34,7 @@
 		<li><%= link_to "Dashboard", project_path(@project) %></li>
 		<li><%= link_to "Cases", personas_path %></li>
 		<li><%= link_to "Survey Items", survey_items_path %></li>
-		<li><a href="#">Code Metrics</a></li>
-		<li><a href="#">Codes</a></li>
+		<li><%= link_to "Codes", code_metrics_path %></li>
 		<li><a href="#">Categories</a></li>
 		<li><a href="#">Themes</a></li>
     <li><%= link_to "Journal", journal_path(Journal.new) %></li>
@@ -55,7 +54,7 @@
       <%= link_to "Code Responses by Question", survey_items_path, class: active_nav == "survey_items" ? 'active-nav' : '' %>
     </div>
     <div class="nav-group" role="group" aria-label="Analysis">
-      <a href="#">Codes</a>
+      <%= link_to "Codes", code_metrics_path %>
       <a href="#">Categories</a>
       <a href="#">Themes</a>
     </div>

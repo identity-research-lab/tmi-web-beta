@@ -1,0 +1,150 @@
+<%= turbo_frame_tag "persona-codes" do %>
+  <section class="survey-code-selector">
+    <div class="survey-code-control">
+      <label for="survey-item-codes" class="code-metrics-label">
+        Choose Individual Case to Review
+      </label>
+
+      <%= form_with url: code_metrics_path, format: :turbo_stream, data: { turbo_stream: true }, id: "persona-select" do %>
+        <% if persona.present? %>
+          <%= select_tag :persona_id, options_from_collection_for_select(personas, 'id', 'formatted_identifier', persona.id), { include_blank: "Select...", onchange: "blur();" } %>
+        <% else %>
+          <%= select_tag :persona_id, options_from_collection_for_select(personas, 'id', 'formatted_identifier'), { include_blank: "Select...", onchange: "blur();" } %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if persona.present? %>
+      <div class="survey-question-preview">
+        <div class="code-metrics-label">
+          Associated Case
+        </div>
+        <p>
+          <%= persona.identifier %>
+        </p>
+      </div>
+    <% end %>
+  </section>
+
+  <% if persona.present? %>
+    <section class="code-metrics-summary">
+      <div>
+        <div class="app-label">
+          Code Metrics
+        </div>
+        <div class="code-metrics-grid">
+
+        <div class="code-metrics-item">
+          <span class="code-metrics-label">Responses</span>
+          <span class="code-metrics-value"><%= persona.survey_responses.count %></span>
+        </div>
+
+        <div class="code-metrics-item">
+          <span class="code-metrics-label">Unique Codes</span>
+          <span class="code-metrics-value"><%= persona.codes_count %></span>
+        </div>
+
+        <div class="code-metrics-item">
+          <span class="code-metrics-label">Last Updated</span>
+          <span class="code-metrics-value"><%= persona.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="code-metrics-layout">
+      <div class="code-metrics-main">
+        <div id="code-frequencies" class="workspace-title-row">
+          <div>
+            <h2 class="workspace-title">
+              Code Frequencies
+            </h2>
+            <p class="workspace-note">
+              Frequency indicates how often a researcher-applied code appears across responses to the selected survey item. Metrics do not determine interpretive significance.
+            </p>
+          </div>
+        </div>
+
+        <div class="frequency-toolbar">
+
+          <div class="frequency-toolbar-left">
+          </div>
+
+          <div class="frequency-toolbar-right">
+            <a class="sortable sort-desc button small" data-sort-direction="asc" onclick="sortCodes(0)">
+              <span>Frequency</span>
+            </a>
+            <a class="sortable button small secondary" data-sort-direction="desc" onclick="sortCodes(1)">
+              <span>Alphabetical</span>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="overview-card">
+          <div id="frequency-list" class="frequency-list">
+            <% codes = Code.histogram(persona) %>
+            <% codes.each do |code, count| %>
+              <% total_codes = codes.sum{|c| c[1]} %>
+              <% width = count / total_codes.to_f * 100 %>
+              <div class="frequency-row" data-sort-alpha="<%= code.downcase %>" data-sort-frequency="<%= width %>">
+                <div class="frequency-label">
+                  <span><%= code %></span>
+                  <strong><%= count %></strong>
+                </div>
+                <div class="frequency-bar-track">
+                  <div class="frequency-bar" style="width:<%= width %>%;"></div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+      <div id="representative-excerpts" class="workspace-title-row overview-spaced">
+        <div>
+          <h2 class="workspace-title">
+            Representative Excerpts
+          </h2>
+          <p class="workspace-note">
+            Excerpts reconnect code frequency to participant language and preserve qualitative context.
+          </p>
+        </div>
+      </div>
+
+      <div class="excerpt-list">
+        <% persona.survey_responses.limit(5).each do |survey_response| %>
+          <% next unless code = survey_response.codes.limit(5).to_a.sample %>
+          <article class="excerpt-card">
+            <div class="excerpt-meta">
+              <span class="tag dark"><%= code.label %></span>
+              <% persona = survey_response.persona %>
+              <span class="case-subtext"><%= link_to persona.formatted_identifier, persona, target: "_top" %></span>
+            </div>
+            <p class="excerpt-text">
+              "<%= survey_response.value %>"
+            </p>
+          </article>
+        <% end %>
+      </div>
+    </div>
+
+    <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
+
+      <section id="memos" class="sidebar-card white">
+        <div class="sidebar-card-title">Researcher Memos</div>
+        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>
+      </section>
+      <section class="sidebar-card">
+        <details class="sidebar-disclosure" open>
+          <summary class="sidebar-card-title disclosure-title">
+            Attached Categories
+          </summary>
+          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
+        </details>
+      </section>
+
+    </aside>
+
+    </section>
+
+  <% end %>
+<% end %>

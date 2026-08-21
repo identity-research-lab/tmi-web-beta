@@ -2,28 +2,46 @@
 <%- active_nav "code_metrics" %>
 
 <section class="app-header dashboard-hero">
-
   <div class="app-header-copy">
     <div class="app-label">
       <%= @project.name %> · <span class="app-label-dense">Pathways</span> · <span class="app-label-dense">Coding by Question</span>
     </div>
     <h1 class="app-title">Code Metrics</h1>
     <p class="app-description">
-      Review code frequencies, representative excerpts, researcher memos, and attached categories for a selected survey item. This view supports cross-case comparison by showing how participant responses to one question have been coded across the dataset.
-    </p>
+      Review coding patterns through either the question/response pathway or the individual case pathway while preserving the context in which codes were applied.    </p>
   </div>
-
-  <aside class="app-header-panel" aria-label="Overview information">
-    <div class="app-panel-title">Metrics View</div>
-    <div class="dashboard-upload-actions">
-      <p class="app-description" style="margin-top:0;">
-      Select a survey item below to review its coding metrics. Once selected, this view can show code frequencies, representative excerpts, researcher memos, and attached categories for that question.
-      </p>
-    </div>
-  </aside>
-
 </section>
 
-<% if @survey_items.any? %>
-  <%= render partial: "show", locals: { survey_item: nil, survey_items: @survey_items } %>
+<% if @project.active_fields.count == 0 %>
+  <section class="coding-readiness-gate" data-coding-readiness-states="setup">
+    <div class="app-label">Project readiness</div>
+    <h2 class="workspace-title">Project data setup required</h2>
+    <p class="workspace-note">Add project data and confirm the analysis schema before reviewing code metrics.</p>
+    <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
+  </section>
+<% elsif @survey_items.any? %>
+  <section class="metrics-scope-switcher" data-modes="question case" aria-labelledby="metrics-scope-title">
+    <div>
+      <div class="app-label">Metrics scope</div>
+      <h2 class="workspace-title" id="metrics-scope-title">Choose how to review code occurrences</h2>
+      <p class="workspace-note">Move between cross-case comparison by question and contextual review within one individual case.</p>
+    </div>
+    <div class="metrics-scope-actions" role="group" aria-label="Choose metrics scope">
+      <button class="metrics-scope-button" type="button" data-mode="case">
+        <span class="metrics-scope-button-title">Individual case view</span>
+        <span>Review code occurrences across one participant’s responses.</span>
+      </button>
+      <button class="metrics-scope-button" type="button" data-mode="question">
+        <span class="metrics-scope-button-title">Responses by question view</span>
+        <span>Compare code occurrences across participants responding to one question.</span>
+      </button>
+    </div>
+  </section>
+  <div id="persona-mode" class="hidden">
+    <%= render partial: "persona", locals: { persona: nil, personas: @personas } %>
+  </div>
+  <div id="question-mode" class="hidden">
+    <%= render partial: "question", locals: { survey_item: nil, survey_items: @survey_items } %>
+  </div>
+
 <% end %>

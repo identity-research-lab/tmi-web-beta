@@ -1,9 +1,36 @@
-export function handleSurveyItemSelect() {
+export function handleMetricsSelect() {
   document.addEventListener("change", (event) => {
     const form = event.target.form
     if (!form) return
     if (form.matches("#survey-item-select")) { form.requestSubmit() }
+    if (form.matches("#persona-select")) { form.requestSubmit() }
   });
+}
+
+export function handleModeSelect() {
+  document.querySelectorAll(".metrics-scope-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.mode;
+      setMode(mode);
+      button.classList.add("is-selected")
+    });
+  });
+}
+
+export function setMode(mode) {
+  const question_mode = document.getElementById("question-mode")
+  const persona_mode = document.getElementById("persona-mode")
+  document.querySelectorAll(".metrics-scope-button").forEach((button) => {
+    button.classList.remove("is-selected")
+  });
+  if (mode == "case") { 
+    if (persona_mode) { persona_mode.classList.toggle("hidden") }
+    if (question_mode) { question_mode.classList.add("hidden") }
+  }
+  if (mode == "question") { 
+    if (persona_mode) { persona_mode.classList.add("hidden") }
+    if (question_mode) { question_mode.classList.toggle("hidden") }
+  }
 }
 
 export function sortCodes(index) {

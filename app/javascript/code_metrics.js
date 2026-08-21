@@ -7,6 +7,33 @@ export function handleMetricsSelect() {
   });
 }
 
+export function handleModeSelect() {
+  document.querySelectorAll(".metrics-scope-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      const mode = button.dataset.mode;
+      document.querySelectorAll(".mode-select").forEach((item) => {
+        const isSelected = item === button;
+        item.setAttribute("aria-pressed", String(isSelected));
+        item.classList.toggle("secondary", !isSelected);
+      });
+      setMode(mode);
+    });
+  });
+}
+
+export function setMode(mode) {
+  const persona_mode = document.getElementById("persona-mode")
+  const question_mode = document.getElementById("question-mode")
+  if (mode == "case") { 
+    if (persona_mode) { persona_mode.classList.toggle("hidden") }
+    if (question_mode) { question_mode.classList.add("hidden") }
+  }
+  if (mode == "question") { 
+    if (persona_mode) { persona_mode.classList.add("hidden") }
+    if (question_mode) { question_mode.classList.toggle("hidden") }
+  }
+}
+
 export function sortCodes(index) {
 
   const list = document.getElementById("frequency-list")

@@ -113,7 +113,7 @@
 
     <div class="category-library-layout">
 
-      <%= render partial: "memos/feed", locals: { memos: Category.memos.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
+      <%= render partial: "memos/feed", locals: { memos: Memo.all.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
 
       <div class="category-library-shell">
         <div aria-label="Search, filter, and sort categories" class="category-library-toolbar search-toolbar" role="search">
@@ -134,13 +134,12 @@
           </div>
           <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status">6 categories</p>
         </div>
+        <div class="category-list-grid" id="category-list">
+          <% @categories.each do |category| %>
+            <%= render partial: "categories/card", locals: { category: category } %>
+          <% end %>
+        </div>
       </div>     
-      
-      <div class="category-list-grid" id="category-list">
-        <% @categories.each do |category| %>
-          <%= render partial: "categories/card", locals: { category: category } %>
-        <% end %>
-      </div>
     </div>
   </section>
 <% end %>

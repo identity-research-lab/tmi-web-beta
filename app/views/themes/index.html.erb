@@ -53,46 +53,38 @@
   </aside>
  </section>
 
- <section aria-labelledby="create-category-title" class="category-create-section">
+ <section aria-labelledby="create-theme-title" class="category-create-section">
 
-    <div class="category-create-layout category-create-layout-single">
-      <div class="category-create-workspace">
-      <div class="workspace-title-row category-create-intro-row">
-      <div>
-      <h2 class="workspace-title" id="create-category-title">
-        Create a new project theme
-      </h2>
-        <p class="workspace-note">
-        Create, review, revise, and remove themes. Themes bring related analytical categories together into higher-level interpretive findings.
-        </p>
-      </div>
+  <div class="category-create-layout category-create-layout-single">
+    <div class="category-create-workspace">
+    <div class="workspace-title-row category-create-intro-row">
+    <div>
+    <h2 class="workspace-title" id="create-theme-title">
+      Create a new project theme
+    </h2>
+      <p class="workspace-note">
+        Name and describe a theme now, Add and organize categories after it has been created.
+      </p>
     </div>
+  </div>
 
-   <%= form_with model: Theme.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "create-category-form", aria: { label: "Create a new project theme", describedby: "category-form-note" } do |f| %>
-
-     <div class="category-create-fields">
-       <div class="category-create-panel category-create-name">
-         <%= f.label :name, "New theme name", class: "app-label category-create-label", for: "new-category-name" %>
-         <%= f.text_field :name, id: "new-theme-name", class: "app-input category-create-input", placeholder: "Enter a theme name", autocomplete: "off", required: true, aria: { describedby: "new-category-name-help new-category-name-error" } %>
-   
-         <p class="form-help" id="new-category-name-help">Required. Use a concise analytical name that distinguishes this theme from related concepts.</p>
-       </div>
-   
-       <div class="category-create-panel category-create-description">
-         <%= f.label :description, "Description", class: "app-label category-create-label", for: "new-category-memo" %>
-         <%= f.text_area :description, id: "new-category-memo", class: "category-create-textarea", placeholder: "Describe the theme and the kinds of categories it may organize.", aria: { describedby: "new-category-memo-help" } %>
-   
-         <p class="form-help" id="new-category-memo-help">
-           Optional. Explain the themes’s analytical purpose and the kinds of categories it may organize.
-         </p>
-       </div>
-     </div>
-   
-     <div class="category-create-footer">
-       <%= f.submit "Create new project theme", class: "button apply small category-create-button" %>
-     </div>
-   
-   <% end %>
+ <%= form_with model: Theme.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-form", id: "create-theme-form", aria: { label: "Create a new project theme", describedby: "category-form-note" } do |f| %>
+    <div class="category-create-fields">
+      <div class="category-create-panel category-create-name">
+        <label class="app-label category-create-label" for="new-theme-name">New theme name</label>
+        <%= f.text_field :name, id: "new-theme-name", class: "app-input category-create-input", placeholder: "Enter a theme name", aria: { describedby: "new-category-name-help new-category-name-error" } %>
+        <p class="form-help" id="new-theme-name-help">Required. Use a concise interpretive name that distinguishes this theme from related findings.</p>
+      </div>
+      <div class="category-create-panel category-create-description">
+        <label class="app-label category-create-label" for="new-theme-description">Description</label>
+        <%= f.text_area :description, id: "new-theme-memo", class: "category-create-textarea", placeholder: "Describe the theme and the kinds of categories it may bring together.", aria: { describedby: "new-theme-description-help" } %>
+        <p class="form-help" id="new-theme-description-help">Optional. Explain the theme’s interpretation and the kinds of categories it may connect.</p>
+      </div>
+  </div>
+  <div class="category-create-footer">
+    <%= f.submit "Create new project theme", class: "button apply small category-create-button" %>
+  </div>
+<% end %>
    
    <p aria-live="polite" class="category-create-feedback form-success" id="category-create-feedback" hidden role="status" tabindex="-1"></p>
   </div>
@@ -131,11 +123,11 @@
             </label>
             <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only themes with no assigned categories</label>
           </div>
-          <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%= @themes.count %><%= pluralize("theme", @themes.count) %></p>
+          <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%= pluralize(@themes.count, "theme", ) %></p>
         </div>
         <div class="category-list-grid" id="category-list">
-          <% @themes.each do |category| %>
-            <%= render partial: "themes/card", locals: { category: category } %>
+          <% @themes.each do |theme| %>
+            <%= render partial: "themes/card", locals: { theme: theme } %>
           <% end %>
         </div>
       </div>     

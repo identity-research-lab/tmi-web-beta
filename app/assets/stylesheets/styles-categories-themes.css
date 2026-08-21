@@ -18,7 +18,7 @@
 .category-create-section {
   padding: 3rem 4rem;
   border-bottom: 1px solid var(--border-soft);
-  background: var(--surface);
+  background: var(--surface) !important;
 }
 
 .category-create-section {

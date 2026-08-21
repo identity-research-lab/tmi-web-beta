@@ -2,7 +2,6 @@ class PersonasController < ApplicationController
 
   def index
     @personas = Persona.as(:persona).query.optional_match('(persona)-[:EXPERIENCES]-(code:code)').return('persona,count(code)').order('persona.identifier')
-    @project = Project.last
     @case_count = Persona.count
     @uncoded_case_count = Persona.uncoded.count
     @in_progress_case_count = Persona.in_progress.count
@@ -13,7 +12,6 @@ class PersonasController < ApplicationController
   end
 
   def show
-    @project = Project.last
     @persona = Persona.find(params[:id])
     @active_survey_items = @project.active_fields
     @survey_responses = @persona.survey_responses.as(:sr).query.match("(sr)-[]-(si:SurveyItem)").order("si.identifier").return(:sr).pluck(:sr)

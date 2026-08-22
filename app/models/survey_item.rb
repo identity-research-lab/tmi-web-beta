@@ -81,6 +81,7 @@ class SurveyItem
     return "Reflection" if self.is_reflection?
     return ""
   end  
+
   def formatted_identifier
     "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
   end

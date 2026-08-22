@@ -64,15 +64,15 @@ class Code
   end
 
   def dimensions
-    @dimensions ||= Dimension.where(name: Code.where(label: self.label).pluck(:dimension).uniq)
+    @dimensions ||= Code.where(label: self.label).pluck(:dimension).uniq.sort
   end
   
   def questions
-    @questions ||= SurveyItem.as(:q).query.match("(q)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:q).map{|r| r[:q]}
+    @questions ||= SurveyItem.as(:s).query.match("(s)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:s).pluck("s.identifier").compact.uniq.sort.map{ |identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
   end
 
   def personas
-    @personas ||= Persona.as(:p).query.match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:p).map{|r| r[:p]}
+    @personas ||= Persona.as(:p).query.match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:p).count
   end
     
   private

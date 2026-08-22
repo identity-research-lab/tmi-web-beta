@@ -69,15 +69,15 @@
           </thead>
           <tbody>
             <% @category_codes.each do |code| %>
-              <tr class="" data-frequency="27" data-name="code switching and contextual self-presentation" data-origins="questions q03, q08; cases 9 personas; dimensions age, race/ethnicity, immigrant status, primary language">
+              <tr class="" data-frequency="27" data-name="<%= code.label %>">
                 <td class="code-name-cell">
                   <span class="tag"><%= code.label %></span>
                 </td>
                 <td class="frequency-cell">27</td>
                 <td class="origins-cell">
-                  <div>Questions: <%= code.questions.map(&:identifier).to_sentence %></div>
-                  <div>Cases: <%= pluralize(code.personas.count, "Persona") %></div>
-                  <div>Dimensions: <%= code.dimensions.map(&:name).to_sentence %></div>
+                  <div>Questions: <%= code.questions.to_sentence %></div>
+                  <div>Cases: <%= pluralize(code.personas, "Persona") %></div>
+                  <div>Dimensions: <%= code.dimensions.to_sentence %></div>
                 </td>
                 <td class="row-action-cell">
                   <button aria-label="Remove '<%= code.label %>' from this category" class="icon-button remove-code-button" title="Remove from category" type="button">

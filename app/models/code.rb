@@ -14,13 +14,13 @@ class Code
   
   has_many :in, :categories, type: :Contains, model_class: "Category"
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
-  has_many :out :dimensions, type: :RelatesTo, model_class: "Dimension"
+  has_many :out, :dimensions, type: :RelatesTo, model_class: "Dimension"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
   def self.applied
-    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return("DISTINCT c").order("c.name DESC").limit(10).map{|r| r[:c]}
+    Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").map{|r| r[:c]}
   end
 
   def self.categorized

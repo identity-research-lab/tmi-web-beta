@@ -104,9 +104,9 @@
         </thead>
       <tbody>
         <% @all_codes.each do |code| %>
-          <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.label %>">
+          <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.name %>">
             <td class="code-name-cell">
-              <span class="tag"><%= code.label %></span>
+              <span class="tag"><%= code.name %></span>
             </td>
             <td class="frequency-cell"><%= code.frequency %></td>
             <td class="origins-cell">
@@ -117,7 +117,7 @@
             <td class="row-action-cell">
               <%= form_with model: @category, data: { turbo_stream: true } do |f| %>
                 <%= f.hidden_field :code, value: code.id %>
-                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.label} to this category" } do %>
+                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.name} to this category" } do %>
                   <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
                 <% end %>
               <% end %>

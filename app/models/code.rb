@@ -16,6 +16,7 @@ class Code
   validates :dimension, presence: true
   validates_uniqueness_of :label, scope: :dimension
 
+  has_many :in, :categories, type: :Contains, model_class: "Category"
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"

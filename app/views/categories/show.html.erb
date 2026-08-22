@@ -68,8 +68,8 @@
             </tr>
           </thead>
           <tbody>
-            <% @category_codes.each do |code| %>
-              <%= render partial: "codes/show", locals: { code: code, category: @category, category_codes: @category_codes } %>
+            <%= turbo_frame_tag "category-codes" do %>
+              <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes } %>
             <% end %>
           </tbody>
         </table>
@@ -137,8 +137,8 @@
           </tr>
         </thead>
       <tbody>
-        <% @all_codes.each do |code| %>
-          <%= render partial: "codes/row", locals: { code: code, category: @category, category_codes: @category_codes } %>
+        <%= turbo_frame_tag "available-codes" do %>
+          <%= render partial: "categories/codes", locals: { category: @category, codes: @all_codes, attached_codes: @category_codes } %>
         <% end %>
       </tbody>
     </table>

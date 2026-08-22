@@ -1,0 +1,3 @@
+<% codes.each do |code| %>
+  <%= render partial: "codes/row", locals: { code: code, category: category, codes: codes, attached_codes: attached_codes } %>
+<% end %>

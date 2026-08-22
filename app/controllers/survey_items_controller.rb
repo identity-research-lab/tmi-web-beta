@@ -4,8 +4,8 @@ class SurveyItemsController < ApplicationController
     @survey_items = SurveyItem.active.order(:identifier)
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count
-    @identities_count = Code.identities.count
-    @coded_experiences_count = Code.experiences.count
+    @identities_count = SurveyResponse.identities.count
+    @coded_experiences_count = Code.count
   end
 
   def show
@@ -34,7 +34,7 @@ class SurveyItemsController < ApplicationController
   private
 
   def survey_item_params
-    params.require(:survey_item).permit(:prompt, :label, :item_kind, :is_active, :dimension_id)
+    params.require(:survey_item).permit(:prompt, :name, :item_kind, :is_active, :dimension_id)
   end
 
 end

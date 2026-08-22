@@ -18,7 +18,7 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     @category_codes = @category.codes
-    @all_codes = Code.applied
+    @all_codes = Code.applied(25)
   end
   
   def destroy
@@ -29,20 +29,29 @@ class CategoriesController < ApplicationController
   
   def update
     @category = Category.find(params[:id])
-    # make changes
-    success = @category.save
-  
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("XXX", partial: "/categories/yyy", locals: { category: @category, success: success })
+    if category_params[:code] && code = Code.find(category_params[:code])
+      if params[:remove]
+        code.categories.delete(@category)
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes, attached_codes: @category.codes })
+          end
+        end
+      elsif params[:add]
+        code.categories << @category unless code.categories.include? @category
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes, attached_codes: @category.codes })
+          end
+        end
       end
     end
   end
-
+  
   private
 
   def category_params
-    params.require(:category).permit(:name, :description)
+    params.require(:category).permit(:name, :description, :code)
   end
 
 end

@@ -34,7 +34,7 @@ class Persona
   end
 
   def codes
-    @codes ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").where("p.id = ?", self.id).return(:c)
+    @codes ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").where("p.uuid = $id").params(id: self.id).return(:c).map{|r| r[:c]}
   end
   
   def codes_count
@@ -61,12 +61,12 @@ class Persona
 
   def coded!
     update_attributes(is_coded: true, is_completed: false)
-    Event.create(persona: self, label: "Persona #{self.identifier}", description: "Coding started.")
+    Event.create(persona: self, name: "Persona #{self.identifier}", description: "Coding started.")
   end
   
   def complete!
     update_attributes(is_completed: true)
-    Event.create(persona: self, label: "Persona #{self.identifier}", description: "Coding completed.")
+    Event.create(persona: self, name: "Persona #{self.identifier}", description: "Coding completed.")
   end
 
    # Calculates the permanent URL of the Case, which is stored as a property on the associated Persona.

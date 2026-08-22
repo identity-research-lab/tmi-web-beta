@@ -82,7 +82,7 @@
 
         <div class="overview-card">
           <div id="frequency-list" class="frequency-list">
-            <% codes = Code.histogram(persona) %>
+            <% codes = Code.personas_histogram(persona) %>
             <% codes.each do |code, count| %>
               <% total_codes = codes.sum{|c| c[1]} %>
               <% width = count / total_codes.to_f * 100 %>
@@ -115,7 +115,7 @@
           <% next unless code = survey_response.codes.limit(5).to_a.sample %>
           <article class="excerpt-card">
             <div class="excerpt-meta">
-              <span class="tag dark"><%= code.label %></span>
+              <span class="tag dark"><%= code.name %></span>
               <% persona = survey_response.persona %>
               <span class="case-subtext"><%= link_to persona.formatted_identifier, persona, target: "_top" %></span>
             </div>
@@ -131,7 +131,7 @@
 
       <section id="memos" class="sidebar-card white">
         <div class="sidebar-card-title">Researcher Memos</div>
-        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>
+        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id), css_class: "" } %>
       </section>
       <section class="sidebar-card">
         <details class="sidebar-disclosure" open>

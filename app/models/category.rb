@@ -1,4 +1,4 @@
-# A Category is a label applied to a group of related Codes within a provided dimension.
+# A Category is a name applied to a group of related Codes within a provided dimension.
 # For example, a category may refer to a subset of the codes related to "age".
 class Category
 

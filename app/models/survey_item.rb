@@ -1,3 +1,4 @@
+
 class SurveyItem
   include ActiveGraph::Node
 
@@ -107,7 +108,7 @@ class SurveyItem
 
   def complete!
     update_attributes(is_completed: true)
-    Event.create(persona: self, label: "Persona #{self.identifier}", description: "Coding completed.")
+    Event.create(persona: self, name: "Persona #{self.identifier}", description: "Coding completed.")
   end
 
   # Force to boolean. Sorry.

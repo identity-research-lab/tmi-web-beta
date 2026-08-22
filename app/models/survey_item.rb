@@ -1,10 +1,11 @@
+
 class SurveyItem
   include ActiveGraph::Node
 
   attr_accessor :item_kind
 
   property :prompt
-  property :name
+  property :label
   property :csv_header
   property :identifier
   property :is_participant_identifier, default: false
@@ -83,7 +84,7 @@ class SurveyItem
   end  
 
   def formatted_identifier
-    "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.name}"
+    "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
   end
 
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.

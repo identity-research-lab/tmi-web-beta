@@ -34,18 +34,21 @@ class CategoriesController < ApplicationController
         code.categories.delete(@category)
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes, attached_codes: @category.codes })
+            render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes })
           end
         end
       elsif params[:add]
         code.categories << @category unless code.categories.include? @category
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes, attached_codes: @category.codes })
+            render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes })
           end
         end
       end
     end
+  end
+  
+  def codes
   end
   
   private

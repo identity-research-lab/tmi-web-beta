@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "category-grid" do %>
+  <% categories.each do |category| %>
+    <%= render partial: "categories/card", locals: { category: category } %>
+  <% end %>
+<% end %>

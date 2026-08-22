@@ -6,7 +6,11 @@ class SearchesController < ApplicationController
 
   def create
     @search = Search.new(params[:search])
-    render :index
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("category-codes", partial: "/categories/codes", locals: { category: @category, codes: @category.codes })
+      end
+    end
   end
   
 end

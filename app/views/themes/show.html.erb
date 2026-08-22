@@ -1,0 +1,127 @@
+<%- title "Themes" %>
+<%- active_nav "themes" %>
+
+<section class="app-header app-header--detail">
+  <div class="app-header-copy">
+    <div class="app-label">
+    <%= @project.name %> · <span class="app-label-dense">Theme Development</span>
+    </div>
+    <h1 class="app-title"><%= @theme.name %></h1>
+    <p class="app-description">
+      Review and revise this analytical theme, manage its attached project categories, and document how the interpretive finding is developing across the data set.
+    </p>
+  </div>
+  <aside aria-label="Relational analysis tools" class="app-header-panel category-relational-panel">
+    <div class="app-panel-title">Relational analysis</div>
+    <button class="button small secondary dashboard-template-button category-graph-button" type="button" disabled>
+      Open theme graph
+    </button>
+    <div class="case-subtext category-cypher-row confirmable">
+      <span class="category-cypher-label">Cypher:</span>
+      <a href="#" id="copy-source" class="cypher-link"><%= @theme.graph_query[:query] %></a>
+      <span id="confirmation" class="hidden">Copied!</span>
+      <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
+    </div>
+  </aside>
+</section>
+
+<nav aria-label="Theme workspace sections" class="category-page-links">
+  <span class="category-page-links-label">On this page</span>
+  <a href="#assigned-categories">Review assigned categories</a>
+  <a href="#explore-categories">Explore and assign categories</a>
+  <a href="#memos">Researcher memos</a>
+</nav>
+
+<!-- Category assignment workspace -->
+<section class="category-detail-main">
+  <div class="category-primary-layout">
+  <section aria-labelledby="assigned-codes-title" class="category-work-area assigned-codes-area" id="assigned-codes">
+    <div class="work-area-heading">
+      <div>
+        <h2 id="assigned-codes-title">Assigned categories</h2>
+        <p>Review, search, sort, and remove categories currently assigned to this theme.</p>
+      </div>
+      <span class="count-badge metric-count-badge"><span id="assigned-count"><%= @theme_categories.count %></span> assigned categories</span>
+    </div>
+    <%= render partial: "themes/categories", locals: { theme: @theme, categories: @theme_categories, attached_categories: @theme_categories } %>
+  </section>
+
+  <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
+    <div class="work-area-heading browser-heading">
+      <div>
+        <h2 id="find-codes-title">Explore, find, and assign categories</h2>
+        <p>Search the full project categories collection and add relevant categories to this category.</p>
+      </div>
+    </div>
+    <div aria-label="Search and filter all project categories" class="table-toolbar code-browser-controls search-toolbar" role="search">
+      <label class="search-field browser-search">
+        <span class="visually-hidden">Search all project categories</span>
+        <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+        <input aria-controls="available-codes-table" class="search-input" id="available-search" placeholder="Search category names and descriptions" type="search"/>
+      </label>
+      <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
+      <label class="toolbar-control">
+        <span>Theme assignment</span>
+        <select aria-controls="available-codes-table" id="display-filter">
+          <option value="all">All categories</option>
+          <option value="available">Not assigned to this theme</option>
+          <option value="added">Assigned to this theme</option>
+        </select>
+      </label>
+      <label class="toolbar-control">
+        <span>Assigned codes</span>
+        <select aria-controls="available-codes-table" id="frequency-filter">
+          <option value="all">Any number of codes</option>
+          <option value="high">15 or more codes</option>
+          <option value="medium">8–14 codes</option>
+          <option value="low">7 or fewer codes</option>
+        </select>
+      </label>
+      <label class="toolbar-control">
+        <span>Category contents</span>
+        <select aria-controls="available-codes-table" id="available-origin-filter">
+          <option value="all">All categories</option>
+          <option value="has-codes">Has assigned codes</option>
+          <option value="no-codes">No assigned codes</option>
+        </select>
+      </label>
+      <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
+      <p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project categories</p>
+    </div>
+    <p class="visually-hidden" id="occurrences-help">Assigned codes is the number of project codes currently organized within a category.</p>
+    <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
+      <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
+        <caption class="visually-hidden">Project categories available for category assignment</caption>
+        <thead>
+          <tr>
+            <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Category name <span aria-hidden="true">A–Z</span></button></th>
+            <th scope="col">Description</th>
+            <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Assigned codes <span aria-hidden="true">↕</span></button></th>
+            <th scope="col"><span class="visually-hidden">Remove category assignment</span></th>
+          </tr>
+        </thead>
+      <tbody>
+        <% @all_categories.each do |category| %>
+          <tr class="code-browser-row">
+            <td class="code-name-cell">
+              <span class="tag"><%= category.name %></span>
+            </td>
+            <td class="origins-cell"><%= category.description %></td>
+            <td class="frequency-cell"><%= category.codes.count %></td>
+            <td class="row-action-cell">
+              <%= form_with model: @theme, data: { turbo_stream: true } do |f| %>
+                <%= f.hidden_field :category, value: category.id %>
+                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{category.name} to this theme" } do %>
+                  <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project categories</strong><p>No project categories match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
+</section>
+
+<%= render partial: "memos/feed", locals: { memo: Memo.new(theme: @theme), memos: @theme.memos, css_class: "category-detail-memos" } %>

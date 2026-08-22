@@ -115,8 +115,8 @@
               <div>Dimensions: <%= code.dimensions.to_sentence %></div>
             </td>
             <td class="row-action-cell">
-              <%= form_with model: code, data: { turbo_stream: true } do |f| %>
-                <%= f.hidden_field :category, value: @category.id %>
+              <%= form_with model: @category, data: { turbo_stream: true } do |f| %>
+                <%= f.hidden_field :code, value: code.id %>
                 <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.label} to this category" } do %>
                   <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
                 <% end %>

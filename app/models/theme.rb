@@ -15,6 +15,13 @@ class Theme
   has_many :out, :categories, type: :EmergesFrom, model_class: "Category"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
+  def graph_query
+    {
+      explainer: "Access and explore this theme (and all of its relationships) in the TMI-WEB graph.",
+      query: "MATCH (t:Theme)-[]-(n) WHERE t.name=\"#{self.name}\" RETURN t,n"
+    }
+  end
+
   private
 
   def sanitize

@@ -17,6 +17,8 @@ class ThemesController < ApplicationController
 
   def show
     @theme = Theme.find(params[:id])
+    @theme_categories = @theme.categories
+    @all_categories = Category.all
   end
   
   def destroy

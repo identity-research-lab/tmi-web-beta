@@ -54,12 +54,11 @@ class Code
   def question_list
     @questions ||= self.survey_responses.as(:s).query.match("(s:SurveyResponse)-[]-(si:SurveyItem)").return("DISTINCT si.identifier AS identifier").order("identifier").map{|r| r[:identifier]}.map{|identifier| "Q#{identifier.to_s.rjust(3, "0")}"}
   end
-  
-  def self.personas_histogram(code)
-    codes = self.survey_responses.as(:s).query.match("(p:Persona)-[]-(s:SurveyResponse)").with("p.identifier AS name, COUNT(p) AS ct").return("name, ct").order("ct DESC").map{|r| r[:s]}
-    codes.to_h { |code| [code[0], code[1]] }
+
+  def self.persona_histograph(code)
+    code.survey_responses.query_as(:s).match("(s)-[]-(c:Code)-[]-(sr:SurveyResponse)").return("c.name AS name, COUNT(sr) AS ct").order("ct").to_a.map{|r| [r[:name], r[:ct]]}.to_h
   end
-  
+
   def self.survey_items_histogram(survey_item)
     codes = survey_item.survey_responses.as(:sr).query.match("(sr:SurveyResponse)-[]-(c:Code)").with("c, count(c) AS ct").return('c.label, ct').order("ct DESC")
     codes.to_h { |code| [code[0].to_s, code[1].to_i] }

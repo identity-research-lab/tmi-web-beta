@@ -115,14 +115,13 @@
             <th scope="col" class="sortable sort-desc" data-sort-direction="desc" onclick="sortTable(0)"><span class="sort-header">Persona</span></th>
             <th scope="col">Graph</th>
             <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(2)"><span class="sort-header">Codes</span></th>
-            <th scope="col">Categories</th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(4)"><span class="sort-header">Status</span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(5)"><span class="sort-header">Activity</span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(3)"><span class="sort-header">Status</span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable(4)"><span class="sort-header">Activity</span></th>
           </tr>
         </thead>
         <tbody>
           <% @personas.each do |record| %>
-            <%= render partial: "personas/row", locals: { persona: record[0], codes_count: record[1] } %>
+            <%= render partial: "personas/row", locals: { persona: record[0], code_count: record[1] } %>
           <% end %>
         </tbody>
       </table>

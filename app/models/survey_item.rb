@@ -68,12 +68,12 @@ class SurveyItem
     self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").return(:c).pluck(:c)
   end
   
-  def codes_count
+  def code_count
     self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").count(:c)
   end
 
   def percentage_of_codes
-    (codes_count / Code.count.to_f * 100).to_i
+    (code_count / Code.count.to_f * 100).to_i
   end
   
   def formatted_kind

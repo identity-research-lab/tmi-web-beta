@@ -33,12 +33,16 @@ class Persona
     where(is_coded: false)
   end
 
-  def codes
-    @codes ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").where("p.uuid = $id").params(id: self.id).return(:c).map{|r| r[:c]}
+  def codes_histogram
+    self.survey_responses.query_as(:s).match("(s)-[]-(c:Code)-[]-(sr:SurveyResponse)").return("c.name AS name, COUNT(sr) AS ct").order("ct").to_a.map{|r| [r[:name], r[:ct]]}.to_h
+  end
+    
+  def code_list
+    @code_list ||= self.query_as(:p).match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").return("DISTINCT c.name AS name").order("name").map{|r| r[:name]}
   end
   
-  def codes_count
-    codes.count
+  def code_count
+    @code_count ||= code_list.count
   end
   
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.

@@ -34,7 +34,7 @@ class SurveyItemsController < ApplicationController
   private
 
   def survey_item_params
-    params.require(:survey_item).permit(:prompt, :label, :item_kind, :is_active, :dimension_id)
+    params.require(:survey_item).permit(:prompt, :name, :item_kind, :is_active, :dimension_id)
   end
 
 end

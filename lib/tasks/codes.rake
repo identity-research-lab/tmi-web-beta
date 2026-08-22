@@ -42,6 +42,7 @@ namespace :import do
             imported_code_count += 1
           end
         end
+        persona.coded!
       end
     end
 
@@ -90,6 +91,7 @@ namespace :import do
             imported_code_count += 1
           end
         end
+        persona.coded!
       end
     end
   

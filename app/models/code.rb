@@ -28,24 +28,15 @@ class Code
   end
 
   def self.uncategorized
-    Code.as(:c).query.where("NOT EXISTS { (c)-[]-(:Category) }").return(:c)
-  end
-
-  def detach_from(survey_response)
-    self.survey_responses.delete(survey_response)
-    self.personas.delete(survey_response.persona)
+    Code.as(:c).query.where("NOT EXISTS { (c)-[]-(:Category) }").return(:c).map{|r| r[:c]}
   end
 
   def frequency
     @frequency ||= self.survey_responses.count  
   end
     
-  def questions
-    @questions ||= SurveyItem.as(:s).query.match("(s)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.name = $name").params(name: self.name).return(:s).pluck("s.identifier").compact.uniq.sort.map{ |identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
-  end
-
   def personas
-    @personas ||= Persona.as(:p).query.match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.name = $name").params(name: self.name).return(:p).count
+    @personas ||= Persona.as(:p).query.match("(p:Persona)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.uuid = $id").params(id: self.id).return(:p).map{|r| r[:p]}
   end
     
   private

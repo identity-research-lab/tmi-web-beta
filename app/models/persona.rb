@@ -34,7 +34,7 @@ class Persona
   end
 
   def codes
-    @codes ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").where("p.id = ?", self.id).return(:c)
+    @codes ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").where("p.uuid = $id").params(id: self.id).return(:c).map{|r| r[:c]}
   end
   
   def codes_count

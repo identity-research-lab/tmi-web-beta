@@ -17,20 +17,27 @@ class CodesController < ApplicationController
   
   def update
     @code = Code.find(params[:id])
-    if @survey_response = SurveyResponse.find(code_params[:survey_response])
+    if code_params[:survey_response] && @survey_response = SurveyResponse.find(code_params[:survey_response])
       @code.detach_from(@survey_response)
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace("codes-for-#{@survey_response.id}", partial: "/codes/show", locals: { survey_response: @survey_response })
         end
       end
-    end
+    elsif code_params[:category] && @category = Category.find(code_params[:category])
+        @code.detach_from(@category)
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace("code-#{@code.id}", partial: "/codes/show", locals: { survey_response: @survey_response })
+          end
+        end
+      end
   end
 
   private
   
   def code_params
-    params.require(:code).permit(:label, :survey_response)
+    params.require(:code).permit(:label, :survey_response, :category)
   end
   
 end

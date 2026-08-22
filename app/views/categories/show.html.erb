@@ -138,7 +138,7 @@
         </thead>
       <tbody>
         <% @all_codes.each do |code| %>
-          <%= render partial: "codes/show", locals: { code: code, category: @category, category_codes: @category_codes } %>
+          <%= render partial: "codes/row", locals: { code: code, category: @category, category_codes: @category_codes } %>
         <% end %>
       </tbody>
     </table>

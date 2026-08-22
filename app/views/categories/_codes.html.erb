@@ -19,9 +19,9 @@
               </td>
               <td class="frequency-cell"><%= code.frequency %></td>
               <td class="origins-cell">
-                <div>Questions: <%= code.questions.to_sentence %></div>
-                <div>Cases: <%= code.personas %></div>
-                <div>Dimensions: <%= code.dimensions.to_sentence %></div>
+                <div>Questions: <%= code.question_list.to_sentence %></div>
+                <div>Cases: <%= code.persona_count %></div>
+                <div>Dimensions: <%= code.dimension_list.to_sentence %></div>
               </td>
               <td class="row-action-cell">
                 <%= form_with model: category, data: { turbo_stream: true } do |f| %>

@@ -19,7 +19,7 @@ class Code
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
-  def self.applied(limit:)
+  def self.applied(limit=nil)
     if limit
       Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").limit(limit).map{|r| r[:c]}
     else
@@ -40,22 +40,22 @@ class Code
   end
 
   def dimension_list
-    @dimension_list ||= self.dimensions.pluck(:name)  
+    @dimension_list ||= self.dimensions.pluck(:name)
   end
   
-  def personas_list
-    @personas_list ||= self.survey_responses.as(:query).query.match("(p:Persona)-[]-(s)").return("p.identifier").map{|r| r[:s]}
+  def persona_list
+    @persona_list ||= self.query_as(:c).match("(c)-[]-(:SurveyResponse)-[]-(p:Persona)").return("DISTINCT p.identifier AS identifier").order("identifier").map{|r| r[:identifier]}
   end
   
-  def personas_count
-    @personas_count ||= self.survey_responses.as(:s).query.match("(p:Persona)-[]-(s)").return("COUNT(p)").map{|r| r[:s]}.first
+  def persona_count
+    @persona_count ||= persona_list.count
   end
 
   def question_list
-    @questions ||= self.survey_responses.as(:s).query.match("(s:SurveyResponse)-[]-(si:SurveyItem)").return("si.identifier").map{|r| r[:s]}.map{|identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
+    @questions ||= self.survey_responses.as(:s).query.match("(s:SurveyResponse)-[]-(si:SurveyItem)").return("DISTINCT si.identifier AS identifier").order("identifier").map{|r| r[:identifier]}.map{|identifier| "Q#{identifier.to_s.rjust(3, "0")}"}
   end
   
-  def self.personas_histogram(personas)
+  def self.personas_histogram(code)
     codes = self.survey_responses.as(:s).query.match("(p:Persona)-[]-(s:SurveyResponse)").with("p.identifier AS name, COUNT(p) AS ct").return("name, ct").order("ct DESC").map{|r| r[:s]}
     codes.to_h { |code| [code[0], code[1]] }
   end

@@ -14,10 +14,12 @@ class Memo
 
   before_save :attach_referrent
   
+  has_one :out, :category, type: :HasMemo
   has_one :out, :persona, type: :HasMemo
   has_one :out, :project, type: :HasMemo
   has_one :out, :researcher, type: :HasMemo
   has_one :out, :survey_item, type: :HasMemo
+  has_one :out, :theme, type: :HasMemo
 
   KINDS = %w{ persona project survey_item }
   

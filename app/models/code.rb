@@ -22,11 +22,11 @@ class Code
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
   def self.applied
-    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return(:c).map{|r| r[:c]}
+    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return("DISTINCT c").order("c.label").limit(10).map{|r| r[:c]}
   end
 
   def self.categorized
-    Code.as(:c).query.match("(c)-[]-(:Category)").return(:c)
+    Code.as(:c).query.match("(c)-[]-(:Category)").return("DISTINCT c").uniq.map{|r| r[:c]}
   end
 
   def self.uncategorized
@@ -66,7 +66,11 @@ class Code
   def dimensions
     @dimensions ||= Code.where(label: self.label).pluck(:dimension).uniq.sort
   end
-  
+
+  def frequency
+    @frequency ||= self.survey_responses.count  
+  end
+    
   def questions
     @questions ||= SurveyItem.as(:s).query.match("(s)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:s).pluck("s.identifier").compact.uniq.sort.map{ |identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
   end

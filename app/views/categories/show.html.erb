@@ -69,28 +69,7 @@
           </thead>
           <tbody>
             <% @category_codes.each do |code| %>
-              <tr class="" data-frequency="27" data-name="<%= code.label %>">
-                <td class="code-name-cell">
-                  <span class="tag"><%= code.label %></span>
-                </td>
-                <td class="frequency-cell">27</td>
-                <td class="origins-cell">
-                  <div>Questions: <%= code.questions.to_sentence %></div>
-                  <div>Cases: <%= pluralize(code.personas, "Persona") %></div>
-                  <div>Dimensions: <%= code.dimensions.to_sentence %></div>
-                </td>
-                <td class="row-action-cell">
-                  <button aria-label="Remove '<%= code.label %>' from this category" class="icon-button remove-code-button" title="Remove from category" type="button">
-                    <svg aria-hidden="true" class="lucide lucide-trash2-icon lucide-trash-2" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 11v6"></path>
-                      <path d="M14 11v6"></path>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                      <path d="M3 6h18"></path>
-                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                  </button>
-                </td>
-              </tr>
+              <%= render partial: "codes/show", locals: { code: code, category: @category } %>
             <% end %>
           </tbody>
         </table>
@@ -100,199 +79,79 @@
     <% end %>
   </section>
 
-<section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
-<div class="work-area-heading browser-heading">
-<div>
-<h2 id="find-codes-title">Explore, find, and assign codes</h2>
-<p>Search the full project code collection and add relevant codes to this category.<span class="work-area-instruction">Select a row to add the code; select it again to remove it.</span></p>
-</div>
-<div class="selection-summary">Selected codes: <strong id="added-count">0</strong></div>
-</div>
-<div aria-label="Search and filter all project codes" class="table-toolbar code-browser-controls search-toolbar" role="search">
-<label class="search-field browser-search">
-<span class="visually-hidden">Search all project codes</span>
-<svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
-<input aria-controls="available-codes-table" class="search-input" id="available-search" placeholder="Search code names and origins" type="search"/>
-</label>
-<button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
-<label class="toolbar-control">
-<span>Category assignment</span>
-<select aria-controls="available-codes-table" id="display-filter">
-<option value="all">All codes</option>
-<option value="available">Not assigned to this category</option>
-<option value="added">Assigned to this category</option>
-</select>
-</label>
-<label class="toolbar-control">
-<span>Occurrences</span>
-<select aria-controls="available-codes-table" id="frequency-filter">
-<option value="all">Any frequency</option>
-<option value="high">15 or more</option>
-<option value="medium">8–14</option>
-<option value="low">7 or fewer</option>
-</select>
-</label>
-<label class="toolbar-control">
-<span>Code origin</span>
-<select aria-controls="available-codes-table" id="available-origin-filter">
-<option value="all">All origins</option>
-<option value="questions">Responses by question</option>
-<option value="cases">Individual cases</option>
-<option value="both">Both coding pathways</option>
-</select>
-</label>
+  <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
+    <div class="work-area-heading browser-heading">
+      <div>
+        <h2 id="find-codes-title">Explore, find, and assign codes</h2>
+        <p>Search the full project code collection and add relevant codes to this category.<span class="work-area-instruction">Select a row to add the code; select it again to remove it.</span></p>
+      </div>
+      <div class="selection-summary">Selected codes: <strong id="added-count">0</strong></div>
+    </div>
+    <div aria-label="Search and filter all project codes" class="table-toolbar code-browser-controls search-toolbar" role="search">
+      <label class="search-field browser-search">
+        <span class="visually-hidden">Search all project codes</span>
+        <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+        <input aria-controls="available-codes-table" class="search-input" id="available-search" placeholder="Search code names and origins" type="search"/>
+      </label>
+      <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
+      <label class="toolbar-control">
+        <span>Category assignment</span>
+        <select aria-controls="available-codes-table" id="display-filter">
+          <option value="all">All codes</option>
+          <option value="available">Not assigned to this category</option>
+          <option value="added">Assigned to this category</option>
+        </select>
+      </label>
+      <label class="toolbar-control">
+        <span>Occurrences</span>
+        <select aria-controls="available-codes-table" id="frequency-filter">
+          <option value="all">Any frequency</option>
+          <option value="high">15 or more</option>
+          <option value="medium">8–14</option>
+          <option value="low">7 or fewer</option>
+        </select>
+      </label>
+      <label class="toolbar-control">
+        <span>Code origin</span>
+        <select aria-controls="available-codes-table" id="available-origin-filter">
+          <option value="all">All origins</option>
+          <option value="questions">Responses by question</option>
+          <option value="cases">Individual cases</option>
+          <option value="both">Both coding pathways</option>
+        </select>
+      </label>
+      <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
+      <p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project codes</p>
+    </div>
+    <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
+    <p aria-live="polite" class="browser-feedback" id="code-assignment-feedback"><span class="browser-feedback-label">Code status change:</span> <span id="code-assignment-feedback-message">No changes yet.</span></p>
+    <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
+      <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
+        <caption class="visually-hidden">Project codes available for category assignment</caption>
+        <thead>
+          <tr>
+            <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="available-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
+            <th scope="col"><button aria-describedby="occurrences-help" class="sort-button" data-key="frequency" data-table="available-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
+            <th scope="col">Code origins</th>
+            <th scope="col"><span class="visually-hidden">Assign code</span></th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr class="code-browser-row" data-frequency="22" data-name="sample code" data-origins="questions q03, q12; cases 12; dimensions sample dimension">
+        <td class="code-name-cell">
+        <span class="tag">Sample code</span>
+        </td>
+        <td class="frequency-cell">22</td>
+        <td class="origins-cell"><div>Questions: Q03, Q12</div><div>Cases: 12</div><div>Dimensions: Sample dimension</div></td>
+        <td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
+        </tr>
+        <% @all_codes.each do |code| %>
+          <%= render partial: "codes/show", locals: { code: code, category: @category } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
+</section>
 
-<button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
-<p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project codes</p>
-</div>
-<p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
-<p aria-live="polite" class="browser-feedback" id="code-assignment-feedback"><span class="browser-feedback-label">Code status change:</span> <span id="code-assignment-feedback-message">No changes yet.</span></p>
-<div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
-<table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
-<caption class="visually-hidden">Project codes available for category assignment</caption>
-<thead>
-<tr>
-<th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="available-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
-<th scope="col"><button aria-describedby="occurrences-help" class="sort-button" data-key="frequency" data-table="available-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
-<th scope="col">Code origins</th>
-<th scope="col"><span class="visually-hidden">Assign code</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="code-browser-row" data-frequency="22" data-name="sample code" data-origins="questions q03, q12; cases 12; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">22</td>
-<td class="origins-cell"><div>Questions: Q03, Q12</div><div>Cases: 12</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="21" data-name="sample code" data-origins="questions q01, q08; cases 15; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">21</td>
-<td class="origins-cell"><div>Questions: Q01, Q08</div><div>Cases: 15</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="18" data-name="sample code" data-origins="questions q02, q05; cases 11; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">18</td>
-<td class="origins-cell"><div>Questions: Q02, Q05</div><div>Cases: 11</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="17" data-name="sample code" data-origins="questions q03, q17; cases 13; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">17</td>
-<td class="origins-cell"><div>Questions: Q03, Q17</div><div>Cases: 13</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="15" data-name="sample code" data-origins="questions q06, q13; cases 9; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">15</td>
-<td class="origins-cell"><div>Questions: Q06, Q13</div><div>Cases: 9</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="14" data-name="sample code" data-origins="questions q04, q11; cases 10; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">14</td>
-<td class="origins-cell"><div>Questions: Q04, Q11</div><div>Cases: 10</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="12" data-name="sample code" data-origins="questions q07, q15; cases 8; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">12</td>
-<td class="origins-cell"><div>Questions: Q07, Q15</div><div>Cases: 8</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="11" data-name="sample code" data-origins="questions q06, q14; cases 7; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">11</td>
-<td class="origins-cell"><div>Questions: Q06, Q14</div><div>Cases: 7</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="10" data-name="sample code" data-origins="questions q04, q16; cases 6; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">10</td>
-<td class="origins-cell"><div>Questions: Q04, Q16</div><div>Cases: 6</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="9" data-name="sample code" data-origins="questions q08, q13; cases 8; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">9</td>
-<td class="origins-cell"><div>Questions: Q08, Q13</div><div>Cases: 8</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="8" data-name="sample code" data-origins="questions q06, q18; cases 7; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">8</td>
-<td class="origins-cell"><div>Questions: Q06, Q18</div><div>Cases: 7</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-<tr class="code-browser-row" data-frequency="7" data-name="sample code" data-origins="questions q10, q20; cases 5; dimensions sample dimension">
-<td class="code-name-cell">
-<span class="tag">Sample code</span>
-</td>
-<td class="frequency-cell">7</td>
-<td class="origins-cell"><div>Questions: Q10, Q20</div><div>Cases: 5</div><div>Dimensions: Sample dimension</div></td>
-<td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
-</section>
-<aside aria-label="Researcher memos" class="category-detail-memos"><section class="sidebar-card white category-detail-memo-card researcher-memos" id="memos">
-<h2 class="sidebar-card-title">Researcher memos</h2>
-<div class="memo-entry">
-<div class="memo-date">May 14, 2026 · 5:01 PM</div>
-<p class="memo-text">
-         Review whether these codes describe a coherent analytic relationship.
-        </p>
-</div>
-<div class="memo-entry">
-<div class="memo-date">May 14, 2026 · 4:35 PM</div>
-<p class="memo-text">
-         Compare how the category appears across questions and individual cases.
-        </p>
-</div>
-<div class="memo-entry">
-<div class="memo-date">May 13, 2026 · 3:18 PM</div>
-<p class="memo-text">
-         Revisit codes with low frequency before deciding whether they belong here.
-        </p>
-</div>
-<div class="memo-entry">
-<div class="memo-date">May 12, 2026 · 11:42 AM</div>
-<p class="memo-text">
-         Check that the category description reflects both common and divergent examples.
-        </p>
-</div>
-<div class="memo-entry">
-<div class="memo-date">May 10, 2026 · 2:07 PM</div>
-<p class="memo-text">
-         Review this category alongside related categories before finalizing assignments.
-        </p>
-</div>
-<button class="button small secondary sidebar-action researcher-memos-action" type="button">Add memo</button>
-</section></aside>
-</div>
-</section>
+<%= render partial: "memos/feed", locals: { memo: Memo.new(category: @category), memos: @category.memos, css_class: "category-detail-memos" } %>

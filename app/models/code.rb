@@ -38,7 +38,17 @@ class Code
   def personas
     @personas ||= Persona.as(:p).query.match("(p:Persona)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.uuid = $id").params(id: self.id).return(:p).map{|r| r[:p]}
   end
-    
+
+  def self.personas_histogram(personas)
+    codes = Persona.as(:p).query.match("(p:Persona)-[]-(:SurveyResponse)-[]-(c:Code)").with("c, count(c) AS ct").return('c.name, ct').order("ct DESC")
+    codes.to_h { |code| [code[0], code[1]] }
+  end
+  
+  def self.survey_item_histogram(survey_item)
+    codes = survey_item.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").with("c, count(c) AS ct").return('c.label, ct').order("ct DESC")
+    codes.to_h { |code| [code[0], code[1]] }
+  end
+
   private
 
   def sanitize

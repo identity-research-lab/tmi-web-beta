@@ -82,7 +82,7 @@
 
         <div class="overview-card">
           <div id="frequency-list" class="frequency-list">
-            <% codes = Code.histogram(survey_item) %>
+            <% codes = Code.survey_items_histogram(survey_item) %>
             <% codes.each do |code, count| %>
               <% total_codes = codes.sum{|c| c[1]} %>
               <% width = count / total_codes.to_f * 100 %>

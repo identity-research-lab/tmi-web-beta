@@ -77,7 +77,7 @@
                 <td class="origins-cell">
                   <div>Questions: <%= code.questions.map(&:identifier).to_sentence %></div>
                   <div>Cases: <%= pluralize(code.personas.count, "Persona") %></div>
-                  <div>Dimensions: <%= code.dimenstions.map(&:name).to_sentence %></div>
+                  <div>Dimensions: <%= code.dimensions.map(&:name).to_sentence %></div>
                 </td>
                 <td class="row-action-cell">
                   <button aria-label="Remove '<%= code.label %>' from this category" class="icon-button remove-code-button" title="Remove from category" type="button">

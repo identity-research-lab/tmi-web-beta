@@ -17,13 +17,12 @@ class Code
   validates_uniqueness_of :label, scope: :dimension
 
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
-  has_many :in, :personas, type: :Experiences, model_class: "Persona"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
   def self.applied
-    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return(:c)
+    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return(:c).map{|r| r[:c]}
   end
 
   def self.categorized
@@ -64,11 +63,18 @@ class Code
     return "unknown"
   end
 
-  def questions
-    SurveyItem.as(:q).query.match("(q)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = `?", self.label).return(:q).uniq
+  def dimensions
+    @dimensions ||= Dimension.where(name: Code.where(label: self.label).pluck(:dimension).uniq)
   end
   
-  
+  def questions
+    @questions ||= SurveyItem.as(:q).query.match("(q)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:q).map{|r| r[:q]}
+  end
+
+  def personas
+    @personas ||= Persona.as(:p).query.match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:p).map{|r| r[:p]}
+  end
+    
   private
 
   def sanitize

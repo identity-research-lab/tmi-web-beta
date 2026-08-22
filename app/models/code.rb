@@ -19,8 +19,12 @@ class Code
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
-  def self.applied
-    Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").map{|r| r[:c]}
+  def self.applied(limit:)
+    if limit
+      Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").limit(limit).map{|r| r[:c]}
+    else
+      Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").map{|r| r[:c]}
+    end
   end
 
   def self.categorized
@@ -34,19 +38,31 @@ class Code
   def frequency
     @frequency ||= self.survey_responses.count  
   end
-    
-  def personas
-    @personas ||= Persona.as(:p).query.match("(p:Persona)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.uuid = $id").params(id: self.id).return(:p).map{|r| r[:p]}
+
+  def dimension_list
+    @dimension_list ||= self.dimensions.pluck(:name)  
+  end
+  
+  def personas_list
+    @personas_list ||= self.survey_responses.as(:query).query.match("(p:Persona)-[]-(s)").return("p.identifier").map{|r| r[:s]}
+  end
+  
+  def personas_count
+    @personas_count ||= self.survey_responses.as(:s).query.match("(p:Persona)-[]-(s)").return("COUNT(p)").map{|r| r[:s]}.first
   end
 
+  def question_list
+    @questions ||= self.survey_responses.as(:s).query.match("(s:SurveyResponse)-[]-(si:SurveyItem)").return("si.identifier").map{|r| r[:s]}.map{|identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
+  end
+  
   def self.personas_histogram(personas)
-    codes = Persona.as(:p).query.match("(p:Persona)-[]-(:SurveyResponse)-[]-(c:Code)").with("c, count(c) AS ct").return('c.name, ct').order("ct DESC")
+    codes = self.survey_responses.as(:s).query.match("(p:Persona)-[]-(s:SurveyResponse)").with("p.identifier AS name, COUNT(p) AS ct").return("name, ct").order("ct DESC").map{|r| r[:s]}
     codes.to_h { |code| [code[0], code[1]] }
   end
   
-  def self.survey_item_histogram(survey_item)
-    codes = survey_item.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").with("c, count(c) AS ct").return('c.label, ct').order("ct DESC")
-    codes.to_h { |code| [code[0], code[1]] }
+  def self.survey_items_histogram(survey_item)
+    codes = survey_item.survey_responses.as(:sr).query.match("(sr:SurveyResponse)-[]-(c:Code)").with("c, count(c) AS ct").return('c.label, ct').order("ct DESC")
+    codes.to_h { |code| [code[0].to_s, code[1].to_i] }
   end
 
   private

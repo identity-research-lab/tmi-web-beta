@@ -1,4 +1,5 @@
 <%= turbo_frame_tag "memo-feed" do %>
+  <%- css_class ||= "" %>
   <section id="memos" class="sidebar-card white researcher-memos <%= css_class %>">
     <h2 class="sidebar-card-title">Researcher memos</h2>
     <% if memos.present? %>

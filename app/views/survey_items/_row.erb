@@ -3,8 +3,8 @@
     <%= link_to survey_item.identifier.to_s.rjust(3, "0"), survey_item_path(survey_item) %>
   </td>
 
-  <td data-sort-index="<%= survey_item.name %>">
-    <%= survey_item.name %>
+  <td data-sort-index="<%= survey_item.label %>">
+    <%= survey_item.label %>
     <p>
       <%= survey_item.prompt %>
     </p>

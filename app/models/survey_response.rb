@@ -20,4 +20,16 @@ class SurveyResponse
     where(is_coded: true)
   end
 
+  def self.experiences
+    SurveyResponse.as(:sr).query.match("(sr)-[]-(si:SurveyItem)").where("si.is_experience = $value").params(value: true).return(:sr).map{|r| r[:sr]}
+  end
+  
+  def self.identities
+    SurveyResponse.as(:sr).query.match("(sr)-[]-(si:SurveyItem)").where("si.is_identity = $value").params(value: true).return(:sr).map{|r| r[:sr]}
+  end
+  
+  def self.reflections
+    SurveyResponse.as(:sr).query.match("(sr)-[]-(si:SurveyItem)").where("si.is_reflection = $value").params(value: true).return(:sr).map{|r| r[:sr]}
+  end
+
 end

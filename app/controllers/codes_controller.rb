@@ -27,6 +27,10 @@ class CodesController < ApplicationController
     end
   end
 
+  def search
+    
+  end
+  
   private
   
   def code_params

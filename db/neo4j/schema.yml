@@ -55,6 +55,7 @@
 - CREATE RANGE INDEX `index_5cb729d1` FOR (n:`Identity`) ON (n.`context`)
 - CREATE RANGE INDEX `index_61584458` FOR (n:`Category`) ON (n.`name`)
 - CREATE RANGE INDEX `index_aabeed83` FOR (n:`Theme`) ON (n.`name`)
+- CREATE RANGE INDEX `index_c5c285f` FOR (n:`Code`) ON (n.`label`)
 - CREATE RANGE INDEX `index_ca770182` FOR (n:`Code`) ON (n.`dimension`)
 - CREATE RANGE INDEX `index_f240f960` FOR (n:`Identity`) ON (n.`dimension`)
 :versions:
@@ -71,3 +72,4 @@
 - '20260608041847'
 - '20260608041855'
 - '20260820191055'
+- '20260822020736'

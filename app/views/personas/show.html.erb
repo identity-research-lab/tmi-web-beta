@@ -115,23 +115,7 @@
       </div>
     </div>
     <aside class="app-sidebar" aria-label="Survey item analysis sidebar">
-      <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo, css_class: "" } %>
-      <section class="sidebar-card">
-        <details class="sidebar-disclosure" open>
-          <summary class="sidebar-card-title disclosure-title">
-            Attached Categories
-          </summary>
-          <% if @categories.any? %>
-            <div class="category-tags collapsed-tags">
-              <% @categories.each do |category| %>
-                <span class="tag"><%= category.name %></span>
-              <% end %>
-            </div>
-          <% else %>
-            <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
-          <% end %>
-        </details>
-      </section>
+      <%= render partial: "memos/feed", locals: { memos: @memos, memo: @memo } %>
     </aside>
   </section>
 <% end %>

@@ -41,7 +41,7 @@
 
         <div class="code-metrics-item">
           <span class="code-metrics-label">Unique Codes</span>
-          <span class="code-metrics-value"><%= persona.codes_count %></span>
+          <span class="code-metrics-value"><%= persona.code_count %></span>
         </div>
 
         <div class="code-metrics-item">
@@ -82,7 +82,7 @@
 
         <div class="overview-card">
           <div id="frequency-list" class="frequency-list">
-            <% codes = Code.personas_histogram(persona) %>
+            <% codes = persona.codes_histogram %>
             <% codes.each do |code, count| %>
               <% total_codes = codes.sum{|c| c[1]} %>
               <% width = count / total_codes.to_f * 100 %>
@@ -128,20 +128,10 @@
     </div>
 
     <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
-
       <section id="memos" class="sidebar-card white">
         <div class="sidebar-card-title">Researcher Memos</div>
-        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id), css_class: "" } %>
+        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>
       </section>
-      <section class="sidebar-card">
-        <details class="sidebar-disclosure" open>
-          <summary class="sidebar-card-title disclosure-title">
-            Attached Categories
-          </summary>
-          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
-        </details>
-      </section>
-
     </aside>
 
     </section>

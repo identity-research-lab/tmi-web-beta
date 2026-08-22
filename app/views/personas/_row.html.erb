@@ -11,17 +11,9 @@
     </div>
   </td>
 
-  <% codes_count = persona.codes.count %>
-  
-  <td data-sort-index="<%= codes_count %>">
+  <td data-sort-index="<%= persona.code_count %>">
     <div class="code-tags">
-      <span class="tag dark"><%= codes_count %></span>
-    </div>
-  </td>
-
-  <td>
-    <div class="category-tags">
-      <span class="tag dark">???</span>
+      <span class="tag dark"><%= persona.code_count %></span>
     </div>
   </td>
 

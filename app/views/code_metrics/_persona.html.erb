@@ -128,20 +128,10 @@
     </div>
 
     <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
-
       <section id="memos" class="sidebar-card white">
         <div class="sidebar-card-title">Researcher Memos</div>
-        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id), css_class: "" } %>
+        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>
       </section>
-      <section class="sidebar-card">
-        <details class="sidebar-disclosure" open>
-          <summary class="sidebar-card-title disclosure-title">
-            Attached Categories
-          </summary>
-          <p>No categories attached yet. Categories will appear as the analysis progresses.</p>
-        </details>
-      </section>
-
     </aside>
 
     </section>

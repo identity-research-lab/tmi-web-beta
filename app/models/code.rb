@@ -3,24 +3,24 @@ class Code
 
   attr_accessor :action
 
-  property :label
-  property :dimension
+  property :name
   property :created_at, type: DateTime
   property :updated_at, type: DateTime
 
   before_validation :sanitize
-  validates :label, presence: true
-  validates_uniqueness_of :label
+  validates :name, presence: true
+  validates_uniqueness_of :name
+  validates_uniqueness_of :name
   
   has_many :in, :categories, type: :Contains, model_class: "Category"
   has_many :in, :survey_responses, type: :AssociatedWith, model_class: "SurveyResponse"
-  has_many :out :identity_dimensions, type: :RelatesTo, model_class: "Dimension"
+  has_many :out :dimensions, type: :RelatesTo, model_class: "Dimension"
   has_many :out, :events, type: :HasEvent, model_class: "Event"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
   def self.applied
-    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return("DISTINCT c").order("c.label DESC").limit(10).map{|r| r[:c]}
+    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return("DISTINCT c").order("c.name DESC").limit(10).map{|r| r[:c]}
   end
 
   def self.categorized
@@ -36,26 +36,22 @@ class Code
     self.personas.delete(survey_response.persona)
   end
 
-  def dimensions
-    @dimensions ||= Code.where(label: self.label).pluck(:dimension).uniq.sort
-  end
-
   def frequency
     @frequency ||= self.survey_responses.count  
   end
     
   def questions
-    @questions ||= SurveyItem.as(:s).query.match("(s)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:s).pluck("s.identifier").compact.uniq.sort.map{ |identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
+    @questions ||= SurveyItem.as(:s).query.match("(s)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.name = $name").params(name: self.name).return(:s).pluck("s.identifier").compact.uniq.sort.map{ |identifier| "Q#{identifier.to_s.rjust(3, '0')}" }
   end
 
   def personas
-    @personas ||= Persona.as(:p).query.match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.label = $label").params(label: self.label).return(:p).count
+    @personas ||= Persona.as(:p).query.match("(p)-[]-(:SurveyResponse)-[]-(c:Code)").where("c.name = $name").params(name: self.name).return(:p).count
   end
     
   private
 
   def sanitize
-    self.label.strip!
+    self.name.strip!
   end
 
 end

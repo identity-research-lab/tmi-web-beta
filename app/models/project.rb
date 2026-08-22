@@ -40,14 +40,14 @@ class Project
     survey_fields.each_with_index do |field,i|
       survey_items.find_or_create_by(csv_header: field, identifier: i + 1)
     end
-    Event.create(project: self, label: "Survey items", description: "Survey items refreshed from upload.")
+    Event.create(project: self, name: "Survey items", description: "Survey items refreshed from upload.")
   end
 
   def create_survey_responses_from_csv
       self.update_attributes(refresh_started_at: DateTime.now)
   #    Services::ImportFromCsv.perform(self.id)
       PopulateSurveyResponsesJob.perform_later(project_id: self.id)
-      Event.create(project: self, label: "Survey responses", description: "Survey responses import started.")
+      Event.create(project: self, name: "Survey responses", description: "Survey responses import started.")
     end
   
   def progress

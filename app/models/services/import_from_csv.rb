@@ -41,11 +41,11 @@ module Services
           persona.touch
 				end
 				project.update_attributes(refreshed_at: DateTime.now, refresh_in_progress: false)
-				Event.create(project: project, label: "Survey responses", description: "Survey responses import completed, #{records.count} cases refreshed.")
+				Event.create(project: project, name: "Survey responses", description: "Survey responses import completed, #{records.count} cases refreshed.")
 			rescue StandardError => exception
 				Rails.logger.error("#{exception.inspect}\n#{exception.backtrace[0..3].to_s}")
 				project.update_attributes(refresh_in_progress: false, has_pending_changes: false)
-				Event.create(project: project, label: "Survey responses", description: "Survey responses import failed: #{exception.inspect}")
+				Event.create(project: project, name: "Survey responses", description: "Survey responses import failed: #{exception.inspect}")
 			end
 		end
 

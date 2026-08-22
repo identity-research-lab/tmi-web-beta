@@ -4,7 +4,7 @@ class SurveyItem
   attr_accessor :item_kind
 
   property :prompt
-  property :label
+  property :name
   property :csv_header
   property :identifier
   property :is_participant_identifier, default: false
@@ -83,7 +83,7 @@ class SurveyItem
   end  
 
   def formatted_identifier
-    "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.label}"
+    "Question #{self.identifier.to_s.rjust(3, "0")}: #{self.name}"
   end
 
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
@@ -107,7 +107,7 @@ class SurveyItem
 
   def complete!
     update_attributes(is_completed: true)
-    Event.create(persona: self, label: "Persona #{self.identifier}", description: "Coding completed.")
+    Event.create(persona: self, name: "Persona #{self.identifier}", description: "Coding completed.")
   end
 
   # Force to boolean. Sorry.

@@ -15,7 +15,7 @@ class Search
   
   def code_results
     return [] unless self.query.present?
-    @code_results ||= Code.as(:c).where("toLower(c.label) CONTAINS toLower($text)", text: self.query)
+    @code_results ||= Code.as(:c).where("toLower(c.name) CONTAINS toLower($text)", text: self.query)
   end
 
   def memo_results

@@ -4,7 +4,7 @@
       <% survey_response.codes.order(:label).each do |code| %>
         <%= form_with model: code, data: { turbo_stream: true } do |f| %>
           <%= f.hidden_field :survey_response, value: survey_response.id %>
-          <%= f.submit code.label, class: "tag deletable" %>
+          <%= f.submit code.name, class: "tag deletable" %>
         <% end %>
       <% end %>
     </div>

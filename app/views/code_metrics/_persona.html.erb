@@ -115,7 +115,7 @@
           <% next unless code = survey_response.codes.limit(5).to_a.sample %>
           <article class="excerpt-card">
             <div class="excerpt-meta">
-              <span class="tag dark"><%= code.label %></span>
+              <span class="tag dark"><%= code.name %></span>
               <% persona = survey_response.persona %>
               <span class="case-subtext"><%= link_to persona.formatted_identifier, persona, target: "_top" %></span>
             </div>

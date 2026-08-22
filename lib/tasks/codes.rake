@@ -61,14 +61,14 @@ namespace :import do
     missing = []
                
     DIMENSION_MAP = {
-      "age" => "Age",
-      "class" => "Class",
-      "race-ethnicity" => "Race/Ethnicity",
-      "religion" => "Religion",
-      "disability" => "Disability",
-      "neurodiversity" => "Neurodiversity",
-      "gender" => "Gender",
-      "lgbtqia" => "LGBTQIA+ Status"
+      "age" => Dimension.find_by(name: "Age"),
+      "class" => Dimension.find_by(name: "Class"),
+      "race-ethnicity" => Dimension.find_by(name: "Race/Ethnicity"),
+      "religion" => Dimension.find_by(name: "Religion"),
+      "disability" => Dimension.find_by(name: "Disability"),
+      "neurodiversity" => Dimension.find_by(name: "Neurodiversity"),
+      "gender" => Dimension.find_by(name: "Gender"),
+      "lgbtqia" => Dimension.find_by(name: "LGBTQIA+ Status")
     }
   
     # Open the CSV file and write the data
@@ -87,7 +87,8 @@ namespace :import do
       if persona = Persona.find_by(identifier: id)
         codes.each do |code_item|
           if survey_response = persona.survey_responses.as(:sr).query.match("(sr)-[]-(si:SurveyItem)-[]-(d:Dimension)").where("d.name = $name").where("si.is_experience = true").params(name: code_item[:dimension]).return(:sr).pluck(:sr).first
-            code = Code.find_or_create_by(label: code_item[:label], dimension: code_item[:dimension], is_experience: true)
+            code = Code.find_or_create_by(name: code_item[:name])
+            code_item[:dimension] << code
             code.personas << persona
             code.survey_responses << survey_response
             imported_code_count += 1

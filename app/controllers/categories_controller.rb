@@ -17,6 +17,8 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
+    @category_codes = @category.codes
+    @all_codes = Code.applied
   end
   
   def destroy

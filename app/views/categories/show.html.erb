@@ -55,28 +55,7 @@
     </div>
 
     <p aria-live="polite" class="assigned-status-feedback" id="assigned-feedback"><span class="browser-feedback-label">Code status change:</span> <span id="assigned-feedback-message">No changes yet.</span></p>
-    <% if @category_codes.any? %>
-      <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
-        <table class="code-data-table" id="assigned-codes-table">
-          <caption class="visually-hidden">Codes currently assigned to this category</caption>
-          <thead>
-            <tr>
-              <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
-              <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
-              <th scope="col">Code origins</th>
-              <th scope="col"><span class="visually-hidden">Remove assignment</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= turbo_frame_tag "category-codes" do %>
-              <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes } %>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% else %>
-      <div class="empty-state search-empty-state" id="assigned-codes-empty"><strong>No matching assigned codes</strong><p>No assigned codes match the current search.</p><button aria-controls="assigned-codes-table" class="button secondary small" id="clear-assigned-search-filters" type="button">Clear search</button></div>
-    <% end %>
+    <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes } %>
   </section>
 
   <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
@@ -137,8 +116,26 @@
           </tr>
         </thead>
       <tbody>
-        <%= turbo_frame_tag "available-codes" do %>
-          <%= render partial: "categories/codes", locals: { category: @category, codes: @all_codes, attached_codes: @category_codes } %>
+        <% @all_codes.each do |code| %>
+          <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.label %>">
+            <td class="code-name-cell">
+              <span class="tag"><%= code.label %></span>
+            </td>
+            <td class="frequency-cell"><%= code.frequency %></td>
+            <td class="origins-cell">
+              <div>Questions: <%= code.questions.to_sentence %></div>
+              <div>Cases: <%= code.personas %></div>
+              <div>Dimensions: <%= code.dimensions.to_sentence %></div>
+            </td>
+            <td class="row-action-cell">
+              <%= form_with model: code, data: { turbo_stream: true } do |f| %>
+                <%= f.hidden_field :category, value: @category.id %>
+                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.label} to this category" } do %>
+                  <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
       </tbody>
     </table>

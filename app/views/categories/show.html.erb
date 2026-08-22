@@ -1,0 +1,133 @@
+<%- title "Categories" %>
+<%- active_nav "categories" %>
+
+<section class="app-header app-header--detail">
+  <div class="app-header-copy">
+    <div class="app-label">
+    <%= @project.name %> · <span class="app-label-dense">Category Development</span>
+    </div>
+    <h1 class="app-title"><%= @category.name %></h1>
+    <p class="app-description">
+      Review and revise this analytical category, manage its attached project codes, and document how the concept is developing across the data set.
+    </p>
+  </div>
+  <aside aria-label="Relational analysis tools" class="app-header-panel category-relational-panel">
+    <div class="app-panel-title">Relational analysis</div>
+    <button class="button small secondary dashboard-template-button category-graph-button" type="button" disabled>
+      Open category graph
+    </button>
+    <div class="case-subtext category-cypher-row confirmable">
+      <span class="category-cypher-label">Cypher:</span>
+      <a href="#" id="copy-source" class="cypher-link"><%= @category.graph_query[:query] %></a>
+      <span id="confirmation" class="hidden">Copied!</span>
+      <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
+    </div>
+  </aside>
+</section>
+
+<nav aria-label="Category workspace sections" class="category-page-links">
+  <span class="category-page-links-label">On this page</span>
+  <a href="#assigned-codes">Review assigned codes</a>
+  <a href="#explore-codes">Explore and assign codes</a>
+  <a href="#memos">Researcher memos</a>
+</nav>
+
+<!-- Category assignment workspace -->
+<section class="category-detail-main">
+  <div class="category-primary-layout">
+  <section aria-labelledby="assigned-codes-title" class="category-work-area assigned-codes-area" id="assigned-codes">
+    <div class="work-area-heading">
+      <div>
+        <h2 id="assigned-codes-title">Assigned codes</h2>
+        <p>Review, search, sort, and remove codes currently assigned to this category.<span class="work-area-instruction">Select a row once to mark the code for removal, then select it again to confirm.</span></p>
+      </div>
+      <span class="count-badge metric-count-badge"><span id="assigned-count"><%= @category_codes.count %></span> assigned codes</span>
+    </div>
+    <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes } %>
+  </section>
+
+  <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
+    <div class="work-area-heading browser-heading">
+      <div>
+        <h2 id="find-codes-title">Explore, find, and assign codes</h2>
+        <p>Search the full project code collection and add relevant codes to this category.<span class="work-area-instruction">Select a row to add the code; select it again to remove it.</span></p>
+      </div>
+      <div class="selection-summary">Selected codes: <strong id="added-count">0</strong></div>
+    </div>
+    <div aria-label="Search and filter all project codes" class="table-toolbar code-browser-controls search-toolbar" role="search">
+      <label class="search-field browser-search">
+        <span class="visually-hidden">Search all project codes</span>
+        <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
+        <input aria-controls="available-codes-table" class="search-input" id="available-search" placeholder="Search code names and origins" type="search"/>
+      </label>
+      <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
+      <label class="toolbar-control">
+        <span>Category assignment</span>
+        <select aria-controls="available-codes-table" id="display-filter">
+          <option value="all">All codes</option>
+          <option value="available">Not assigned to this category</option>
+          <option value="added">Assigned to this category</option>
+        </select>
+      </label>
+      <label class="toolbar-control">
+        <span>Occurrences</span>
+        <select aria-controls="available-codes-table" id="frequency-filter">
+          <option value="all">Any frequency</option>
+          <option value="high">15 or more</option>
+          <option value="medium">8–14</option>
+          <option value="low">7 or fewer</option>
+        </select>
+      </label>
+      <label class="toolbar-control">
+        <span>Code origin</span>
+        <select aria-controls="available-codes-table" id="available-origin-filter">
+          <option value="all">All origins</option>
+          <option value="questions">Responses by question</option>
+          <option value="cases">Individual cases</option>
+          <option value="both">Both coding pathways</option>
+        </select>
+      </label>
+      <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
+      <p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project codes</p>
+    </div>
+    <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
+    <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
+      <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
+        <caption class="visually-hidden">Project codes available for category assignment</caption>
+        <thead>
+          <tr>
+            <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="available-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
+            <th scope="col"><button aria-describedby="occurrences-help" class="sort-button" data-key="frequency" data-table="available-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
+            <th scope="col">Code origins</th>
+            <th scope="col"><span class="visually-hidden">Assign code</span></th>
+          </tr>
+        </thead>
+      <tbody>
+        <% @all_codes.each do |code| %>
+          <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.label %>">
+            <td class="code-name-cell">
+              <span class="tag"><%= code.label %></span>
+            </td>
+            <td class="frequency-cell"><%= code.frequency %></td>
+            <td class="origins-cell">
+              <div>Questions: <%= code.questions.to_sentence %></div>
+              <div>Cases: <%= code.personas %></div>
+              <div>Dimensions: <%= code.dimensions.to_sentence %></div>
+            </td>
+            <td class="row-action-cell">
+              <%= form_with model: code, data: { turbo_stream: true } do |f| %>
+                <%= f.hidden_field :category, value: @category.id %>
+                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.label} to this category" } do %>
+                  <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
+</section>
+
+<%= render partial: "memos/feed", locals: { memo: Memo.new(category: @category), memos: @category.memos, css_class: "category-detail-memos" } %>

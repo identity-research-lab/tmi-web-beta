@@ -1,13 +1,12 @@
 <%= turbo_frame_tag "theme-categories" do %>
   <% if attached_categories.any? %>
-
     <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
       <caption class="visually-hidden">Project categories available for category assignment</caption>
       <thead>
         <tr>
           <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Category name <span aria-hidden="true">A–Z</span></button></th>
-          <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Assigned codes <span aria-hidden="true">↕</span></button></th>
           <th scope="col">Description</th>
+          <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Assigned codes <span aria-hidden="true">↕</span></button></th>
           <th scope="col"><span class="visually-hidden">Remove category assignment</span></th>
         </tr>
       </thead>
@@ -17,12 +16,25 @@
             <td class="code-name-cell">
               <span class="tag"><%= category.name %></span>
             </td>
+            <td class="origins-cell"><%= category.description %></td>
             <td class="frequency-cell"><%= category.codes.count %></td>
             <td class="row-action-cell">
-              <%= form_with model: @theme, data: { turbo_stream: true } do |f| %>
+                <%= form_with model: theme, data: { turbo_stream: true } do |f| %>
                 <%= f.hidden_field :category, value: category.id %>
-                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{category.name} to this theme" } do %>
-                  <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
+                <% if attached_categories.include? category %>
+                  <%= f.button name: "remove", class: "icon-button remove-code-button", aria: { label: "Remove #{category.name} from this theme" } do %>
+                    <svg aria-hidden="true" class="lucide lucide-trash2-icon lucide-trash-2" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10 11v6"></path>
+                      <path d="M14 11v6"></path>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                      <path d="M3 6h18"></path>
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                  <% end %>
+                <% else %>
+                  <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{category.name} to this theme" } do %>
+                    <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
+                  <% end %>
                 <% end %>
               <% end %>
             </td>
@@ -30,57 +42,5 @@
         <% end %>
       </tbody>
     </table>
-
-
-    <div aria-label="Scrollable assigned categories table" class="data-table-window assigned-table-window" role="region" tabindex="0">
-      <table class="code-data-table" id="assigned-codes-table">
-        <caption class="visually-hidden">Categories currently assigned to this theme</caption>
-        <thead>
-          <tr>
-            <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
-            <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
-            <th scope="col">Code origins</th>
-            <th scope="col"><span class="visually-hidden">Remove assignment</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% codes.each do |code| %>
-            <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.name %>">
-              <td class="code-name-cell">
-                <span class="tag"><%= code.name %></span>
-              </td>
-              <td class="frequency-cell"><%= code.frequency %></td>
-              <td class="origins-cell">
-                <div>Questions: <%= code.questions.to_sentence %></div>
-                <div>Cases: <%= code.personas %></div>
-                <div>Dimensions: <%= code.dimensions.to_sentence %></div>
-              </td>
-              <td class="row-action-cell">
-                <%= form_with model: category, data: { turbo_stream: true } do |f| %>
-                  <%= f.hidden_field :theme, value: theme.id %>
-                  <% if attached_categories.include? category %>
-                    <%= f.button name: "remove", class: "icon-button remove-code-button", aria: { label: "Remove #{category.name} from this category" } do %>
-                      <svg aria-hidden="true" class="lucide lucide-trash2-icon lucide-trash-2" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 11v6"></path>
-                        <path d="M14 11v6"></path>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                        <path d="M3 6h18"></path>
-                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                      </svg>
-                    <% end %>
-                  <% else %>
-                    <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{category.name} to this theme" } do %>
-                      <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
-                    <% end %>
-                  <% end %>
-              <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
-    <div class="empty-state search-empty-state" id="assigned-codes-empty"><strong>No matching assigned categories</strong><p>No assigned categories match the current search.</p><button aria-controls="assigned-codes-table" class="button secondary small" id="clear-assigned-search-filters" type="button">Clear search</button></div>
   <% end %>
 <% end %>

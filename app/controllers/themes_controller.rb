@@ -29,12 +29,21 @@ class ThemesController < ApplicationController
   
   def update
     @theme = Theme.find(params[:id])
-    # make changes
-    success = @theme.save
-  
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("XXX", partial: "/themes/yyy", locals: { theme: @theme, success: success })
+    if theme_params[:category] && category = Category.find(theme_params[:category])
+      if params[:remove]
+        category.themes.delete(@theme)
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace("theme-categories", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories })
+          end
+        end
+      elsif params[:add]
+        category.themes << @theme unless category.themes.include? @theme
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace("theme-categories", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories })
+          end
+        end
       end
     end
   end
@@ -42,7 +51,7 @@ class ThemesController < ApplicationController
   private
 
   def theme_params
-    params.require(:theme).permit(:name, :description)
+    params.require(:theme).permit(:name, :description, :category)
   end
 
 end

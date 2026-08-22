@@ -13,7 +13,7 @@ class Category
   validates_uniqueness_of :name
 
   has_many :out, :codes, type: :Contains, model_class: "Code"
-  has_many :in, :themes, type: :EmergesFrom, model_class: "Theme"
+  has_many :out, :themes, type: :EmergesFrom, model_class: "Theme"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :Categorizes, model_class: "Researcher"
 

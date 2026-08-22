@@ -12,7 +12,7 @@ class Theme
   validates :name, presence: true
   validates_uniqueness_of :name
 
-  has_many :out, :categories, type: :EmergesFrom, model_class: "Category"
+  has_many :in, :categories, type: :EmergesFrom, model_class: "Category"
   has_many :out, :memos, type: :HasMemo, model_class: "Memo"
 
   def graph_query

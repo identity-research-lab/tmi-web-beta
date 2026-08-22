@@ -43,18 +43,6 @@
       </div>
       <span class="count-badge metric-count-badge"><span id="assigned-count"><%= @category_codes.count %></span> assigned codes</span>
     </div>
-
-    <div aria-label="Search and filter assigned codes" class="table-toolbar assigned-toolbar search-toolbar" role="search">
-      <label class="search-field">
-        <span class="visually-hidden">Search assigned codes</span>
-        <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
-        <input aria-controls="assigned-codes-table" class="search-input" id="assigned-search" placeholder="Search assigned code names and origins" type="search"/>
-      </label>
-      <button aria-controls="assigned-codes-table" class="button secondary small search-clear" disabled id="clear-assigned-search" type="button">Clear search</button>
-      <p aria-live="polite" class="search-result-count"><span id="assigned-visible-count"><%= @category_codes.count %></span> assigned codes</p>
-    </div>
-
-    <p aria-live="polite" class="assigned-status-feedback" id="assigned-feedback"><span class="browser-feedback-label">Code status change:</span> <span id="assigned-feedback-message">No changes yet.</span></p>
     <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes } %>
   </section>
 
@@ -103,7 +91,6 @@
       <p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project codes</p>
     </div>
     <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
-    <p aria-live="polite" class="browser-feedback" id="code-assignment-feedback"><span class="browser-feedback-label">Code status change:</span> <span id="code-assignment-feedback-message">No changes yet.</span></p>
     <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
       <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
         <caption class="visually-hidden">Project codes available for category assignment</caption>

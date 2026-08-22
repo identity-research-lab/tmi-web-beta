@@ -69,7 +69,7 @@
           </thead>
           <tbody>
             <% @category_codes.each do |code| %>
-              <%= render partial: "codes/show", locals: { code: code, category: @category } %>
+              <%= render partial: "codes/show", locals: { code: code, category: @category, category_codes: @category_codes } %>
             <% end %>
           </tbody>
         </table>
@@ -137,16 +137,8 @@
           </tr>
         </thead>
       <tbody>
-        <tr class="code-browser-row" data-frequency="22" data-name="sample code" data-origins="questions q03, q12; cases 12; dimensions sample dimension">
-        <td class="code-name-cell">
-        <span class="tag">Sample code</span>
-        </td>
-        <td class="frequency-cell">22</td>
-        <td class="origins-cell"><div>Questions: Q03, Q12</div><div>Cases: 12</div><div>Dimensions: Sample dimension</div></td>
-        <td class="row-action-cell"><button aria-label="Assign Sample code to this category" aria-pressed="false" class="icon-button assign-code-button" title="Assign to category" type="button"><span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span></button></td>
-        </tr>
         <% @all_codes.each do |code| %>
-          <%= render partial: "codes/show", locals: { code: code, category: @category } %>
+          <%= render partial: "codes/show", locals: { code: code, category: @category, category_codes: @category_codes } %>
         <% end %>
       </tbody>
     </table>

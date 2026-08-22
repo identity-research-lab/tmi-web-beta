@@ -22,7 +22,7 @@ class Code
   has_one :out, :researcher, type: :CodesAs, model_class: "Researcher"
 
   def self.applied
-    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return("DISTINCT c").order("c.label").limit(10).map{|r| r[:c]}
+    Code.as(:c).query.match("(c)-[]-(SurveyItem)").return("DISTINCT c").order("c.label DESC").limit(10).map{|r| r[:c]}
   end
 
   def self.categorized

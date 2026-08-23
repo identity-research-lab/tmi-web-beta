@@ -118,9 +118,10 @@
       <div class="category-library-shell">
         <div aria-label="Search, filter, and sort categories" class="category-library-toolbar search-toolbar" role="search">
           <div class="search-controls">
-            <%= form_with model: Search.new(query: ""), data: {turbo: true} do |f| %>
+            <%= form_with model: Search.new(query: "", scope: "category"), data: {turbo: true} do |f| %>
               <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
                   <%= f.text_field :query, class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+                  <%= f.hidden_field :scope, value: "category" %>
               </label>
               <button aria-controls="category-list" class="button secondary small category-library-clear-search search-clear" disabled id="clear-category-search" type="button">Clear search</button>
               <label class="toolbar-field search-sort"><span class="toolbar-label">Sort by</span>

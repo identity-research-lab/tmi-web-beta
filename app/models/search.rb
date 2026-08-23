@@ -5,12 +5,12 @@ class Search
   attr_accessor :query
   attr_accessor :scope  
 
-  SCOPES = %w{ category code memo theme theme }
+  SCOPES = %w{ all category code memo theme theme }
   
-  def initialize(params)
-    self.query = params[:query]
-    if params[:scope] && SCOPES.include? params[:scope]
-      self.scope = params[:scope]
+  def initialize(query:, scope: "all")
+    self.query = query
+    if SCOPES.include? scope
+      self.scope = scope
     else
       self.scope = "all"
     end
@@ -20,8 +20,6 @@ class Search
     return [] unless self.query.present?
     @results ||= { categories: category_results, codes: code_results, memos: memo_results, responses: response_results }
   end
-  
-  private
   
   def category_results
     return [] unless self.scope == "all" || self.scope == "category"

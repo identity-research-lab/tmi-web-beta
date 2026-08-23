@@ -143,12 +143,9 @@
           </div>
           <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%# pluralize(categories.count, "category") %></p>
         </div>
-
-      <%= render partial: "categories/grid", locals: { categories: @categories } %>
+        <%= render partial: "categories/grid", locals: { categories: @categories } %>
       </div>
-
     </div>
-
 
   </section>
 <% end %>

@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "theme-grid" do %>
+
+  <div class="category-list-grid" id="category-list">
+    <% themes.each do |theme| %>
+      <%= render partial: "themes/card", locals: { theme: theme } %>
+    <% end %>
+  </div>
+
+<% end %>

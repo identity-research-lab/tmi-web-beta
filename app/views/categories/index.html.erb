@@ -123,22 +123,10 @@
             <%= form_with model: Search.new(query: "", scope: "category"), data: {turbo: true} do |f| %>
               <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
                 <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+                <%= f.hidden_field :context, value: "categories-grid" %>
                 <%= f.hidden_field :scope, value: "category" %>
               </label>
             <% end %>
-              
-            <%# button_to "Clear search", searches_path, params: { search: { query: "*", scope: "category" } }, aria: { controls: "category-list" }, class: "button secondary small category-library-clear-search search-clear" %>
-            
-            <!--
-              <label class="toolbar-field search-sort"><span class="toolbar-label">Sort by</span>
-                <select aria-controls="category-list" class="app-select" id="category-sort">
-                  <option value="name-asc">Name: A–Z</option>
-                  <option value="name-desc">Name: Z–A</option>
-                  <option value="codes-desc">Assigned codes: most to least</option>
-                  <option value="codes-asc">Assigned codes: least to most</option>
-                </select>
-              </label>
-            -->
               <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-count" type="checkbox"/> Only categories with no assigned codes</label>
           </div>
           <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%# pluralize(categories.count, "category") %></p>

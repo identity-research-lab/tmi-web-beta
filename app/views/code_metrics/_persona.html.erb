@@ -128,10 +128,7 @@
     </div>
 
     <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
-      <section id="memos" class="sidebar-card white">
-        <div class="sidebar-card-title">Researcher Memos</div>
-        <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>
-      </section>
+      <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>
     </aside>
 
     </section>

@@ -19,6 +19,8 @@ class ThemesController < ApplicationController
     @theme = Theme.find(params[:id])
     @theme_categories = @theme.categories
     @all_categories = Category.all
+    @memos = @theme.memos.order(created_at: :desc)
+    @memo = Memo.new(kind: "theme", referrent_id: @theme.id)
   end
   
   def destroy

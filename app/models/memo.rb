@@ -27,6 +27,10 @@ class Memo
     where(kind: "category")
   end
   
+  def self.theme
+    where(kind: "theme")
+  end
+  
   def attach_referrent
     return unless KINDS.include? self.kind
     return unless self.referrent_id.present?

@@ -73,15 +73,14 @@ export function fireFilters() {
 
   const visibleFilters = document.getElementsByClassName("filter-visible")
   if (visibleFilters) {
-    for (const el of visibleFilters) {
-      if (el.checked == false) {
-        el.addEventListener("change", (event) => {
-          for (const el of filterables) {
-            if (attachedFilter.value.find(element.dataset.filter)) {
-              el.classList.add("hidden")
-            }
+    for (const filter of visibleFilters) {
+      if (filter.checked == false) {
+        for (const filterable of filterables) {
+          console.log(filter.value + " == " + filterable.dataset.filter)
+          if (filter.value == filterable.dataset.visibility) {
+            filterable.classList.add("hidden")
           }
-        })
+        }
       }
     }
   }

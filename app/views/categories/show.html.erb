@@ -43,8 +43,10 @@
       </div>
       <span class="count-badge metric-count-badge"><span id="assigned-count"><%= @category_codes.count %></span> assigned codes</span>
     </div>
-    <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes } %>
+    <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes, pane: "attached" } %>
   </section>
+
+    <%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>
 
   <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
     <div class="work-area-heading browser-heading">
@@ -55,11 +57,14 @@
       <div class="selection-summary">Selected codes: <strong id="added-count">0</strong></div>
     </div>
     <div aria-label="Search and filter all project codes" class="table-toolbar code-browser-controls search-toolbar" role="search">
-      <label class="search-field browser-search">
-        <span class="visually-hidden">Search all project codes</span>
-        <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
-        <input aria-controls="available-codes-table" class="search-input" id="available-search" placeholder="Search code names and origins" type="search"/>
-      </label>
+      <%= form_with model: Search.new(query: "", scope: "theme"), data: {turbo: true} do |f| %>
+        <label class="search-field browser-search"><span class="visually-hidden">Search all project codes</span>
+          <%= f.text_field :query, id: "", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search code names" %>
+          <%= f.hidden_field :scope, value: "code" %>
+          <%= f.hidden_field :context, value: "category-details" %>
+          <%= f.hidden_field :context_id, value: @category.id %>
+        </label>
+      <% end %>
       <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
       <label class="toolbar-control">
         <span>Category assignment</span>
@@ -92,41 +97,9 @@
     </div>
     <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
     <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
-      <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
-        <caption class="visually-hidden">Project codes available for category assignment</caption>
-        <thead>
-          <tr>
-            <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="available-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
-            <th scope="col"><button aria-describedby="occurrences-help" class="sort-button" data-key="frequency" data-table="available-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
-            <th scope="col">Code origins</th>
-            <th scope="col"><span class="visually-hidden">Assign code</span></th>
-          </tr>
-        </thead>
-      <tbody>
-        <% @all_codes.each do |code| %>
-          <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.name %>">
-            <td class="code-name-cell">
-              <span class="tag"><%= code.name %></span>
-            </td>
-            <td class="frequency-cell"><%= code.frequency %></td>
-            <td class="origins-cell">
-              <div>Questions: <%= code.question_list.to_sentence %></div>
-              <div>Dimensions: <%= code.dimension_list.to_sentence %></div>
-            </td>
-            <td class="row-action-cell">
-              <%= form_with model: @category, data: { turbo_stream: true } do |f| %>
-                <%= f.hidden_field :code, value: code.id %>
-                <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.name} to this category" } do %>
-                  <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+      <%= render partial: "categories/codes", locals: { category: @category, codes: @all_codes, attached_codes: @category_codes, pane: "available" } %>
+    </div>
+    <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
+  </section>
   </div>
-  <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
 </section>
-
-<%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>

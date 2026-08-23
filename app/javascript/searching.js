@@ -20,3 +20,31 @@ export function handleLiveSearch() {
     //form.submit()
   })
 }
+
+export function handleSearchFilters() {
+  const countFilter = document.getElementById("filter-count")
+  if (countFilter) {
+    countFilter.addEventListener("change", (event) => {
+      fireFilters()
+    })
+  }
+}
+
+export function fireFilters() {
+  console.log(1)
+  const elements = document.getElementsByClassName("filterable")
+  for (const el of elements) {
+    el.classList.remove("hidden")
+  }
+  const countFilter = document.getElementById("filter-count")
+  if (countFilter) {
+    for (const el of elements) {
+      if (countFilter.checked == true) {
+        if (el.dataset.count != "0") {
+          el.classList.add("hidden")
+        }
+      }
+    }
+  }
+
+}

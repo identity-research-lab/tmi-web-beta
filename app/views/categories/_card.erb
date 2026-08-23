@@ -1,4 +1,5 @@
-<article aria-labelledby="category-card-title-1" class="category-overview-card" data-code-count="23" data-name="Belonging and affinity">
+<% code_count = category.codes.count %>
+<article aria-labelledby="category-card-title" class="category-overview-card filterable" data-count="<%= code_count %>" data-name="<%= category.name %>">
   <div class="category-overview-card-content">
     <h3 class="category-overview-card-title">
       <%= category.name %>
@@ -8,7 +9,7 @@
     </p>
     <div class="category-workspace-footer">
       <span class="count-badge">
-        <%= "#{category.codes.count} code".pluralize(category.codes.count) %> added
+        <%= "#{code_count} code".pluralize(code_count) %> added
       </span>
     </div>
   </div>

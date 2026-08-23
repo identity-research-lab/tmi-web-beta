@@ -1,7 +1,7 @@
 class SearchesController < ApplicationController
   
   def index
-    @search ||= Search.new("")
+    @search ||= Search.new(query: nil)
   end
 
   def create

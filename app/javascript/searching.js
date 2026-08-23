@@ -1,7 +1,7 @@
 export function highlightSearchTerm() {
-  const searchbox = document.getElementById("search-query")
+  const searchbox = document.getElementsByClassName("search-input")
   if (!searchbox) return
-  const substring = searchbox.value
+  const substring = searchbox[0].value
   if (!substring) return
   const elements = document.getElementsByClassName("search-result")
   const regex = new RegExp(`(${substring})`, "gi")
@@ -76,7 +76,6 @@ export function fireFilters() {
     for (const filter of visibleFilters) {
       if (filter.checked == false) {
         for (const filterable of filterables) {
-          console.log(filter.value + " == " + filterable.dataset.filter)
           if (filter.value == filterable.dataset.visibility) {
             filterable.classList.add("hidden")
           }

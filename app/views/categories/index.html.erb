@@ -112,10 +112,8 @@
     </div>
 
     <div class="category-library-layout">
-
       <%= render partial: "categories/grid", locals: { categories: @categories } %>
-      <%= render partial: "memos/feed", locals: { memos: Memo.category.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
-
+      <%= render partial: "memos/feed", locals: { memos: Memo.category.order(created_at: :desc), css_class: "category-library-memos", memo: nil } %>
     </div>
   </section>
 <% end %>

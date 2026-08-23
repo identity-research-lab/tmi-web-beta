@@ -3,8 +3,8 @@ class ThemesController < ApplicationController
   def index
     @themes = Theme.all
     @categories_count = Category.count
-    @categories_assigned_count = Category.assigned.count
-    @categories_unassigned_count = Category.unassigned.count
+    @assigned_category_count = Category.assigned.count
+    @unassigned_category_count = Category.unassigned.count
   end
 
   def create

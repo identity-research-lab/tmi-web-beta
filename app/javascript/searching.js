@@ -1,5 +1,5 @@
 export function highlightSearchTerm() {
-  const searchbox = document.getElementById("search_query")
+  const searchbox = document.getElementById("search-query")
   if (!searchbox) return
   const substring = searchbox.value
   if (!substring) return
@@ -8,4 +8,15 @@ export function highlightSearchTerm() {
   for (const el of elements) { 
     el.innerHTML = el.textContent.replace(regex, '<span class="highlight">$1</span>')
   }
+}
+
+export function handleLiveSearch() {
+  const input = document.getElementById("search-live")
+  if (!input) return
+  input.addEventListener("input", (event) => {
+    const form = event.target.form
+    if (!form) return
+    form.requestSubmit()
+    //form.submit()
+  })
 }

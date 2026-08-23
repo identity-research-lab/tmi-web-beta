@@ -35,7 +35,7 @@
     </div>
     <div class="app-stat">
      <span class="app-stat-value">
-      <%= @assigned_categories_count %>
+      <%= @assigned_category_count %>
      </span>
      <span class="app-stat-label">
      Categories assigned to themes
@@ -106,7 +106,7 @@
 
     <div class="category-library-layout">
 
-      <%= render partial: "memos/feed", locals: { memos: Memo.all.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
+      <%= render partial: "memos/feed", locals: { memos: Memo.theme.order(created_at: :desc), css_class: "category-library-memos", memo: nil } %>
 
       <div class="category-library-shell">
         <div aria-label="Search, filter, and sort themes" class="category-library-toolbar search-toolbar" role="search">

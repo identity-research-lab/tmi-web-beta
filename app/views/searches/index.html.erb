@@ -15,8 +15,8 @@
 <section class="app-section">
   <div>
     <h2 class="workspace-title">Full text search</h2>
-    <%= form_with model: Search.new(@search.query), data: {turbo: false} do |f| %>
-      <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "off", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
+    <%= form_with model: Search.new(query: @search.query, scope: "all"), data: {turbo: false} do |f| %>
+      <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "on", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
       <%= f.submit "Search", class: "site-search-submit" %>
     <% end %>
   </div>

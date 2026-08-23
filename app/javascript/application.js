@@ -11,6 +11,7 @@ import { setMode } from "code_metrics"
 import { sortCodes } from "code_metrics"
 import { handleCodingForms } from "coding"
 import { highlightSearchTerm } from "searching"
+import { handleLiveSearch } from "searching"
 
 document.addEventListener("turbo:load", () => {
   setupMobileNav()
@@ -19,10 +20,12 @@ document.addEventListener("turbo:load", () => {
   handleMetricsSelect()
   handleModeSelect()
   highlightSearchTerm()
+  handleLiveSearch()
 })
 
 window.copyToClipboard = copyToClipboard
 window.sortTable = sortTable
 window.sortCodes = sortCodes
+window.handleLiveSearch = handleLiveSearch
 window.highlightSearchTerm = highlightSearchTerm
 window.setMode = setMode

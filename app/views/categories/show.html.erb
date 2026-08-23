@@ -129,4 +129,4 @@
   <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
 </section>
 
-<%= render partial: "memos/feed", locals: { memo: Memo.new(category: @category), memos: @category.memos, css_class: "category-detail-memos" } %>
+<%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>

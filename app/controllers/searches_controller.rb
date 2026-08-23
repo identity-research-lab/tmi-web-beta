@@ -10,7 +10,9 @@ class SearchesController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           if search_params[:context] == "theme"
-            render turbo_stream: turbo_stream.replace("category-table", partial: "/theme/grid", locals: { categories: @search.category_results })
+            if search_params[:context_id] && theme = Theme.find(search_params[:context_id]) 
+              render turbo_stream: turbo_stream.replace("theme-categories-available", partial: "/themes/categories", locals: { theme: theme, categories: @search.category_results, attached_categories: theme.categories, pane: "available" })
+            end
           else
             render turbo_stream: turbo_stream.replace("category-grid", partial: "/categories/grid", locals: { categories: @search.category_results })
           end
@@ -30,7 +32,7 @@ class SearchesController < ApplicationController
   private
   
   def search_params
-    params.require(:search).permit(:query, :scope)
+    params.require(:search).permit(:query, :scope, :context, :context_id)
   end
   
 end

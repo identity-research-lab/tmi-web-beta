@@ -43,7 +43,7 @@
       </div>
       <span class="count-badge metric-count-badge"><span id="assigned-count"><%= @theme_categories.count %></span> assigned categories</span>
     </div>
-    <%= render partial: "themes/categories", locals: { theme: @theme, categories: @theme_categories, attached_categories: @theme_categories } %>
+    <%= render partial: "themes/categories", locals: { theme: @theme, categories: @theme_categories, attached_categories: @theme_categories, pane: "attached" } %>
   </section>
 
   <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
@@ -63,6 +63,7 @@
             <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search category names and descriptions" %>
             <%= f.hidden_field :scope, value: "category" %>
             <%= f.hidden_field :context, value: "theme" %>
+            <%= f.hidden_field :context_id, value: @theme.id %>
           </label>
         <% end %>
 
@@ -99,7 +100,7 @@
     <p class="visually-hidden" id="occurrences-help">Assigned codes is the number of project codes currently organized within a category.</p>
 
     <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
-      <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
+      <!-- <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
         <caption class="visually-hidden">Project categories available for category assignment</caption>
         <thead>
           <tr>
@@ -110,11 +111,12 @@
           </tr>
         </thead>
       <tbody>
-        <% @all_categories.each do |category| %>
-          <%= render partial: "themes/category_row", locals: { category: category, attached_categories: @theme.categories } %>
-        <% end %>
+        <%# @all_categories.each do |category| %>
+          <%# render partial: "themes/category_row", locals: { theme: @theme, category: category } %>
+        <%# end %>
       </tbody>
-    </table>
+    </table-->
+    <%= render partial: "themes/categories", locals: { theme: @theme, categories: @all_categories, attached_categories: [], pane: "available" } %>
   </div>
   <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project categories</strong><p>No project categories match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
 </section>

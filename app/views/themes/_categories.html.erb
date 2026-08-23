@@ -14,5 +14,8 @@
       <% end %>
     </tbody>
   </table>
+  <p aria-live="polite" class="search-result-count">
+    <% if pane == "available" %><span id="available-visible-count"></span><% end %><%= categories.count %> project categories
+  </p>
   <script>fireFilters();</script>
 <% end %>

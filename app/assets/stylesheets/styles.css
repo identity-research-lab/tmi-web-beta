@@ -1646,6 +1646,8 @@ button[aria-busy="true"] {
   flex: 0 0 auto;
   margin: 0;
   white-space: nowrap;
+  text-align: right;
+  padding: .5rem 1rem;
 }
 
 .search-empty-state p {

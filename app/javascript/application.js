@@ -16,12 +16,10 @@ import { handleSearchFilters } from "searching"
 import { fireFilters } from "searching"
 
 document.addEventListener("turbo:frame-load", () => {
-  console.log(12)
   fireFilters()
 })
 
 document.addEventListener("turbo:load", () => {
-  console.log(13)
   setupMobileNav()
   handleSchemaForms()
   handleCodingForms()

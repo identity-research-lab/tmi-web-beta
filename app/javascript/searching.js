@@ -31,7 +31,6 @@ export function handleSearchFilters() {
 }
 
 export function fireFilters() {
-  console.log(1)
   const elements = document.getElementsByClassName("filterable")
   for (const el of elements) {
     el.classList.remove("hidden")

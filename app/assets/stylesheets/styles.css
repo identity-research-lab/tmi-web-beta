@@ -1763,6 +1763,10 @@ button[aria-busy="true"] {
   padding: 3rem 4rem;
 }
 
+.results-section {
+  padding: 1rem 4rem;
+}
+
 .case-table-wrap,
 .response-table-wrap {
   overflow-x: auto;

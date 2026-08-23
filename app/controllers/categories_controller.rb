@@ -18,7 +18,7 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     @category_codes = @category.codes
-    @all_codes = Code.applied(25)
+    @codes = Code.applied(25)
     @memos = @category.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "category", referrent_id: @category.id)
   end

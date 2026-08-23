@@ -22,6 +22,18 @@ export function handleLiveSearch() {
 }
 
 export function handleSearchFilters() {
+
+  const resetFiltersButton = document.getElementById("clear-browser-filters")
+  if (resetFiltersButton) {
+    resetFiltersButton.addEventListener("click", (event) => {
+      const form = event.target.form
+      if (form) {
+        form.reset()        
+      }
+      fireFilters()
+    })
+  }
+  
   const countFilter = document.getElementById("filter-count")
   if (countFilter) {
     countFilter.addEventListener("change", (event) => {

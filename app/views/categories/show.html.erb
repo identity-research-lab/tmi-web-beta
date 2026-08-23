@@ -64,40 +64,41 @@
           <%= f.hidden_field :context, value: "category-details" %>
           <%= f.hidden_field :context_id, value: @category.id %>
         </label>
+        <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: false}, "response", nil %>Responses</label>
+        <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
+        <label class="toolbar-control">
+          <span>Category assignment</span>
+          <select aria-controls="available-codes-table" id="display-filter">
+            <option value="all">All codes</option>
+            <option value="available">Not assigned to this category</option>
+            <option value="added">Assigned to this category</option>
+          </select>
+        </label>
+        <label class="toolbar-control">
+          <span>Occurrences</span>
+          <select aria-controls="available-codes-table" id="frequency-filter">
+            <option value="all">Any frequency</option>
+            <option value="high">15 or more</option>
+            <option value="medium">8–14</option>
+            <option value="low">7 or fewer</option>
+          </select>
+        </label>
+        <label class="toolbar-control">
+          <span>Code origin</span>
+          <select aria-controls="available-codes-table" id="available-origin-filter">
+            <option value="all">All origins</option>
+            <option value="questions">Responses by question</option>
+            <option value="cases">Individual cases</option>
+            <option value="both">Both coding pathways</option>
+          </select>
+        </label>
+        <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
       <% end %>
-      <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
-      <label class="toolbar-control">
-        <span>Category assignment</span>
-        <select aria-controls="available-codes-table" id="display-filter">
-          <option value="all">All codes</option>
-          <option value="available">Not assigned to this category</option>
-          <option value="added">Assigned to this category</option>
-        </select>
-      </label>
-      <label class="toolbar-control">
-        <span>Occurrences</span>
-        <select aria-controls="available-codes-table" id="frequency-filter">
-          <option value="all">Any frequency</option>
-          <option value="high">15 or more</option>
-          <option value="medium">8–14</option>
-          <option value="low">7 or fewer</option>
-        </select>
-      </label>
-      <label class="toolbar-control">
-        <span>Code origin</span>
-        <select aria-controls="available-codes-table" id="available-origin-filter">
-          <option value="all">All origins</option>
-          <option value="questions">Responses by question</option>
-          <option value="cases">Individual cases</option>
-          <option value="both">Both coding pathways</option>
-        </select>
-      </label>
-      <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
-      <p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project codes</p>
+      <p aria-live="polite" class="search-result-count"><span id="available-visible-count"><%= @codes.count %></span> project codes</p>
     </div>
     <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
     <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
-      <%= render partial: "categories/codes", locals: { category: @category, codes: @all_codes, attached_codes: @category_codes, pane: "available" } %>
+      <%= render partial: "categories/codes", locals: { category: @category, codes: @codes, attached_codes: @category_codes, pane: "available" } %>
     </div>
     <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
   </section>

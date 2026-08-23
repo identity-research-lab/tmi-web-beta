@@ -23,6 +23,7 @@ class Search
   
   def category_results
     return [] unless self.scope == "all" || self.scope == "category"
+    @category_results ||= Category.all if self.query == "*"
     @category_results ||= Category.as(:c).where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query)
   end
   

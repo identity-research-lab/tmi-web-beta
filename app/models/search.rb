@@ -44,7 +44,7 @@ class Search
   
   def theme_results
     return [] unless self.scope == "all" || self.scope == "theme"
-    @theme_results ||= Theme.as(:t).where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query)
+    @theme_results ||= Theme.as(:t).where("toLower(t.name) CONTAINS toLower($text) OR toLower(t.description) CONTAINS toLower($text)", text: self.query)
   end
   
 end

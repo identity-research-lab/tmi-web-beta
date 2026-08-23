@@ -72,7 +72,7 @@ export function fireFilters() {
   }
 
   const visibleFilters = document.getElementsByClassName("filter-visible")
-  if (visibleFilter) {
+  if (visibleFilters) {
     for (const el of visibleFilters) {
       if (el.checked == false) {
         el.addEventListener("change", (event) => {

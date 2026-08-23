@@ -10,9 +10,12 @@ class SearchesController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace("search-results", partial: "/searches/results", locals: { search: @search })
+          format.html do
+            render :index
+          end
         end
       end
-    elsif search_params[:context] == "theme_details"
+    elsif search_params[:context] == "theme-details"
       respond_to do |format|
         format.turbo_stream do
           if search_params[:context_id] && theme = Theme.find(search_params[:context_id]) 
@@ -22,12 +25,18 @@ class SearchesController < ApplicationController
           end
         end
       end
-      elsif search_params[:context] == "categories-grid"
-        respond_to do |format|
-          format.turbo_stream do
-            render turbo_stream: turbo_stream.replace("theme-grid", partial: "/themes/grid", locals: { themes: @search.theme_results })
-          end
+    elsif search_params[:context] == "category-grid"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("category-grid", partial: "/categories/grid", locals: { categories: @search.category_results })
         end
+      end
+    elsif search_params[:context] == "theme-grid"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("theme-grid", partial: "/themes/grid", locals: { themes: @search.theme_results })
+        end
+      end
     else
       render :index
     end

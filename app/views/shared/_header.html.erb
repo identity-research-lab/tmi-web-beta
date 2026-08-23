@@ -17,6 +17,7 @@
     <div class="site-search-control">
       <%= form_with model: Search.new(query: ""), data: {turbo: false} do |f| %>
         <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "off", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
+        <%= f.hidden_field :context, value: "theme-details" %>
         <%= f.submit "Search", class: "site-search-submit" %>
       <% end %>
     </div>

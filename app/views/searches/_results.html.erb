@@ -2,7 +2,7 @@
   
   <% if search.results.any? %>
     <section class="app-section">
-      <details class="" open="true">
+      <details class="filterable" data-visibility="response" open="true">
           <summary class="section-label">
             <%= search.response_results.count %> <%= "Response".pluralize(search.response_results.count) %>
           </summary>
@@ -11,7 +11,7 @@
           <% end %>
         </details>  
       
-      <details class="" open="true">
+      <details class="filterable" data-visibility="memo" open="true">
           <summary class="section-label">
             <%= search.memo_results.count %> <%= "Memo".pluralize(search.memo_results.count) %>
           </summary>
@@ -20,7 +20,7 @@
           <% end %>
         </details>
       
-      <details class="" open="true">
+      <details class="filterable" data-visibility="code" open="true">
         <summary class="section-label">
           <%= search.code_results.count %> <%= "Code".pluralize(search.code_results.count) %>
         </summary>

@@ -34,6 +34,14 @@ export function handleSearchFilters() {
       fireFilters()
     })
   }
+  const visibleFilters = document.getElementsByClassName("filter-visible")
+  if (visibleFilters) {
+    for (const el of visibleFilters) {
+      el.addEventListener("change", (event) => {
+        fireFilters()
+      })
+    }
+  }
 }
 
 export function fireFilters() {
@@ -59,6 +67,21 @@ export function fireFilters() {
         if (el.dataset.attached == "true") {
           el.classList.add("hidden")
         }
+      }
+    }
+  }
+
+  const visibleFilters = document.getElementsByClassName("filter-visible")
+  if (visibleFilter) {
+    for (const el of visibleFilters) {
+      if (el.checked == false) {
+        el.addEventListener("change", (event) => {
+          for (const el of filterables) {
+            if (attachedFilter.value.find(element.dataset.filter)) {
+              el.classList.add("hidden")
+            }
+          }
+        })
       }
     }
   }

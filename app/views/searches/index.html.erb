@@ -21,14 +21,15 @@
   <div class="search-controls">
     <%= form_with model: @search, data: {turbo: true} do |f| %>
       <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
-        <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+        <%= f.text_field :query, class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
       </label>
+      <%= f.hidden_field :context, value: "site" %>
       <%= f.submit "Search", class: "site-search-submit" %>
-      <label class="category-library-checkbox search-filter"><%= f.checkbox :scope, id: "filter-response", value:"response" %>Responses</label>
-      <label class="category-library-checkbox search-filter"><%= f.checkbox :scope, id: "filter-code", value:"code" %>Codes</label>
-      <label class="category-library-checkbox search-filter"><%= f.checkbox :scope, id: "filter-memo", value:"memo" %>Memos</label>
-      <label class="category-library-checkbox search-filter"><%= f.checkbox :scope, id: "filter-category", value:"category" %>Categories</label>
-      <label class="category-library-checkbox search-filter"><%= f.checkbox :scope, id: "filter-theme", value:"theme" %>Themes</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("response") || @search.scope.include?("all"), multiple: true}, "response", nil %>Responses</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("code") || @search.scope.include?("all"), multiple: true}, "code", nil %>Codes</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("memo") || @search.scope.include?("all"), multiple: true}, "memo", nil %>Memos</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("category") || @search.scope.include?("all"), multiple: true}, "category", nil %>Categories</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("theme") || @search.scope.include?("all"), multiple: true}, "theme", nil %>Themes</label>
     <% end %>
   </div>
   <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%# pluralize(@results.count, "result") %></p>

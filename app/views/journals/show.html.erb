@@ -35,7 +35,7 @@
               </li>
           <% elsif entry.class.name == "Event" %>
             <li class="memo-entry">
-              <span class="memo-title"><%= entry.label %></span>
+              <span class="memo-title"><%= entry.name %></span>
               <div class="memo-header-row">
                 <div class="memo-date"><%= entry.created_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
               </div>

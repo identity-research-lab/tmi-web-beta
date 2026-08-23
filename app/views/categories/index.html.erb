@@ -114,7 +114,7 @@
     <div class="category-library-layout">
 
       <aside aria-label="Researcher memos" class="category-library-memos">
-        <%= render partial: "memos/feed", locals: { memos: Memo.category.order(created_at: :desc), css_class: "category-library-memos", memo: nil } %>
+        <%= render partial: "memos/feed", locals: { memos: Memo.category.order(created_at: :desc), memo: nil } %>
       </aside>
                     
       <div class="category-library-shell">
@@ -141,9 +141,10 @@
           </div>
           <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%# pluralize(categories.count, "category") %></p>
         </div>
-      </div>
 
       <%= render partial: "categories/grid", locals: { categories: @categories } %>
+      </div>
+
     </div>
 
 

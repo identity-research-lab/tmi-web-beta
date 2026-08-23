@@ -28,6 +28,12 @@ export function handleSearchFilters() {
       fireFilters()
     })
   }
+  const attachedFilter = document.getElementById("filter-attached")
+  if (attachedFilter) {
+    attachedFilter.addEventListener("change", (event) => {
+      fireFilters()
+    })
+  }
 }
 
 export function fireFilters() {
@@ -40,6 +46,16 @@ export function fireFilters() {
     for (const el of elements) {
       if (countFilter.checked == true) {
         if (el.dataset.count != "0") {
+          el.classList.add("hidden")
+        }
+      }
+    }
+  }
+  const attachedFilter = document.getElementById("filter-attached")
+  if (attachedFilter) {
+    if (attachedFilter.checked == true) {
+      for (const el of elements) {
+        if (el.dataset.attached == "true") {
           el.classList.add("hidden")
         }
       }

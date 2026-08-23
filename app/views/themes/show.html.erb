@@ -68,57 +68,18 @@
         <% end %>
 
       </label>
-      <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
-      <label class="toolbar-control">
-        <span>Theme assignment</span>
-        <select aria-controls="available-codes-table" id="display-filter">
-          <option value="all">All categories</option>
-          <option value="available">Not assigned to this theme</option>
-          <option value="added">Assigned to this theme</option>
-        </select>
-      </label>
-      <label class="toolbar-control">
-        <span>Assigned codes</span>
-        <select aria-controls="available-codes-table" id="frequency-filter">
-          <option value="all">Any number of codes</option>
-          <option value="high">15 or more codes</option>
-          <option value="medium">8–14 codes</option>
-          <option value="low">7 or fewer codes</option>
-        </select>
-      </label>
-      <label class="toolbar-control">
-        <span>Category contents</span>
-        <select aria-controls="available-codes-table" id="available-origin-filter">
-          <option value="all">All categories</option>
-          <option value="has-codes">Has assigned codes</option>
-          <option value="no-codes">No assigned codes</option>
-        </select>
-      </label>
-      <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
+      <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-count" type="checkbox"/>Only categories with no assigned codes</label>
+      <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-attached" type="checkbox"/>Hide already assigned</label>
       <p aria-live="polite" class="search-result-count"><span id="available-visible-count">12</span> project categories</p>
     </div>
     <p class="visually-hidden" id="occurrences-help">Assigned codes is the number of project codes currently organized within a category.</p>
 
     <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
-      <!-- <table aria-describedby="code-assignment-feedback" class="code-data-table" id="available-codes-table">
-        <caption class="visually-hidden">Project categories available for category assignment</caption>
-        <thead>
-          <tr>
-            <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Category name <span aria-hidden="true">A–Z</span></button></th>
-            <th scope="col">Description</th>
-            <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Assigned codes <span aria-hidden="true">↕</span></button></th>
-            <th scope="col"><span class="visually-hidden">Remove category assignment</span></th>
-          </tr>
-        </thead>
-      <tbody>
-        <%# @all_categories.each do |category| %>
-          <%# render partial: "themes/category_row", locals: { theme: @theme, category: category } %>
-        <%# end %>
-      </tbody>
-    </table-->
-    <%= render partial: "themes/categories", locals: { theme: @theme, categories: @all_categories, attached_categories: [], pane: "available" } %>
+      <%= render partial: "themes/categories", locals: { theme: @theme, categories: @all_categories, attached_categories: @theme_categories, pane: "available" } %>
+    </div>
+    
+    <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project categories</strong><p>No project categories match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
+  </section>
+  <%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>
   </div>
-  <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project categories</strong><p>No project categories match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
 </section>
-
-<%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>

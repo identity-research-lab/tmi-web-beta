@@ -10,8 +10,9 @@
     </thead>
     <tbody>
       <% categories.each do |category| %>
-        <%= render partial: "themes/category_row", locals: { theme: theme, category: category, attached_categories: attached_categories } %>
+        <%= render partial: "themes/category_row", locals: { theme: theme, category: category, attached_categories: attached_categories, pane: pane } %>
       <% end %>
     </tbody>
   </table>
+  <script>fireFilters();</script>
 <% end %>

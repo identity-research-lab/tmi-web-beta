@@ -28,22 +28,48 @@ export function handleSearchFilters() {
       fireFilters()
     })
   }
+  const attachedFilter = document.getElementById("filter-attached")
+  if (attachedFilter) {
+    attachedFilter.addEventListener("change", (event) => {
+      fireFilters()
+    })
+  }
 }
 
 export function fireFilters() {
-  const elements = document.getElementsByClassName("filterable")
-  for (const el of elements) {
+  const filterables = document.getElementsByClassName("filterable")
+  for (const el of filterables) {
     el.classList.remove("hidden")
   }
+  
   const countFilter = document.getElementById("filter-count")
   if (countFilter) {
-    for (const el of elements) {
+    for (const el of filterables) {
       if (countFilter.checked == true) {
         if (el.dataset.count != "0") {
           el.classList.add("hidden")
         }
       }
     }
+  }
+  const attachedFilter = document.getElementById("filter-attached")
+  if (attachedFilter) {
+    if (attachedFilter.checked == true) {
+      for (const el of filterables) {
+        if (el.dataset.attached == "true") {
+          el.classList.add("hidden")
+        }
+      }
+    }
+  }
+
+  const visibleCounter = document.getElementById("available-visible-count")
+  if (!visibleCounter) return
+  const hiddenElems = document.getElementsByClassName("filterable hidden")
+  if (hiddenElems.length == 0 ) { 
+    visibleCounter.innerHTML = ""
+  } else {
+    visibleCounter.innerHTML = filterables.length - hiddenElems.length + "/"
   }
 
 }

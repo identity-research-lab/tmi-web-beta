@@ -1,0 +1,9 @@
+<article class="excerpt-card">
+  <div class="excerpt-meta">
+    <span class="case-subtext"><%= link_to category.name, category, target: "_top" %></span>
+  </div>
+  <p class="excerpt-text">
+    <%= category.description %>
+  </p>
+  <div class="tag"><span class="search-result"><%= category.codes.count %> codes</span></div>
+</article>

@@ -28,6 +28,25 @@
           <%= render partial: "searches/code_row", locals: { code: code } %>
         <% end %>
       </details>
+
+      <details class="filterable" data-visibility="category" open="true">
+        <summary class="section-label">
+          <%= search.category_results.count %> <%= "Category".pluralize(search.category_results.count) %>
+        </summary>
+        <% search.category_results.each do |category| %>
+          <%= render partial: "searches/category_row", locals: { category: category } %>
+        <% end %>
+      </details>
+
+      <details class="filterable" data-visibility="theme" open="true">
+        <summary class="section-label">
+          <%= search.theme_results.count %> <%= "Theme".pluralize(search.theme_results.count) %>
+        </summary>
+        <% search.theme_results.each do |theme| %>
+          <%= render partial: "searches/theme_row", locals: { theme: theme } %>
+        <% end %>
+      </details>
+
     </section>
   <% end %>
 <% end %>

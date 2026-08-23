@@ -130,18 +130,16 @@
                   <option value="name-desc">Name: Z–A</option>
                   <option value="codes-desc">Assigned codes: most to least</option>
                   <option value="codes-asc">Assigned codes: least to most</option>
-                  </select>
-                </label>
-                <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only categories with no assigned codes</label>
+                </select>
+              </label>
+              <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only categories with no assigned codes</label>
               <%= f.submit "Search", class: "site-search-submit" %>
             <% end %>
           </div>
           <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%= pluralize(@categories.count, "category") %></p>
         </div>
-        <div class="category-list-grid" id="category-list">
-          <%= render partial: "categories/grid", locals: { categories: @categories } %>
-        </div>
-      </div>     
+        <%= render partial: "categories/grid", locals: { categories: @categories } %>
+      </div>
     </div>
   </section>
 <% end %>

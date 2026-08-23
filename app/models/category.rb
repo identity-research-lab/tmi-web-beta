@@ -12,9 +12,9 @@ class Category
   validates :name, presence: true
   validates_uniqueness_of :name
 
+  has_many :in, :memos, type: :HasMemo, model_class: "Memo"
   has_many :out, :codes, type: :Contains, model_class: "Code"
   has_many :out, :themes, type: :EmergesFrom, model_class: "Theme"
-  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
   has_one :out, :researcher, type: :Categorizes, model_class: "Researcher"
 
   def self.assigned
@@ -24,7 +24,11 @@ class Category
   def self.unassigned
     Category.as(:c).query.where("NOT EXISTS { (c)-[]-(:Theme) }").return(:c)
   end
-  
+
+  def formatted_identifier
+    self.name
+  end
+    
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query
     {

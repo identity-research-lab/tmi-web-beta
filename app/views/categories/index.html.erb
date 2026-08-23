@@ -103,7 +103,7 @@
     <div class="workspace-title-row">
       <div>
         <h2 class="workspace-title">
-          Current categories
+          Current project categories
         </h2>
         <p class="workspace-note">
           Review category descriptions and assigned codes. Open a category to revise its details or manage its codes.
@@ -114,7 +114,7 @@
     <div class="category-library-layout">
 
       <%= render partial: "categories/grid", locals: { categories: @categories } %>
-      <%= render partial: "memos/feed", locals: { memos: Memo.all.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
+      <%= render partial: "memos/feed", locals: { memos: Memo.category.order(created_at: :desc), css_class: "category-library-memos", memo: Memo.new(kind: "researcher", referrent_id: @researcher.id) } %>
 
     </div>
   </section>

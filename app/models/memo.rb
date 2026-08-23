@@ -21,12 +21,20 @@ class Memo
   has_one :out, :survey_item, type: :HasMemo
   has_one :out, :theme, type: :HasMemo
 
-  KINDS = %w{ persona project survey_item }
+  KINDS = %w{ category persona project survey_item theme }
+
+  def self.category
+    where(kind: "category")
+  end
   
   def attach_referrent
     return unless KINDS.include? self.kind
     return unless self.referrent_id.present?
     case self.kind
+      when "category"
+        if category = Category.find(self.referrent_id)
+          self.category = category
+        end
       when "persona"
         if persona = Persona.find(self.referrent_id)
           self.persona = persona
@@ -39,11 +47,15 @@ class Memo
         if survey_item = SurveyItem.find(self.referrent_id)
           self.survey_item = survey_item
         end
+      when "theme"
+        if theme = Theme.find(self.referrent_id)
+          self.theme = theme
+        end
     end
   end
   
   def referrent
-    self.project || self.persona || self.survey_item
+    self.category || self.project || self.persona || self.survey_item || self.theme
   end
     
 end

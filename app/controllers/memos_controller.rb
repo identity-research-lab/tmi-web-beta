@@ -7,8 +7,7 @@ class MemosController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("memo-feed", partial: "/memos/feed", locals: { 
           memo: Memo.new(kind: @memo.kind, referrent_id: @memo.referrent_id),
-          memos: @memos,
-          css_class: ""
+          memos: @memos
         })
       end
     end
@@ -21,8 +20,7 @@ class MemosController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("memo-feed", partial: "/memos/feed", locals: { 
           memo: Memo.new(kind: @memo.kind, referrent_id: @memo.referrent_id),
-          memos: @memos,
-          css_class: ""
+          memos: @memos
         })
       end
     end
@@ -36,8 +34,7 @@ class MemosController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("memo-feed", partial: "/memos/feed", locals: { 
           memo: Memo.new(kind: @memo.kind, referrent_id: @memo.referrent_id),
-          memos: @memos,
-          css_class: ""
+          memos: @memos
         })
       end
     end
@@ -60,8 +57,7 @@ class MemosController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("memo-feed", partial: "/memos/feed", locals: { 
           memo: Memo.new(kind: @memo.kind, referrent_id: @memo.referrent_id),
-          memos: @memos,
-          css_class: ""
+          memos: @memos
         })
       end
     end

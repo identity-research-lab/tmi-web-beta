@@ -13,7 +13,7 @@ class Theme
   validates_uniqueness_of :name
 
   has_many :in, :categories, type: :EmergesFrom, model_class: "Category"
-  has_many :out, :memos, type: :HasMemo, model_class: "Memo"
+  has_many :in, :memos, type: :HasMemo, model_class: "Memo"
 
   def graph_query
     {
@@ -22,6 +22,10 @@ class Theme
     }
   end
 
+  def formatted_identifier
+    self.name
+  end
+    
   private
 
   def sanitize

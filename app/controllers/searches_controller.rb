@@ -9,7 +9,11 @@ class SearchesController < ApplicationController
     if @search.scope == "category"
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("category-grid", partial: "/categories/grid", locals: { categories: @search.category_results })
+          if search_params[:context] == "theme"
+            render turbo_stream: turbo_stream.replace("category-table", partial: "/theme/grid", locals: { categories: @search.category_results })
+          else
+            render turbo_stream: turbo_stream.replace("category-grid", partial: "/categories/grid", locals: { categories: @search.category_results })
+          end
         end
       end
     elsif @search.scope == "theme"

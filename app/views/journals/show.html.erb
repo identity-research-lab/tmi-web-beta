@@ -13,40 +13,40 @@
   </div>
 </section>
 
-<% @entries.each do |date| %>
-
-<section class="app-layout">
-  <div class="overview-card">
-    <div class="section-label">
-      <%= date[0] %>
+<section class="results-section">
+  <% @entries.each do |date| %>
+    <div class="feed-overview-card" style="width: 100%;">
+  
+      <details>
+        <summary class="section-label"><%= date[0] %></summary>
+        <div>
+          <ul class="memo-feed">
+            <% date[1].each do |entry| %>
+              <% if entry.class.name == "Memo" %>
+                <li class="memo-entry">
+                    <%= link_to entry.referrent.formatted_identifier, entry.referrent, target: "_top", class: "memo-title" %>
+                    <div class="memo-header-row">
+                      <div class="memo-date"><%= entry.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
+                    </div>
+                    <p class="memo-text">
+                      <%= entry.text.truncate(120) %>
+                    </p>
+                  </li>
+              <% elsif entry.class.name == "Event" %>
+                <li class="memo-entry">
+                  <span class="memo-title"><%= entry.name %></span>
+                  <div class="memo-header-row">
+                    <div class="memo-date"><%= entry.created_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
+                  </div>
+                  <p class="memo-text">
+                    <%= entry.description %>
+                  </p>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </details>
     </div>
-    <div>
-      <ul class="memo-feed">
-        <% date[1].each do |entry| %>
-          <% if entry.class.name == "Memo" %>
-            <li class="memo-entry">
-                <%= link_to entry.referrent.formatted_identifier, entry.referrent, target: "_top", class: "memo-title" %>
-                <div class="memo-header-row">
-                  <div class="memo-date"><%= entry.updated_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
-                </div>
-                <p class="memo-text">
-                  <%= entry.text.truncate(120) %>
-                </p>
-              </li>
-          <% elsif entry.class.name == "Event" %>
-            <li class="memo-entry">
-              <span class="memo-title"><%= entry.label %></span>
-              <div class="memo-header-row">
-                <div class="memo-date"><%= entry.created_at.strftime("%B %e, %Y • %I:%M %p") %> UTC</div>
-              </div>
-              <p class="memo-text">
-                <%= entry.description %>
-              </p>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
-    </div>
-  </div>
+  <% end %>
 </section>
-<% end %>

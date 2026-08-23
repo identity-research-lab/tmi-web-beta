@@ -129,10 +129,8 @@
 
     <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
 
-      <section id="memos" class="sidebar-card white">
-        <div class="sidebar-card-title">Researcher Memos</div>
-        <%= render partial: "memos/feed", locals: { memos: survey_item.memos.order(created_at: :desc), memo: Memo.new(kind: "survey_item", referrent_id: survey_item.id) } %>
-      </section>
+      <%= render partial: "memos/feed", locals: { memos: survey_item.memos.order(created_at: :desc), memo: Memo.new(kind: "survey_item", referrent_id: survey_item.id) } %>
+
       <section class="sidebar-card">
         <details class="sidebar-disclosure" open>
           <summary class="sidebar-card-title disclosure-title">

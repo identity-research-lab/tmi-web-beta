@@ -1,0 +1,33 @@
+<%= turbo_frame_tag "search-results" do %>
+  
+  <% if search.results.any? %>
+    <section class="app-section">
+      <details class="filterable" data-visibility="response" open="true">
+          <summary class="section-label">
+            <%= search.response_results.count %> <%= "Response".pluralize(search.response_results.count) %>
+          </summary>
+          <% search.response_results.each do |survey_response| %>
+            <%= render partial: "searches/response_row", locals: { survey_response: survey_response } %>
+          <% end %>
+        </details>  
+      
+      <details class="filterable" data-visibility="memo" open="true">
+          <summary class="section-label">
+            <%= search.memo_results.count %> <%= "Memo".pluralize(search.memo_results.count) %>
+          </summary>
+          <% search.memo_results.each do |memo| %>
+            <%= render partial: "searches/memo_row", locals: { memo: memo } %>
+          <% end %>
+        </details>
+      
+      <details class="filterable" data-visibility="code" open="true">
+        <summary class="section-label">
+          <%= search.code_results.count %> <%= "Code".pluralize(search.code_results.count) %>
+        </summary>
+        <% search.code_results.each do |code| %>
+          <%= render partial: "searches/code_row", locals: { code: code } %>
+        <% end %>
+      </details>
+    </section>
+  <% end %>
+<% end %>

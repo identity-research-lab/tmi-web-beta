@@ -1,7 +1,7 @@
 export function highlightSearchTerm() {
-  const searchbox = document.getElementById("search-query")
+  const searchbox = document.getElementsByClassName("search-input")
   if (!searchbox) return
-  const substring = searchbox.value
+  const substring = searchbox[0].value
   if (!substring) return
   const elements = document.getElementsByClassName("search-result")
   const regex = new RegExp(`(${substring})`, "gi")
@@ -34,6 +34,14 @@ export function handleSearchFilters() {
       fireFilters()
     })
   }
+  const visibleFilters = document.getElementsByClassName("filter-visible")
+  if (visibleFilters) {
+    for (const el of visibleFilters) {
+      el.addEventListener("change", (event) => {
+        fireFilters()
+      })
+    }
+  }
 }
 
 export function fireFilters() {
@@ -58,6 +66,19 @@ export function fireFilters() {
       for (const el of filterables) {
         if (el.dataset.attached == "true") {
           el.classList.add("hidden")
+        }
+      }
+    }
+  }
+
+  const visibleFilters = document.getElementsByClassName("filter-visible")
+  if (visibleFilters) {
+    for (const filter of visibleFilters) {
+      if (filter.checked == false) {
+        for (const filterable of filterables) {
+          if (filter.value == filterable.dataset.visibility) {
+            filterable.classList.add("hidden")
+          }
         }
       }
     }

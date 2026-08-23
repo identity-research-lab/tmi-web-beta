@@ -2,50 +2,36 @@
 <%- active_nav "search" %>
 
 <section class="app-header dashboard-hero">
+
   <div class="app-header-copy">
     <div class="app-label">
-      <%= @project.name %> · <span class="app-label-dense">Search</span>
+      <%= @project.name %> · <span class="app-label-dense">Full text search</span>
     </div>
     <h1 class="app-title">Search</h1>
     <p class="app-description">
+      Search across categories, codes, experiences, identities, reflections, and themes.
     </p>
   </div>
 </section>
 
-<section class="app-section">
-  <div>
-    <h2 class="workspace-title">Full text search</h2>
-    <%= form_with model: Search.new(query: @search.query, scope: "all"), data: {turbo: false} do |f| %>
-      <%= f.text_field :query, class: "site-search-input", type: "search", autocomplete: "on", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
+<section aria-labelledby="search" class="category-create-section">
+  <div class="search-controls">
+    <%= form_with model: @search, data: {turbo: true} do |f| %>
+      <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
+        <%= f.text_field :query, class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+      </label>
+      <%= f.hidden_field :context, value: "site" %>
       <%= f.submit "Search", class: "site-search-submit" %>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("response") || @search.scope.include?("all"), multiple: true}, "response", nil %>Responses</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("code") || @search.scope.include?("all"), multiple: true}, "code", nil %>Codes</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("memo") || @search.scope.include?("all"), multiple: true}, "memo", nil %>Memos</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("category") || @search.scope.include?("all"), multiple: true}, "category", nil %>Categories</label>
+      <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: @search.scope.include?("theme") || @search.scope.include?("all"), multiple: true}, "theme", nil %>Themes</label>
     <% end %>
   </div>
+  <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%# pluralize(@results.count, "result") %></p>
 </section>
 
-<section class="app-section">
-  <div class="section-label">
-    <%= @search.response_results.count %> <%= "Survey Response".pluralize(@search.response_results.count) %>
-  </div>
-  <% @search.response_results.each do |survey_response| %>
-    <%= render partial: "searches/response_row", locals: { survey_response: survey_response } %>
-  <% end %>
+<section>
+  <%= render partial: "searches/results", locals: { search: @search } %>
 </section>
-
-<section class="app-section">
-  <div class="section-label">
-    <%= @search.memo_results.count %> <%= "Memo".pluralize(@search.memo_results.count) %>
-  </div>
-  <% @search.memo_results.each do |memo| %>
-    <%= render partial: "searches/memo_row", locals: { memo: memo } %>
-  <% end %>
-</section>
-
-<section class="app-section">
-  <div class="section-label">
-    <%= @search.code_results.count %> <%= "Code".pluralize(@search.code_results.count) %>
-  </div>
-  <% @search.code_results.each do |code| %>
-    <%= render partial: "searches/code_row", locals: { code: code } %>
-  <% end %>
-</section>
-

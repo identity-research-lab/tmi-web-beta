@@ -12,6 +12,12 @@ import { sortCodes } from "code_metrics"
 import { handleCodingForms } from "coding"
 import { highlightSearchTerm } from "searching"
 import { handleLiveSearch } from "searching"
+import { handleSearchFilters } from "searching"
+import { fireFilters } from "searching"
+
+document.addEventListener("turbo:frame-load", () => {
+  fireFilters()
+})
 
 document.addEventListener("turbo:load", () => {
   setupMobileNav()
@@ -21,11 +27,14 @@ document.addEventListener("turbo:load", () => {
   handleModeSelect()
   highlightSearchTerm()
   handleLiveSearch()
+  handleSearchFilters()
 })
 
 window.copyToClipboard = copyToClipboard
 window.sortTable = sortTable
 window.sortCodes = sortCodes
 window.handleLiveSearch = handleLiveSearch
+window.handleSearchFilters = handleSearchFilters
 window.highlightSearchTerm = highlightSearchTerm
+window.fireFilters = fireFilters
 window.setMode = setMode

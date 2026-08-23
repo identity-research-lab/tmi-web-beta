@@ -122,8 +122,8 @@
           <div class="search-controls">
             <%= form_with model: Search.new(query: "", scope: "category"), data: {turbo: true} do |f| %>
               <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
-                  <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
-                  <%= f.hidden_field :scope, value: "category" %>
+                <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+                <%= f.hidden_field :scope, value: "category" %>
               </label>
             <% end %>
               
@@ -138,8 +138,8 @@
                   <option value="codes-asc">Assigned codes: least to most</option>
                 </select>
               </label>
-              <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="category-empty-filter" type="checkbox"/> Only categories with no assigned codes</label>
             -->
+              <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-count" type="checkbox"/> Only categories with no assigned codes</label>
           </div>
           <p aria-live="polite" class="category-library-status search-result-count" id="category-library-status"><%# pluralize(categories.count, "category") %></p>
         </div>

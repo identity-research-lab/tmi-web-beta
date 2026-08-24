@@ -36,7 +36,13 @@ class Search
   end
   
   def code_results
-    @code_results ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
+    return @code_results if @code_results
+    
+    if self.sort_key == "frequency"
+      @code_results ||= Code.as(:c).query.match("(c)-[]-(sr:SurveyResponse)").with("c, COUNT(sr) AS ct").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c, ct").order("ct #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
+    else
+      @code_results ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
+    end
   end
 
   def memo_results

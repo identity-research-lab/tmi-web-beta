@@ -61,8 +61,8 @@
           <%= f.hidden_field :scope, multiple: true, value: "code" %>
           <%= f.hidden_field :context, value: "category-details" %>
           <%= f.hidden_field :context_id, value: @category.id %>
-          <%= f.hidden_field :limit, value: "50" %>
-          <%= f.hidden_field :per_page, value: "5" %>
+          <%= f.hidden_field :limit, value: "1000" %>
+          <%= f.hidden_field :per_page, value: "50" %>
           <%= f.hidden_field :offset, value: "0" %>
           <%= f.hidden_field :sort_key, value: "name" %>
           <%= f.hidden_field :sort_dir, value: "asc" %>

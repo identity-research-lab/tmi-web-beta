@@ -24,7 +24,6 @@ class Search
   end
 
   def results
-    return [] unless self.query.present?
     @results ||= { categories: category_results, codes: code_results, memos: memo_results, responses: response_results }
   end
 

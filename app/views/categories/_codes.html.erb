@@ -37,16 +37,16 @@
       <% end %>
     </table>
   </div>
-  <div style="margin-top: 2rem; text-align: center; width: 100%;">
-    <button class="button small page-button page-previous" data-direction="back" style="float: left;">Previous</button>
-    <button class="button small page-button page-next" data-direction="next" style="float: right;">Next</button>
-  </div>
   
   <% if pane == "attached" %>
     <p aria-live="polite" class="search-result-count">
       <%= attached_codes.count %> assigned project codes
     </p>
   <% else %>
+    <div style="margin-top: 2rem; text-align: center; width: 100%;">
+      <button class="button small page-button" id="page-back" data-direction="back" style="float: left;">Previous</button>
+      <button class="button small page-button" id="page-next" data-direction="next" style="float: right;">Next</button>
+    </div>
     <p aria-live="polite" class="search-result-count">
       <% total ||= codes.count %>
       <% if pane == "available" %>

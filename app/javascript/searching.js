@@ -25,11 +25,32 @@ export function handleSearchPagination() {
   
   const pageButtons = document.getElementsByClassName("page-button")
   const availableWindow = document.getElementById("available-window")
-  
+  const backButton = document.getElementById("page-back")
+  const nextButton = document.getElementById("page-next")
+  const totalRecordsElem = document.getElementById("available-total-count")
+
   var startIndex = parseInt(document.getElementById("search_offset").value) + 1
   var endIndex = startIndex + parseInt(document.getElementById("search_per_page").value) - 1
+  var totalCount = 0
+  if (totalRecordsElem) {
+    totalCount = parseInt(totalRecordsElem.innerHTML)
+  }
   
+  if (startIndex == 1) {
+    backButton.classList.add("hidden")
+  } else {
+    backButton.classList.remove("hidden")
+  }
+  
+  if (endIndex > totalCount) { 
+    endIndex = totalCount 
+    nextButton.classList.add("hidden")
+  } else {
+    nextButton.classList.remove("hidden")
+  }
   availableWindow.innerHTML = startIndex + "-" + endIndex
+
+  
   
   for (const pageButton of pageButtons) {
     pageButton.addEventListener("mousedown", (event) => {

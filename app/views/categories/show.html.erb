@@ -55,15 +55,17 @@
       </div>
     </div>
     <div aria-label="Search and filter all project codes" class="table-toolbar code-browser-controls search-toolbar" role="search">
-      <%= form_with model: Search.new(query: "", scope: "theme"), data: {turbo: true} do |f| %>
+      <%= form_with model: Search.new(query: "", scope: "theme"), id: "search-form", data: {turbo: true} do |f| %>
         <label class="search-field browser-search"><span class="visually-hidden">Search all project codes</span>
-          <%= f.text_field :query, id: "", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search code names" %>
+          <%= f.text_field :query, class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search code names" %>
           <%= f.hidden_field :scope, value: "code" %>
           <%= f.hidden_field :context, value: "category-details" %>
           <%= f.hidden_field :context_id, value: @category.id %>
           <%= f.hidden_field :limit, value: 50 %>
           <%= f.hidden_field :per_page, value: 5 %>
           <%= f.hidden_field :offset, value: 0 %>
+          <%= f.hidden_field :sort_by, value: "name" %>
+          <%= f.hidden_field :sort_dir, value: "asc" %>
         </label>
         <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-attached" type="checkbox" />Not assigned to this category</label>
         <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-high-freq" type="checkbox" checked />High frequency (15+)</label>

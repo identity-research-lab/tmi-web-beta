@@ -21,6 +21,36 @@ export function handleLiveSearch() {
   })
 }
 
+export function handleSearchSort() {
+  
+  const sortButtons = document.getElementsByClassName("sort-button")
+  if (!sortButtons) return
+  
+  for (const sortButton of sortButtons) {
+    sortButton.addEventListener("click", (event) => {
+      const searchForm = document.getElementById("search-form")  
+      if (!searchForm) return
+      
+      const sortBy = document.getElementById("search_sort_by")
+      if (!sortBy) return
+      
+      const prevSortKey = sortBy.value
+      sortBy.value = sortButton.dataset.key
+      
+      const sortDir = document.getElementById("search_sort_dir")
+      if (!sortDir) return
+      if (prevSortKey == sortBy.value) {
+        if (sortDir.value == "asc") { sortDir.value = "desc" } else { sortDir.value = "asc" }
+      }
+
+      searchForm.requestSubmit()
+      
+    })
+  }
+  
+  
+}
+
 export function handleSearchFilters() {
 
   const resetFiltersButton = document.getElementById("clear-browser-filters")
@@ -73,8 +103,8 @@ export function handleSearchFilters() {
 
 export function fireFilters() {
   const filterables = document.getElementsByClassName("filterable")
-  for (const el of filterables) {
-    el.classList.remove("hidden")
+  for (const filterable of filterables) {
+    filterable.classList.remove("hidden")
   }
   
   const countFilter = document.getElementById("filter-count")

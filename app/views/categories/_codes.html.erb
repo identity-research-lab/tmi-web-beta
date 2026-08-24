@@ -14,8 +14,14 @@
   <% if codes.any? %>
         <thead>
           <tr>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('<%= table_id %>', 0)"><span class="sort-header">Code name <span aria-hidden="true">A–Z</span></button></span></th>
-            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('<%= table_id %>', 1)"><span class="sort-header">Occurrences <span aria-hidden="true">↕</span></button></span></th>
+            <th scope="col" class="sortable" data-sort-direction="desc">
+              <span class="sort-header"><button class="sort-button" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button></span>
+            </th>
+            <th scope="col" class="sortable" data-sort-direction="desc">
+              <span class="sort-header">
+                <button class="sort-button" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
+              </span>
+            </th>
             <th scope="col">Code origins</th>
             <th scope="col"><span class="visually-hidden">Remove assignment</span></th>
           </tr>
@@ -28,6 +34,11 @@
       <% end %>
     </table>
   </div>
+  <ul>
+    <li><a href="#">1-50</a></li>
+    <li><a href="#">51-100</a></li>
+    <li><a href="#">101-150</a></li>
+  </ul>
   <% if pane == "attached" %>
     <p aria-live="polite" class="search-result-count">
       <%= attached_codes.count %> assigned project codes

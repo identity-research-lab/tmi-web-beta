@@ -15,16 +15,29 @@
     <% sort_class = pane == "attached" ? "sort-button" : "sort-button search-sort-button" %>
         <thead>
           <tr>
-            <th scope="col" class="sortable" data-sort-direction="desc">
+            <% if pane == "attached" %>
+              <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-codes-table', 0);">
               <span class="sort-header">
                 <button class="<%= sort_class %>" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button>
               </span>
             </th>
-            <th scope="col" class="sortable" data-sort-direction="desc">
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-codes-table', 1);">
               <span class="sort-header">
                 <button class="<%= sort_class %>" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
               </span>
             </th>
+            <% else %>
+              <th scope="col" class="sortable" data-sort-direction="desc">
+                <span class="sort-header">
+                  <button class="<%= sort_class %>" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button>
+                </span>
+              </th>
+              <th scope="col" class="sortable" data-sort-direction="desc">
+                <span class="sort-header">
+                  <button class="<%= sort_class %>" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
+                </span>
+              </th>
+            <% end %>
             <th scope="col">Code origins</th>
             <th scope="col"><span class="visually-hidden">Remove assignment</span></th>
           </tr>

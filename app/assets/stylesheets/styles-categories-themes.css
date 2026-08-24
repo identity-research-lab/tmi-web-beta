@@ -468,11 +468,11 @@
 }
 
 .assigned-table-window {
-  max-height: 400px;
+  max-height: 800px;
 }
 
 .available-table-window {
-  max-height: 540px;
+  max-height: 1080px;
 }
 
 .code-data-table {

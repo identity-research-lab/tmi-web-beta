@@ -110,7 +110,7 @@ export function fireFilters() {
     }
   }
 
-  const highFreqFilter = document.getElementsByClassName("filter-high-freq")
+  const highFreqFilter = document.getElementById("filter-high-freq")
   if (highFreqFilter) {
     if (highFreqFilter.checked == false) {
       for (const filterable of filterables) {
@@ -121,7 +121,7 @@ export function fireFilters() {
     }
   }
 
-  const lowFreqFilter = document.getElementsByClassName("filter-low-freq")
+  const lowFreqFilter = document.getElementById("filter-low-freq")
   if (lowFreqFilter) {
     if (lowFreqFilter.checked == false) {
       for (const filterable of filterables) {

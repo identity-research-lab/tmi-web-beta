@@ -50,9 +50,6 @@ class CategoriesController < ApplicationController
     end
   end
   
-  def codes
-  end
-  
   private
 
   def category_params

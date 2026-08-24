@@ -9,6 +9,8 @@
       <table class="code-data-table" id="available-codes-table">
       <caption class="visually-hidden">Project codes available for category assignment</caption>
   <% end %>
+  
+  <% if codes.any? %>
         <thead>
           <tr>
             <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
@@ -23,6 +25,7 @@
           <% end %>
         </tbody>
       </table>
+  <% end %>
     </div>
     <% if pane == "attached" %>
       <p aria-live="polite" class="search-result-count">

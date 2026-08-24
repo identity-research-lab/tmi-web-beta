@@ -1,17 +1,17 @@
-<tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.name %>">
-  <td class="code-name-cell">
+<tr class="code-browser-row filterable" data-frequency="<%= code.frequency %>" data-name="<%= code.name %>" data-attached="<%= attached_codes.include?(code) %>">
+  <td class="code-name-cell" data-sort-index="<%= code.name.downcase %>">
     <span class="tag"><%= code.name %></span>
   </td>
-  <td class="frequency-cell"><%= code.frequency %></td>
+  <td class="frequency-cell" data-sort-index="<%= code.frequency.to_s.rjust(3, "0") %>"><%= code.frequency %></td>
   <td class="origins-cell">
-    <div>Questions: <%= code.questions.to_sentence %></div>
-    <div>Cases: <%= code.personas %></div>
-    <div>Dimensions: <%= code.dimensions.to_sentence %></div>
+    <div>Questions: <%= code.question_list.to_sentence %></div>
+    <div>Cases: <%= code.persona_list.to_sentence %></div>
+    <div>Dimensions: <%= code.dimension_list.to_sentence %></div>
   </td>
   <td class="row-action-cell">
-    <%= form_with model: code, data: { turbo_stream: true } do |f| %>
-      <%= f.hidden_field :category, value: category.id %>
-      <% if attached_codes.include? code %>
+    <%= form_with model: category, data: { turbo_stream: true } do |f| %>
+      <%= f.hidden_field :code, value: code.id %>
+      <% if pane == "attached" && attached_codes.include?(code) %>
         <%= f.button name: "remove", class: "icon-button remove-code-button", aria: { label: "Remove #{code.name} from this category" } do %>
           <svg aria-hidden="true" class="lucide lucide-trash2-icon lucide-trash-2" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 11v6"></path>

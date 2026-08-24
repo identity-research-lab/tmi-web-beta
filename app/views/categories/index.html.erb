@@ -124,7 +124,7 @@
               <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
                 <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
                 <%= f.hidden_field :context, value: "category-grid" %>
-                <%= f.hidden_field :scope, value: "category" %>
+                <%= f.hidden_field :scope, multiple: true, value: "category" %>
               </label>
             <% end %>
               <label class="category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-count" type="checkbox"/> Only categories with no assigned codes</label>

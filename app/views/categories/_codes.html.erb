@@ -1,44 +1,73 @@
-<%= turbo_frame_tag "category-codes" do %>
-  <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
-    <table class="code-data-table" id="assigned-codes-table">
+<%= turbo_frame_tag "category-codes-#{pane}" do %>
+
+  <% table_id = pane == "attached" ? "assigned-codes-table" : "available-codes-table" %>
+  <% if pane == "attached" %>
+    <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
+      <table class="code-data-table" id="<%= table_id %>">
       <caption class="visually-hidden">Codes currently assigned to this category</caption>
-      <thead>
-        <tr>
-          <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Code name <span aria-hidden="true">A–Z</span></button></th>
-          <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Occurrences <span aria-hidden="true">↕</span></button></th>
-          <th scope="col">Code origins</th>
-          <th scope="col"><span class="visually-hidden">Remove assignment</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% codes.each do |code| %>
-          <tr class="code-browser-row" data-frequency="<%= code.frequency %>" data-name="<%= code.name %>">
-            <td class="code-name-cell">
-              <span class="tag"><%= code.name %></span>
-            </td>
-            <td class="frequency-cell"><%= code.frequency %></td>
-            <td class="origins-cell">
-              <div>Questions: <%= code.question_list.to_sentence %></div>
-              <div>Cases: <%= code.persona_count %></div>
-              <div>Dimensions: <%= code.dimension_list.to_sentence %></div>
-            </td>
-            <td class="row-action-cell">
-              <%= form_with model: category, data: { turbo_stream: true } do |f| %>
-                <%= f.hidden_field :code, value: code.id %>
-                <%= f.button name: "remove", class: "icon-button remove-code-button", aria: { label: "Remove #{code.name} from this category" } do %>
-                  <svg aria-hidden="true" class="lucide lucide-trash2-icon lucide-trash-2" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 11v6"></path>
-                    <path d="M14 11v6"></path>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                    <path d="M3 6h18"></path>
-                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                  </svg>
-                <% end %>
-              <% end %>
-            </td>
+  <% else %>
+    <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
+      <table class="code-data-table" id="<%= table_id %>">
+      <caption class="visually-hidden">Project codes available for category assignment</caption>
+  <% end %>
+  
+  <% if codes.any? %>
+    <% sort_class = pane == "attached" ? "sort-button" : "sort-button search-sort-button" %>
+        <thead>
+          <tr>
+            <% if pane == "attached" %>
+              <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-codes-table', 0);">
+              <span class="sort-header">
+                <button class="<%= sort_class %>" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button>
+              </span>
+            </th>
+            <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-codes-table', 1);">
+              <span class="sort-header">
+                <button class="<%= sort_class %>" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
+              </span>
+            </th>
+            <% else %>
+              <th scope="col" class="sortable" data-sort-direction="desc">
+                <span class="sort-header">
+                  <button class="<%= sort_class %>" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button>
+                </span>
+              </th>
+              <th scope="col" class="sortable" data-sort-direction="desc">
+                <span class="sort-header">
+                  <button class="<%= sort_class %>" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
+                </span>
+              </th>
+            <% end %>
+            <th scope="col">Code origins</th>
+            <th scope="col"><span class="visually-hidden">Remove assignment</span></th>
           </tr>
-        <% end %>
-      </tbody>
+        </thead>
+        <tbody>
+          <% codes.each do |code| %>
+            <%= render partial: "categories/code_row", locals: { category: category, code: code, attached_codes: attached_codes, pane: pane } %>
+          <% end %>
+        </tbody>
+      <% end %>
     </table>
   </div>
+  
+  <% if pane == "attached" %>
+    <p aria-live="polite" class="search-result-count">
+      <%= attached_codes.count %> assigned project codes
+    </p>
+  <% else %>
+    <div style="margin-top: 2rem; text-align: center; width: 100%;">
+      <button class="button small page-button" id="page-back" data-direction="back" style="float: left;">Previous</button>
+      <button class="button small page-button" id="page-next" data-direction="next" style="float: right;">Next</button>
+    </div>
+    <p aria-live="polite" class="search-result-count">
+      <% total ||= codes.count %>
+      <% if pane == "available" %>
+        <span id="available-window"></span> of
+      <% end %>
+      <span id="available-visible-count"></span><span id="available-total-count"><%= total %></span>
+    </p>
+  <% end %>
+
+  <script>fireFilters();handleSearchSort();handleSearchPagination();</script>
 <% end %>

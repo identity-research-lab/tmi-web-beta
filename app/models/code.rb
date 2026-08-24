@@ -21,9 +21,9 @@ class Code
 
   def self.applied(limit=nil)
     if limit
-      Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").limit(limit).map{|r| r[:c]}
+      Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").return("DISTINCT c").order("c.name").limit(limit).map{|r| r[:c]}
     else
-      Code.as(:c).query.match("(c)-[]-(SurveyResponse)").return("DISTINCT c").order("c.name DESC").map{|r| r[:c]}
+      Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").return("DISTINCT c").order("c.name").map{|r| r[:c]}
     end
   end
 

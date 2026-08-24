@@ -1,8 +1,10 @@
-export function sortTable(columnIndex) {
+export function sortTable(tableID, columnIndex) {
 
-  const table = document.getElementById("data-table")
+  console.log(0)
+  const table = document.getElementById(tableID)
   if (!table) return
 
+  console.log(1)
   const tbody = table.getElementsByTagName("tbody")[0]
   const rows = Array.from(tbody.rows)
   const theaders = Array.from(table.getElementsByTagName("th"))

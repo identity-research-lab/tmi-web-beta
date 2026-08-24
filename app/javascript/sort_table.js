@@ -1,6 +1,6 @@
-export function sortTable(columnIndex) {
+export function sortTable(tableID, columnIndex) {
 
-  const table = document.getElementById("data-table")
+  const table = document.getElementById(tableID)
   if (!table) return
 
   const tbody = table.getElementsByTagName("tbody")[0]

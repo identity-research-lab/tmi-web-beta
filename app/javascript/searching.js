@@ -23,23 +23,30 @@ export function handleLiveSearch() {
 
 export function handleSearchSort() {
   
-  const sortButtons = document.getElementsByClassName("sort-button")
-  if (!sortButtons) return
-  
+  const sortButtons = document.getElementsByClassName("search-sort-button")
+
   for (const sortButton of sortButtons) {
-    sortButton.addEventListener("click", (event) => {
+    console.log(sortButton)
+    sortButton.addEventListener("mousedown", (event) => {
+      console.log(2)
       const searchForm = document.getElementById("search-form")  
       if (!searchForm) return
       
-      const sortBy = document.getElementById("search_sort_by")
-      if (!sortBy) return
+      console.log(3)
+      const sortKey = document.getElementById("search_sort_key")
+      if (!sortKey) return
       
-      const prevSortKey = sortBy.value
-      sortBy.value = sortButton.dataset.key
+      console.log(4)
+      const prevSortKey = sortKey.value
+      sortKey.value = sortButton.dataset.key
       
+      console.log(5)
+
       const sortDir = document.getElementById("search_sort_dir")
       if (!sortDir) return
-      if (prevSortKey == sortBy.value) {
+
+      console.log(6)
+      if (prevSortKey == sortKey.value) {
         if (sortDir.value == "asc") { sortDir.value = "desc" } else { sortDir.value = "asc" }
       }
 

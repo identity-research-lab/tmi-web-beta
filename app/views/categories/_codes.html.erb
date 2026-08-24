@@ -12,14 +12,17 @@
   <% end %>
   
   <% if codes.any? %>
+    <% sort_class = pane == "attached" ? "sort-button" : "sort-button search-sort-button" %>
         <thead>
           <tr>
             <th scope="col" class="sortable" data-sort-direction="desc">
-              <span class="sort-header"><button class="sort-button" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button></span>
+              <span class="sort-header">
+                <button class="<%= sort_class %>" data-key="name" type="button">Code name <span aria-hidden="true">A–Z</span></button>
+              </span>
             </th>
             <th scope="col" class="sortable" data-sort-direction="desc">
               <span class="sort-header">
-                <button class="sort-button" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
+                <button class="<%= sort_class %>" data-key="frequency" type="button">Occurrences <span aria-hidden="true">↕</span></button>
               </span>
             </th>
             <th scope="col">Code origins</th>
@@ -49,5 +52,5 @@
     </p>
   <% end %>
 
-  <script>fireFilters();</script>    
+  <script>fireFilters();handleSearchSort();</script>
 <% end %>

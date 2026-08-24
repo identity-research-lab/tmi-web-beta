@@ -55,7 +55,7 @@ class SearchesController < ApplicationController
   private
   
   def search_params
-    params.require(:search).permit(:query, :context, :context_id, scope: [])
+    params.require(:search).permit(:query, :context, :context_id, :limit, :offset, :per_page, :sort_key, :sort_dir, scope: [])
   end
   
 end

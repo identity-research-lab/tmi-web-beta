@@ -7,14 +7,18 @@ class Search
   attr_accessor :limit
   attr_accessor :per_page
   attr_accessor :offset
+  attr_accessor :sort_key
+  attr_accessor :sort_dir
+    
+  SCOPES = %w{ all category code memo response theme }
   
-  SCOPES = %w{ all category code memo theme theme }
-  
-  def initialize(query:, limit: 1000, per_page: 10, offset: 0, scope: [])
+  def initialize(query:, limit: 1000, per_page: 10, offset: 0, sort_key: "name", sort_dir: "ASC", scope: [])
     self.query = query.to_s
     self.limit = limit.to_i
     self.per_page = per_page.to_i
     self.offset = offset.to_i
+    self.sort_key = %w{name frequency created_at updated_at}.include?(sort_key) ? sort_key : "name"
+    self.sort_dir = %w{ASC DESC}.include?(sort_dir.to_s.upcase) ? sort_dir.to_s.upcase : "ASC"
     self.scope = [scope].flatten.compact
     self.scope = ["all"] if self.scope.empty?
   end
@@ -32,9 +36,7 @@ class Search
   end
   
   def code_results
-    return [] unless self.query.present?
-    return [] unless self.scope.include?("all") || self.scope.include?("code")
-    @code_results ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c").order("c.name").limit(self.limit).map{|r| r[:c]}
+    @code_results ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
   end
 
   def memo_results

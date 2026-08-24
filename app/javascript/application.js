@@ -11,8 +11,9 @@ import { setMode } from "code_metrics"
 import { sortCodes } from "code_metrics"
 import { handleCodingForms } from "coding"
 import { highlightSearchTerm } from "searching"
-import { handleLiveSearch } from "searching"
 import { handleSearchFilters } from "searching"
+import { handleLiveSearch } from "searching"
+import { handleSearchSort } from "searching"
 import { fireFilters } from "searching"
 
 document.addEventListener("turbo:frame-load", () => {
@@ -28,6 +29,7 @@ document.addEventListener("turbo:load", () => {
   highlightSearchTerm()
   handleLiveSearch()
   handleSearchFilters()
+  handleSearchSort()
 })
 
 window.copyToClipboard = copyToClipboard
@@ -36,5 +38,6 @@ window.sortCodes = sortCodes
 window.handleLiveSearch = handleLiveSearch
 window.handleSearchFilters = handleSearchFilters
 window.highlightSearchTerm = highlightSearchTerm
+window.handleSearchSort = handleSearchSort
 window.fireFilters = fireFilters
 window.setMode = setMode

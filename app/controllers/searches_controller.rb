@@ -31,7 +31,7 @@ class SearchesController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           if search_params[:context_id] && category = Category.find(search_params[:context_id]) 
-            render turbo_stream: turbo_stream.replace("category-codes-available", partial: "/categories/codes", locals: { category: category, codes: @search.code_results, attached_codes: category.codes, pane: "available" })
+            render turbo_stream: turbo_stream.replace("category-codes-available", partial: "/categories/codes", locals: { category: category, total: @search.total_results, codes: @search.paged_results, attached_codes: category.codes, pane: "available" })
           else
             render turbo_stream: turbo_stream.replace("category-grid", partial: "/categories/grid", locals: { categories: @search.category_results })
           end

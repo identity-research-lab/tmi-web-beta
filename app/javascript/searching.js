@@ -21,31 +21,72 @@ export function handleLiveSearch() {
   })
 }
 
+export function handleSearchPagination() {
+  
+  const pageButtons = document.getElementsByClassName("page-button")
+  const availableWindow = document.getElementById("available-window")
+  
+  var startIndex = parseInt(document.getElementById("search_offset").value) + 1
+  var endIndex = startIndex + parseInt(document.getElementById("search_per_page").value) - 1
+  
+  availableWindow.innerHTML = startIndex + "-" + endIndex
+  
+  for (const pageButton of pageButtons) {
+    pageButton.addEventListener("mousedown", (event) => {
+  
+      console.log(1)
+      const searchForm = document.getElementById("search-form")  
+      if (!searchForm) return
+      
+      const offset = document.getElementById("search_offset")
+      if (!offset) return
+  
+      const perPage = document.getElementById("search_per_page")
+      if (!perPage) return
+      
+      var totalCount = 0
+      const totalRecordsElem = document.getElementById("available-total-count")
+      if (totalRecordsElem) {
+        totalCount = parseInt(totalRecordsElem.innerHTML)
+      }
+      
+      var newOffset = 0
+      if (event.target.dataset.direction == "back") {
+        newOffset = parseInt(offset.value) - parseInt(perPage.value)
+      } else {
+        newOffset = parseInt(offset.value) + parseInt(perPage.value)
+      }
+      
+      if (newOffset < 0) { newOffset = 0 }
+      if (newOffset > totalCount) { newOffset = offset.value }
+  
+      offset.value = newOffset
+  
+      searchForm.requestSubmit()
+      
+    })
+  }    
+}
+
 export function handleSearchSort() {
   
   const sortButtons = document.getElementsByClassName("search-sort-button")
 
   for (const sortButton of sortButtons) {
-    console.log(sortButton)
     sortButton.addEventListener("mousedown", (event) => {
-      console.log(2)
+
       const searchForm = document.getElementById("search-form")  
       if (!searchForm) return
       
-      console.log(3)
       const sortKey = document.getElementById("search_sort_key")
       if (!sortKey) return
       
-      console.log(4)
       const prevSortKey = sortKey.value
       sortKey.value = sortButton.dataset.key
       
-      console.log(5)
-
       const sortDir = document.getElementById("search_sort_dir")
       if (!sortDir) return
 
-      console.log(6)
       if (prevSortKey == sortKey.value) {
         if (sortDir.value == "asc") { sortDir.value = "desc" } else { sortDir.value = "asc" }
       }
@@ -186,9 +227,9 @@ export function fireFilters() {
   if (!visibleCounter) return
   const hiddenElems = document.getElementsByClassName("filterable hidden")
   if (hiddenElems.length == 0 ) { 
-    visibleCounter.innerHTML = ""
+ //   visibleCounter.innerHTML = ""
   } else {
-    visibleCounter.innerHTML = filterables.length - hiddenElems.length + "/"
+//    visibleCounter.innerHTML = filterables.length - hiddenElems.length + "/"
   }
 
   const totalCounter = document.getElementById("available-visible-total")

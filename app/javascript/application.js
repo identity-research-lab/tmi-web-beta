@@ -14,6 +14,7 @@ import { highlightSearchTerm } from "searching"
 import { handleSearchFilters } from "searching"
 import { handleLiveSearch } from "searching"
 import { handleSearchSort } from "searching"
+import { handleSearchPagination } from "searching"
 import { fireFilters } from "searching"
 
 document.addEventListener("turbo:frame-load", () => {
@@ -30,6 +31,7 @@ document.addEventListener("turbo:load", () => {
   handleLiveSearch()
   handleSearchFilters()
   handleSearchSort()
+  handleSearchPagination()
 })
 
 window.copyToClipboard = copyToClipboard
@@ -39,5 +41,6 @@ window.handleLiveSearch = handleLiveSearch
 window.handleSearchFilters = handleSearchFilters
 window.highlightSearchTerm = highlightSearchTerm
 window.handleSearchSort = handleSearchSort
+window.handleSearchPagination = handleSearchPagination
 window.fireFilters = fireFilters
 window.setMode = setMode

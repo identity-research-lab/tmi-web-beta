@@ -1444,6 +1444,7 @@
   align-self: center;
   justify-self: end;
   margin: 0;
+  text-align: center;
 }
 
 @media (max-width: 1100px) {

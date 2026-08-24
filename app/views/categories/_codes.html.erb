@@ -37,20 +37,24 @@
       <% end %>
     </table>
   </div>
-  <ul>
-    <li><a href="#">1-50</a></li>
-    <li><a href="#">51-100</a></li>
-    <li><a href="#">101-150</a></li>
-  </ul>
+  <div style="margin-top: 2rem; text-align: center; width: 100%;">
+    <button class="button small page-button page-previous" data-direction="back" style="float: left;">Previous</button>
+    <button class="button small page-button page-next" data-direction="next" style="float: right;">Next</button>
+  </div>
+  
   <% if pane == "attached" %>
     <p aria-live="polite" class="search-result-count">
       <%= attached_codes.count %> assigned project codes
     </p>
   <% else %>
     <p aria-live="polite" class="search-result-count">
-      <span id="available-visible-count"></span><span id="available-total-count"><%= codes.count %></span> project codes
+      <% total ||= codes.count %>
+      <% if pane == "available" %>
+        <span id="available-window"></span> of
+      <% end %>
+      <span id="available-visible-count"></span><span id="available-total-count"><%= total %></span>
     </p>
   <% end %>
 
-  <script>fireFilters();handleSearchSort();</script>
+  <script>fireFilters();handleSearchSort();handleSearchPagination();</script>
 <% end %>

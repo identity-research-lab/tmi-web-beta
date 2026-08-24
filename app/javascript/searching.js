@@ -28,7 +28,8 @@ export function handleSearchFilters() {
     resetFiltersButton.addEventListener("click", (event) => {
       const form = event.target.form
       if (form) {
-        form.reset()        
+        form.reset()
+        form.requestSubmit() 
       }
       fireFilters()
     })
@@ -104,5 +105,9 @@ export function fireFilters() {
   } else {
     visibleCounter.innerHTML = filterables.length - hiddenElems.length + "/"
   }
+
+  const totalCounter = document.getElementById("available-visible-total")
+  if (!totalCounter) return
+  totalCounter.innerHTML = filterables.length
 
 }

@@ -39,11 +39,12 @@
     <div class="work-area-heading">
       <div>
         <h2 id="assigned-codes-title">Assigned codes</h2>
-        <p>Review, search, sort, and remove codes currently assigned to this category.<span class="work-area-instruction">Select a row once to mark the code for removal, then select it again to confirm.</span></p>
+        <p>Review, search, sort, and remove codes currently assigned to this category.</p>
       </div>
-      <span class="count-badge metric-count-badge"><span id="assigned-count"><%= @category_codes.count %></span> assigned codes</span>
     </div>
-    <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes, pane: "attached" } %>
+    <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
+      <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes, pane: "attached" } %>
+    </div>
   </section>
 
     <%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>
@@ -52,7 +53,7 @@
     <div class="work-area-heading browser-heading">
       <div>
         <h2 id="find-codes-title">Explore, find, and assign codes</h2>
-        <p>Search the full project code collection and add relevant codes to this category.<span class="work-area-instruction">Select a row to add the code; select it again to remove it.</span></p>
+        <p>Search the full project code collection and add relevant codes to this category.</p>
       </div>
       <div class="selection-summary">Selected codes: <strong id="added-count">0</strong></div>
     </div>
@@ -63,9 +64,11 @@
           <%= f.hidden_field :scope, value: "code" %>
           <%= f.hidden_field :context, value: "category-details" %>
           <%= f.hidden_field :context_id, value: @category.id %>
+          <%= f.hidden_field :limit, value: 50 %>
+          <%= f.hidden_field :per_page, value: 5 %>
+          <%= f.hidden_field :offset, value: 0 %>
         </label>
         <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: false}, "response", nil %>Responses</label>
-        <button aria-controls="available-codes-table" class="button secondary small search-clear" disabled id="clear-browser-search" type="button">Clear search</button>
         <label class="toolbar-control">
           <span>Category assignment</span>
           <select aria-controls="available-codes-table" id="display-filter">
@@ -92,15 +95,14 @@
             <option value="both">Both coding pathways</option>
           </select>
         </label>
-        <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear filters</button>
+        <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear search</button>
       <% end %>
-      <p aria-live="polite" class="search-result-count"><span id="available-visible-count"><%= @codes.count %></span> project codes</p>
     </div>
     <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
-    <div aria-label="Scrollable project codes table" class="available-table-window" role="region" tabindex="0">
+
+    <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
       <%= render partial: "categories/codes", locals: { category: @category, codes: @codes, attached_codes: @category_codes, pane: "available" } %>
     </div>
-    <div class="empty-state search-empty-state" id="available-codes-empty" hidden><strong>No matching project codes</strong><p>No project codes match the current search and filters.</p><button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-search-filters" type="button">Clear filters</button></div>
   </section>
   </div>
 </section>

@@ -61,7 +61,7 @@
         <%= form_with model: Search.new(query: "", scope: "theme"), data: {turbo: true} do |f| %>
           <label class="search-field browser-search"><span class="visually-hidden">Search categories</span>
             <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search category names and descriptions" %>
-            <%= f.hidden_field :scope, value: "category" %>
+            <%= f.hidden_field :scope, multiple: true, value: "category" %>
             <%= f.hidden_field :context, value: "theme-details" %>
             <%= f.hidden_field :context_id, value: @theme.id %>
           </label>

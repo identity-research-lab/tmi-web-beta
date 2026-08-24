@@ -5,7 +5,9 @@ class SearchesController < ApplicationController
   end
 
   def create
-    @search = Search.new(query: search_params[:query], scope: search_params[:scope])
+    @search = Search.new(
+      query: search_params[:query], limit: search_params[:limit], per_page: search_params[:per_page], offset: search_params[:offset], sort_key: search_params[:sort_key], sort_dir: search_params[:sort_dir], scope: search_params[:scope]
+    )
     if search_params[:context] == "site"
       respond_to do |format|
         format.turbo_stream do

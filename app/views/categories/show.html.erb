@@ -42,12 +42,10 @@
         <p>Review, search, sort, and remove codes currently assigned to this category.</p>
       </div>
     </div>
-    <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
-      <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes, pane: "attached" } %>
-    </div>
+    <%= render partial: "categories/codes", locals: { category: @category, codes: @category_codes, attached_codes: @category_codes, pane: "attached" } %>
   </section>
 
-    <%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>
+  <%= render partial: "memos/feed", locals: { memo: @memo, memos: @memos, css_class: "category-detail-memos" } %>
 
   <section aria-labelledby="find-codes-title" class="category-work-area code-browser-area" id="explore-codes">
     <div class="work-area-heading browser-heading">
@@ -55,7 +53,6 @@
         <h2 id="find-codes-title">Explore, find, and assign codes</h2>
         <p>Search the full project code collection and add relevant codes to this category.</p>
       </div>
-      <div class="selection-summary">Selected codes: <strong id="added-count">0</strong></div>
     </div>
     <div aria-label="Search and filter all project codes" class="table-toolbar code-browser-controls search-toolbar" role="search">
       <%= form_with model: Search.new(query: "", scope: "theme"), data: {turbo: true} do |f| %>
@@ -68,41 +65,16 @@
           <%= f.hidden_field :per_page, value: 5 %>
           <%= f.hidden_field :offset, value: 0 %>
         </label>
-        <label class="category-library-checkbox search-filter"><%= f.check_box :scope, { class: "filter-visible", checked: false}, "response", nil %>Responses</label>
-        <label class="toolbar-control">
-          <span>Category assignment</span>
-          <select aria-controls="available-codes-table" id="display-filter">
-            <option value="all">All codes</option>
-            <option value="available">Not assigned to this category</option>
-            <option value="added">Assigned to this category</option>
-          </select>
-        </label>
-        <label class="toolbar-control">
-          <span>Occurrences</span>
-          <select aria-controls="available-codes-table" id="frequency-filter">
-            <option value="all">Any frequency</option>
-            <option value="high">15 or more</option>
-            <option value="medium">8–14</option>
-            <option value="low">7 or fewer</option>
-          </select>
-        </label>
-        <label class="toolbar-control">
-          <span>Code origin</span>
-          <select aria-controls="available-codes-table" id="available-origin-filter">
-            <option value="all">All origins</option>
-            <option value="questions">Responses by question</option>
-            <option value="cases">Individual cases</option>
-            <option value="both">Both coding pathways</option>
-          </select>
-        </label>
+        <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-attached" type="checkbox" />Not assigned to this category</label>
+        <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-high-freq" type="checkbox" checked />High frequency (15+)</label>
+        <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-low-freq" type="checkbox" checked/>Low frequency (1-7)</label>
         <button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear search</button>
       <% end %>
     </div>
     <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>
 
-    <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
-      <%= render partial: "categories/codes", locals: { category: @category, codes: @codes, attached_codes: @category_codes, pane: "available" } %>
-    </div>
+    <%= render partial: "categories/codes", locals: { category: @category, codes: @codes, attached_codes: @category_codes, pane: "available" } %>
+
   </section>
   </div>
 </section>

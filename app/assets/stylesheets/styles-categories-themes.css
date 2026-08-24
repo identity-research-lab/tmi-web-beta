@@ -1344,7 +1344,7 @@
 #available-codes-table thead th {
   position: sticky;
   z-index: 3;
-  top: 3.25rem;
+  /* top: 3.25rem; */
 }
 
 .code-browser-area .browser-feedback-label {

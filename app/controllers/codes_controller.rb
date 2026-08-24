@@ -29,7 +29,7 @@ class CodesController < ApplicationController
   private
   
   def code_params
-    params.require(:code).permit(:name, :survey_response)
+    params.require(:code).permit(:name, :survey_response, :category)
   end
   
 end

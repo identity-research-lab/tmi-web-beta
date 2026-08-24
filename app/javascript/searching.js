@@ -41,19 +41,33 @@ export function handleSearchFilters() {
       fireFilters()
     })
   }
+
   const attachedFilter = document.getElementById("filter-attached")
   if (attachedFilter) {
     attachedFilter.addEventListener("change", (event) => {
       fireFilters()
     })
   }
-  const visibleFilters = document.getElementsByClassName("filter-visible")
-  if (visibleFilters) {
-    for (const el of visibleFilters) {
-      el.addEventListener("change", (event) => {
-        fireFilters()
-      })
-    }
+
+  const unattachedFilter = document.getElementById("filter-unattached")
+  if (unattachedFilter) {
+    unattachedFilter.addEventListener("change", (event) => {
+      fireFilters()
+    })
+  }
+
+  const highFreqFilter = document.getElementById("filter-high-freq")
+  if (highFreqFilter) {
+    highFreqFilter.addEventListener("change", (event) => {
+      fireFilters()
+    })
+  }
+
+  const lowFreqFilter = document.getElementById("filter-low-freq")
+  if (lowFreqFilter) {
+    lowFreqFilter.addEventListener("change", (event) => {
+      fireFilters()
+    })
   }
 }
 
@@ -73,6 +87,7 @@ export function fireFilters() {
       }
     }
   }
+
   const attachedFilter = document.getElementById("filter-attached")
   if (attachedFilter) {
     if (attachedFilter.checked == true) {
@@ -84,6 +99,39 @@ export function fireFilters() {
     }
   }
 
+  const unattachedFilter = document.getElementById("filter-unattached")
+  if (unattachedFilter) {
+    if (unattachedFilter.checked == true) {
+      for (const el of filterables) {
+        if (el.dataset.attached == "false") {
+          el.classList.add("hidden")
+        }
+      }
+    }
+  }
+
+  const highFreqFilter = document.getElementsByClassName("filter-high-freq")
+  if (highFreqFilter) {
+    if (highFreqFilter.checked == false) {
+      for (const filterable of filterables) {
+        if (parseInt(filterable.dataset.frequency) > 14) {
+          filterable.classList.add("hidden")
+        }
+      }
+    }
+  }
+
+  const lowFreqFilter = document.getElementsByClassName("filter-low-freq")
+  if (lowFreqFilter) {
+    if (lowFreqFilter.checked == false) {
+      for (const filterable of filterables) {
+        if (parseInt(filterable.dataset.frequency) < 8) {
+          filterable.classList.add("hidden")
+        }
+      }
+    }
+  }
+  
   const visibleFilters = document.getElementsByClassName("filter-visible")
   if (visibleFilters) {
     for (const filter of visibleFilters) {

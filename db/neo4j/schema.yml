@@ -13,23 +13,23 @@
 ---
 :constraints:
 - 'CREATE CONSTRAINT `NODE_CodedExperience#uuid_key` FOR (n:`CodedExperience`) REQUIRE
-  (n.`uuid`) IS NODE KEE'
+  (n.`uuid`) IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_Dimension#uuid_key` FOR (n:`Dimension`) REQUIRE (n.`uuid`)
-  IS NODE KEE'
+  IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_Event#uuid_key` FOR (n:`Event`) REQUIRE (n.`uuid`) IS NODE
-  KEE'
+  KEY'
 - 'CREATE CONSTRAINT `NODE_Memo#uuid_key` FOR (n:`Memo`) REQUIRE (n.`uuid`) IS NODE
-  KEE'
+  KEY'
 - 'CREATE CONSTRAINT `NODE_Project#uuid_key` FOR (n:`Project`) REQUIRE (n.`uuid`)
-  IS NODE KEE'
+  IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_Reflection#uuid_key` FOR (n:`Reflection`) REQUIRE (n.`uuid`)
-  IS NODE KEE'
+  IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_Researcher#uuid_key` FOR (n:`Researcher`) REQUIRE (n.`uuid`)
-  IS NODE KEE'
+  IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_SurveyItem#uuid_key` FOR (n:`SurveyItem`) REQUIRE (n.`uuid`)
-  IS NODE KEE'
+  IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_SurveyResponse#uuid_key` FOR (n:`SurveyResponse`) REQUIRE
-  (n.`uuid`) IS NODE KEE'
+  (n.`uuid`) IS NODE KEY'
 - 'CREATE CONSTRAINT `constraint_2e9488d8` FOR (n:`Identity`) REQUIRE (n.`uuid`) IS
   UNIQUE'
 - 'CREATE CONSTRAINT `constraint_302a3d92` FOR (n:`Category`) REQUIRE (n.`uuid`) IS

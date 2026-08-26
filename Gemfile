@@ -7,6 +7,7 @@ gem "sqlite3", ">= 2.1"
 gem "puma", ">= 5.0"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "activejob"
+gem "csv"
 
 # Minimal asset handling
 gem "propshaft"
@@ -14,7 +15,7 @@ gem "importmap-rails"
 gem "turbo-rails"
 
 # neo4j
-gem "activegraph", "12.0.0.beta.7"
+gem "activegraph"
 gem "neo4j-ruby-driver"
 gem "benchmark"
 

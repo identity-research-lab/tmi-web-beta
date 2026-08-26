@@ -12,25 +12,56 @@
 
 ---
 :constraints:
+- 'CREATE CONSTRAINT `NODE_CodedExperience#uuid_key` FOR (n:`CodedExperience`) REQUIRE
+  (n.`uuid`) IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Dimension#uuid_key` FOR (n:`Dimension`) REQUIRE (n.`uuid`)
-  IS NODE KEY'
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Event#uuid_key` FOR (n:`Event`) REQUIRE (n.`uuid`) IS NODE
-  KEY'
+  KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Memo#uuid_key` FOR (n:`Memo`) REQUIRE (n.`uuid`) IS NODE
-  KEY'
+  KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Project#uuid_key` FOR (n:`Project`) REQUIRE (n.`uuid`)
-  IS NODE KEY'
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `NODE_Reflection#uuid_key` FOR (n:`Reflection`) REQUIRE (n.`uuid`)
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_Researcher#uuid_key` FOR (n:`Researcher`) REQUIRE (n.`uuid`)
-  IS NODE KEY'
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_SurveyItem#uuid_key` FOR (n:`SurveyItem`) REQUIRE (n.`uuid`)
-  IS NODE KEY'
+  IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `NODE_SurveyResponse#uuid_key` FOR (n:`SurveyResponse`) REQUIRE
-  (n.`uuid`) IS NODE KEY'
+  (n.`uuid`) IS NODE KEY OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_2e9488d8` FOR (n:`Identity`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_302a3d92` FOR (n:`Category`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_651783b9` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_6beeaf37` FOR (n:`Code`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_6e98d5ab` FOR (n:`Keyword`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_b3f651ab` FOR (n:`Tag`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
-  REQUIRE (n.`migration_id`) IS UNIQUE'
+  REQUIRE (n.`migration_id`) IS UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_dd2c112` FOR (n:`Theme`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 :indexes:
-# - CREATE RANGE INDEX `index_2a91af07` FOR (n:`Identity`) ON (n.`name`)
-# - CREATE RANGE INDEX `index_32e8f300` FOR (n:`Category`) ON (n.`name`)
-# - CREATE RANGE INDEX `index_4bd64d5` FOR (n:`Code`) ON (n.`name`)
-# - CREATE RANGE INDEX `index_aabeed83` FOR (n:`Theme`) ON (n.`name`)
+- CREATE RANGE INDEX `index_1b3228ee` FOR (n:`Code`) ON (n.`context`)
+- CREATE RANGE INDEX `index_2a91af07` FOR (n:`Identity`) ON (n.`name`)
+- CREATE RANGE INDEX `index_2f2d7a20` FOR (n:`Category`) ON (n.`dimension`)
+- CREATE RANGE INDEX `index_32e8f300` FOR (n:`Category`) ON (n.`context`)
+- CREATE RANGE INDEX `index_4bd64d5` FOR (n:`Code`) ON (n.`name`)
+- CREATE RANGE INDEX `index_5cb729d1` FOR (n:`Identity`) ON (n.`context`)
+- CREATE RANGE INDEX `index_61584458` FOR (n:`Category`) ON (n.`name`)
+- CREATE RANGE INDEX `index_aabeed83` FOR (n:`Theme`) ON (n.`name`)
+- CREATE RANGE INDEX `index_c5c285f` FOR (n:`Code`) ON (n.`label`)
+- CREATE RANGE INDEX `index_ca770182` FOR (n:`Code`) ON (n.`dimension`)
+- CREATE RANGE INDEX `index_f240f960` FOR (n:`Identity`) ON (n.`dimension`)
 :versions:
+- '20240323194853'
+- '20240323195422'
+- '20240325234413'
+- '20240412021416'
+- '20240522013044'
+- '20240607210627'

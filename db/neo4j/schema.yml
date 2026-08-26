@@ -26,8 +26,8 @@
 #   IS NODE KEY'
 # - 'CREATE CONSTRAINT `NODE_SurveyResponse#uuid_key` FOR (n:`SurveyResponse`) REQUIRE
 #   (n.`uuid`) IS NODE KEY'
-# - 'CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
-#   REQUIRE (n.`migration_id`) IS UNIQUE'
+- 'CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
+  REQUIRE (n.`migration_id`) IS UNIQUE'
 :indexes:
 - CREATE RANGE INDEX `index_2a91af07` FOR (n:`Identity`) ON (n.`name`)
 - CREATE RANGE INDEX `index_32e8f300` FOR (n:`Category`) ON (n.`name`)

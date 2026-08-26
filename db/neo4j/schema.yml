@@ -11,7 +11,20 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ---
-:constraints: []
+:constraints:
+- 'CREATE CONSTRAINT `NODE_ActiveGraph::Migrations::SchemaMigration#migration_id_unique` FOR (n:`ActiveGraph::Migrations::SchemaMigration`) REQUIRE (n.`migration_id`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Code#uuid_key` FOR (n:`Code`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Category#uuid_key` FOR (n:`Category`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Dimension#uuid_key` FOR (n:`Dimension`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Event#uuid_key` FOR (n:`Event`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Memo#uuid_key` FOR (n:`Memo`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Persona#uuid_key` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Project#uuid_key` FOR (n:`Project`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Researcher#uuid_key` FOR (n:`Researcher`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_SurveyItem#uuid_key` FOR (n:`SurveyItem`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_SurveyResponse#uuid_key` FOR (n:`SurveyResponse`) REQUIRE (n.`uuid`) IS UNIQUE'
+- 'CREATE CONSTRAINT `NODE_Theme#uuid_key` FOR (n:`Theme`) REQUIRE (n.`uuid`) IS UNIQUE'
+
 :indexes:
 - CREATE RANGE INDEX `index_1b3228ee` FOR (n:`Code`) ON (n.`context`)
 - CREATE RANGE INDEX `index_2a91af07` FOR (n:`Identity`) ON (n.`name`)
@@ -24,4 +37,5 @@
 - CREATE RANGE INDEX `index_c5c285f` FOR (n:`Code`) ON (n.`label`)
 - CREATE RANGE INDEX `index_ca770182` FOR (n:`Code`) ON (n.`dimension`)
 - CREATE RANGE INDEX `index_f240f960` FOR (n:`Identity`) ON (n.`dimension`)
-:versions: []
+:versions:
+- '20260826043532'

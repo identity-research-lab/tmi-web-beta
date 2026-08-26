@@ -14,7 +14,7 @@ gem "importmap-rails"
 gem "turbo-rails"
 
 # neo4j
-gem "activegraph", "12.0.0.beta.7"
+gem "activegraph"
 gem "neo4j-ruby-driver"
 gem "benchmark"
 

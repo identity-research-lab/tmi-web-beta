@@ -26,11 +26,6 @@
   IS NODE KEY'
 - 'CREATE CONSTRAINT `NODE_SurveyResponse#uuid_key` FOR (n:`SurveyResponse`) REQUIRE
   (n.`uuid`) IS NODE KEY'
-- 'CREATE CONSTRAINT `constraint_302a3d92` FOR (n:`Category`) REQUIRE (n.`uuid`) IS
-  UNIQUE'
-- 'CREATE CONSTRAINT `constraint_651783b9` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS
-  UNIQUE'
-- 'CREATE CONSTRAINT `constraint_6beeaf37` FOR (n:`Code`) REQUIRE (n.`uuid`) IS UNIQUE'
 - 'CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
   REQUIRE (n.`migration_id`) IS UNIQUE'
 :indexes:

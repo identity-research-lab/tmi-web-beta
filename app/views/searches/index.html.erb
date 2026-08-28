@@ -18,7 +18,7 @@
   <div class="search-controls">
     <%= form_with model: @search, data: {turbo: true} do |f| %>
       <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
-        <%= f.text_field :query, class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+        <%= f.text_field :query, class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search TMI-WEB", aria: { describedby: "site-search-feedback" } %>
       </label>
       <%= f.hidden_field :context, value: "site" %>
       <%= f.submit "Search", class: "site-search-submit" %>

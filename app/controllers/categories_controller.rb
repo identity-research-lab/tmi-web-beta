@@ -12,23 +12,23 @@ class CategoriesController < ApplicationController
     @category.description = category_params[:description]
     @category.save!
     @categories = Category.all
-    redirect_to categories_path
+    redirect_to @category
   end
 
   def show
     @category = Category.find(params[:id])
     @category_codes = @category.codes
-    @codes = Code.applied(25)
+    @codes = Search.new(query: "*", scope: ["code"], per_page: 50, sort_key: "name").paged_results
     @memos = @category.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "category", referrent_id: @category.id)
   end
-  
+
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
     redirect_to categories_path
   end
-  
+
   def update
     @category = Category.find(params[:id])
     if category_params[:code] && code = Code.find(category_params[:code])
@@ -49,7 +49,7 @@ class CategoriesController < ApplicationController
       end
     end
   end
-  
+
   private
 
   def category_params

@@ -12,7 +12,7 @@ class ThemesController < ApplicationController
     @theme.description = theme_params[:description]
     @theme.save!
     @themes = Theme.all
-    redirect_to themes_path
+    redirect_to @theme
   end
 
   def show
@@ -22,28 +22,28 @@ class ThemesController < ApplicationController
     @memos = @theme.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "theme", referrent_id: @theme.id)
   end
-  
+
   def destroy
     @theme = Theme.find(params[:id])
     @theme.destroy
     redirect_to themes_path
   end
-  
+
   def update
     @theme = Theme.find(params[:id])
     if theme_params[:category] && category = Category.find(theme_params[:category])
       if params[:remove]
-        category.themes.delete(@theme)
+        @theme.categories.delete(category)
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: turbo_stream.replace("theme-categories", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories })
+            render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories, pane: "attached" })
           end
         end
       elsif params[:add]
         category.themes << @theme unless category.themes.include? @theme
         respond_to do |format|
           format.turbo_stream do
-            render turbo_stream: turbo_stream.replace("theme-categories", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories })
+            render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories, pane: "attached" })
           end
         end
       end

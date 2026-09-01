@@ -11,7 +11,6 @@ class CategoriesController < ApplicationController
     @category = Category.find_or_create_by(name: category_params[:name])
     @category.description = category_params[:description]
     @category.save!
-    @categories = Category.all
     redirect_to @category
   end
 
@@ -24,14 +23,14 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("category-header", partial: "/categories/show", locals: { project: @project, category: @category})
-      end
       format.html do
         @category_codes = @category.codes
         @codes = Search.new(query: "*", scope: ["code"], per_page: 50, limit: 50, sort_key: "name").paged_results
         @memos = @category.memos.order(created_at: :desc)
         @memo = Memo.new(kind: "category", referrent_id: @category.id)
+      end
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("category-header", partial: "/categories/show", locals: { project: @project, category: @category})
       end
     end
   end

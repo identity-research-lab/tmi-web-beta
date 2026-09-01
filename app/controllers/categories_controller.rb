@@ -1,10 +1,10 @@
 class CategoriesController < ApplicationController
 
   def index
-    @categories = Category.all
-    @code_count = Code.count
+    @categories = Category.all.order(:name)
     @categorized_code_count = Code.categorized.count
     @uncategorized_code_count = Code.uncategorized.count
+    @code_count = @categorized_code_count + @uncategorized_code_count
   end
 
   def create

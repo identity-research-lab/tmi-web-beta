@@ -25,10 +25,10 @@
         <div class="category-edit-footer">
           <%= f.submit "Save changes", class: "button apply small category-create-button" %>
           <%= link_to "Cancel", category, data: { turbo_stream: true }, class: "button small" %>
-          <%= link_to("Delete category", category_path(category), method: :delete, data: { turbo: false, turbo_confirm: "Sure?" }, class: "button small delete") %>
+          <%= button_to("Delete category", category_path(category), method: :delete, form: { target: "_top" }, onclick: "return confirm('Permanently delete this category?')", class: "button small delete") %>
         </div>
-      
       <% end %>
+      
     </div>
   </section>
 <% end %>

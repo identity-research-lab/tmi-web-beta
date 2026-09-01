@@ -122,7 +122,7 @@
           <div class="search-controls">
             <%= form_with model: Search.new(query: "", scope: "category"), data: {turbo: true} do |f| %>
               <label class="toolbar-field search-field"><span class="toolbar-label search-label">Search categories</span>
-                <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search codes", aria: { describedby: "site-search-feedback" } %>
+                <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search categories", aria: { describedby: "site-search-feedback" } %>
                 <%= f.hidden_field :context, value: "category-grid" %>
                 <%= f.hidden_field :scope, multiple: true, value: "category" %>
               </label>

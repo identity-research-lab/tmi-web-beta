@@ -56,6 +56,10 @@
   --button-apply-hover: var(--color-olive-900);
   --button-apply-active: var(--color-black);
   --button-apply-text: var(--color-white);
+  --button-delete-background: var(--color-red-800);
+  --button-delete-hover: var(--color-red-500);
+  --button-delete-active: var(--color-black);
+  --button-delete-text: var(--color-white);
   --link-text: var(--text-primary);
   --status-pending-surface: var(--color-olive-050);
   --status-pending-border: var(--color-olive-400);
@@ -541,6 +545,23 @@ summary:focus-visible {
   border-color: var(--button-apply-active);
   background: var(--button-apply-active);
 }
+
+.button.delete {
+  border-color: var(--button-delete-background);
+  background: var(--button-delete-background);
+  color: var(--button-delete-text);
+}
+
+.button.delete:not(:disabled):hover {
+  border-color: var(--button-delete-hover);
+  background: var(--button-delete-hover);
+}
+
+.button.delete:not(:disabled):active {
+  border-color: var(--button-delete-active);
+  background: var(--button-delete-active);
+}
+
 
 .button:disabled {
   opacity: 0.55;

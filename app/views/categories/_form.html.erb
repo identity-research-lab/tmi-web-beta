@@ -1,13 +1,10 @@
 <%= turbo_frame_tag "category-header" do %>
   <section class="app-header app-header--detail">
     <div class="app-header-copy">
-      <div class="app-label">
-      <%= project.name %> · <span class="app-label-dense">Category Development</span>
-      </div>
       <%= form_with model: category, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "edit-category-form", aria: { label: "Edit this project category" } do |f| %>
       
-        <div class="category-create-fields">
-          <div class="category-create-panel category-create-name">
+        <div>
+          <div>
             <%= f.label :name, "Category name", class: "app-label category-create-label", for: "new-category-name" %>
             <%= f.text_field :name, id: "new-category-name", class: "app-input category-create-input", placeholder: "Enter a category name", autocomplete: "off", required: true, aria: { describedby: "new-category-name-help new-category-name-error" } %>
         
@@ -15,7 +12,7 @@
             <p class="form-error" data-error-for="new-category-name" hidden id="new-category-name-error">Enter a category name.</p>
           </div>
         
-          <div class="category-create-panel category-create-description">
+          <div style="margin-top: 2rem;">
             <%= f.label :description, "Description", class: "app-label category-create-label", for: "new-category-memo" %>
             <%= f.text_area :description, id: "new-category-memo", class: "category-create-textarea", placeholder: "Describe the category and the kinds of codes it may organize.", aria: { describedby: "new-category-memo-help" } %>
         
@@ -25,9 +22,10 @@
           </div>
         </div>
         
-        <div class="category-create-footer">
+        <div class="category-edit-footer">
           <%= f.submit "Save changes", class: "button apply small category-create-button" %>
-          <%= link_to "Cancel", category, data: { turbo_stream: true } %>
+          <%= link_to "Cancel", category, data: { turbo_stream: true }, class: "button small" %>
+          <%= link_to("Delete category", category_path(category), method: :delete, data: { turbo: false, turbo_confirm: "Sure?" }, class: "button small delete") %>
         </div>
       
       <% end %>

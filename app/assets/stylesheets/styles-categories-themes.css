@@ -188,6 +188,21 @@
   background: var(--color-olive-050); */
 }
 
+.category-edit-footer {
+  display: flex;
+  clear: both;
+  width: auto;
+  align-items: left;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 3rem 0 1.5rem;
+  padding: 1.25rem;
+  /* border: 1px solid var(--color-olive-400);
+  border-radius: 6px;
+  background: var(--color-olive-050); */
+}
+
+
 @media (max-width: 1100px) {
   .category-create-section {
     padding-right: 1.5rem;

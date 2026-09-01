@@ -1,7 +1,8 @@
 <%- title "Categories" %>
 <%- active_nav "categories" %>
 
-<%= render partial: "categories/show", locals: { project: @project, category: @category } %>
+<%# render partial: "categories/show", locals: { project: @project, category: @category } %>
+<%= render partial: "categories/form", locals: { project: @project, category: @category } %>
  
 <nav aria-label="Category workspace sections" class="category-page-links">
   <span class="category-page-links-label">On this page</span>

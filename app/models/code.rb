@@ -28,13 +28,21 @@ class Code
   end
 
   def self.categorized
-    Code.as(:c).query.match("(c)-[]-(:Category)").return("DISTINCT c").uniq.map{|r| r[:c]}
+    Code.as(:c).query.match("(c)-[:Contains]-(:Category)").return("DISTINCT c").uniq.map{|r| r[:c]}
   end
 
+  def self.categorized_count
+    Code.as(:c).query.match("(c)-[:Contains]-(:Category)").return("COUNT(DISTINCT c) AS ct").uniq.map{|c| c[:ct]}.first
+  end
+  
   def self.uncategorized
-    Code.as(:c).query.where("NOT EXISTS { (c)-[]-(:Category) }").return(:c).map{|r| r[:c]}
+    Code.as(:c).query.where("NOT EXISTS { (c)-[:Contains]-(:Category) }").return(:c).map{|r| r[:c]}
   end
 
+  def self.uncategorized_count
+    Code.as(:c).query.where("NOT EXISTS { (c)-[:Contains]-(:Category) }").return("COUNT(DISTINCT c) AS ct").uniq.map{|c| c[:ct]}.first
+  end
+  
   def frequency
     @frequency ||= self.survey_responses.count  
   end

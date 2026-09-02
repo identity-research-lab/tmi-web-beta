@@ -18,6 +18,7 @@
   --color-gray-100: #eeeeee;
   --color-gray-250: #dfe2e3;
   --color-gray-350: #cfcfcf;
+  --color-gray-500: #777777;
   --color-gray-700: #555;
   --color-gray-900: #222;
 
@@ -277,6 +278,16 @@ p {
 .code-data-table thead th {
   font-size: var(--font-size-label-compact);
   text-transform: uppercase;
+}
+
+.case-table a,
+.response-table a {
+  text-decoration: underline;
+}
+
+.case-table a:hover,
+.response-table a:hover {
+  font-weight: var(--font-weight-medium);
 }
 
 .toolbar-control span {
@@ -686,7 +697,7 @@ summary:focus-visible {
   position: relative;
 }
 
-#confirmation {
+.confirmation {
   height: 1.5rem;
   margin: 0 -0.25rem 0 0.1em;
 }
@@ -1862,11 +1873,13 @@ button[aria-busy="true"] {
 
 /* Record rows and links */
 
-.case-row {
+.case-row,
+.response-row {
   transition: background 0.2s ease;
 }
 
-.case-row:hover {
+.case-row:hover,
+.response-row:hover {
   background: var(--surface-soft);
 }
 
@@ -1949,6 +1962,10 @@ button[aria-busy="true"] {
   background: var(--surface-soft);
   font-size: var(--font-size-label);
   line-height: var(--line-height-heading-compact);
+}
+
+.tag-entry {
+  border-color: var(--color-gray-350);
 }
 
 .tag.dark {

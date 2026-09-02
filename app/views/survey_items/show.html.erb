@@ -7,7 +7,7 @@
     <div class="app-label">
       <%= @project.name %> · <span class="app-label-dense">Question-centered coding pathway</span>
     </div>
-    <h1 class="app-title"><%= @survey_item.formatted_identifier %>: <%= @survey_item.label %></h1>
+    <h1 class="app-title"><%= @survey_item.formatted_identifier %></h1>
     <p class="app-description">
       Review all participant responses associated with this question. Revise researcher-applied codes, add analytical memos, and explore cross-case patterns, frequencies, and emergent thematic relationships.
     </p>
@@ -19,9 +19,6 @@
         <div class="app-panel-title">
           Relational Analysis
         </div>
-        <a href="#" class="button small secondary dashboard-template-button">
-          Open Question Graph
-        </a>
         <div class="case-subtext confirmable">
           Cypher:
           <span id="confirmation" class="hidden">Copied!</span>

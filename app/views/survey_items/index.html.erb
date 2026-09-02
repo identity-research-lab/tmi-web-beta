@@ -56,7 +56,7 @@
     <%= link_to "Manage project data", edit_project_path(@project), class: "button apply" %>
   </section>
 <% elsif @survey_items.any? %>
- <section class="app-toolbar search-toolbar" role="search" aria-label="Search, filter, and sort responses by question">
+ <!--section class="app-toolbar search-toolbar" role="search" aria-label="Search, filter, and sort responses by question">
     <div class="app-toolbar-left search-controls">
       <label class="toolbar-field search-field">
         <span class="toolbar-label search-label">Search questions</span>
@@ -101,7 +101,7 @@
   <div class="app-toolbar-right">
     <p class="search-result-count" aria-live="polite"><%= @responses_count %> <%= "response".pluralize(@responses_count) %></p>
   </div>
- </section>
+ </section-->
 
   <section class="app-section">
     <div class="section-label">

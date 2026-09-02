@@ -1,12 +1,12 @@
 <% category_codes_count = category.codes.count %>
-<tr class="code-browser-row <%= pane == "available" ? "filterable" : "" %>" data-count="<%= category_codes_count %>" data-attached="<%= attached_categories.include? category %>">
+<tr class="code-browser-row filterable" data-count="<%= category_codes_count %>" data-attached="<%= attached_categories.include? category %>">
   <td class="code-name-cell">
     <span class="tag"><%= category.name %></span>
   </td>
   <td class="origins-cell"><%= category.description %></td>
   <td class="frequency-cell"><%= category_codes_count %></td>
   <td class="row-action-cell">
-    <%= form_with model: theme, data: { turbo_stream: true } do |f| %>
+    <%= form_with model: theme, class: "assign-form", data: { turbo_stream: true } do |f| %>
       <%= f.hidden_field :category, value: category.id %>
       <% if pane == "attached" && attached_categories.include?(category) %>
         <%= f.button name: "remove", class: "icon-button remove-code-button", aria: { label: "Remove #{category.name} from this category" } do %>
@@ -19,9 +19,9 @@
           </svg>
         <% end %>
       <% else %>
-        <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{category.name} to this category" } do %>
-          <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
-        <% end %>
+        <% show_check = attached_categories.include?(category) %>
+        <%= image_tag "check-small.svg", data: { assignedid: category.id }, alt: "included in category", class: "icon-checkmark assigned-icon #{show_check ? '' : 'hidden'}" %></span>
+        <%= f.button "+", name: "add", data: { assignedid: category.id }, class: "icon-button assign-button assign-code-button #{show_check ? 'hidden' : ''}", aria: { label: "Add #{category.name} to this theme" } %>
       <% end %>
     <% end %>
   </td>

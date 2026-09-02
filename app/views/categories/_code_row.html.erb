@@ -21,6 +21,8 @@
             <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
           </svg>
         <% end %>
+      <% elsif attached_codes.include?(code) %>
+        <%= image_tag "check-small.svg", alt: "checkmark", class: "icon-checkmark" %></span>
       <% else %>
         <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.name} to this category" } do %>
           <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>

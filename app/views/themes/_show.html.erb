@@ -1,0 +1,25 @@
+<%= turbo_frame_tag "theme-header" do %>
+  <section class="app-header app-header--detail">
+    <div class="app-header-copy">
+      <div class="app-label">
+      <%= @project.name %> · <span class="app-label-dense">Theme Development</span>
+      </div>
+      <h1 class="app-title"><%= @theme.name %></h1>
+      <div style="width: 2rem; height: 2rem; float: right;">
+        <%= button_to " ", edit_category_path(category), method: :get, format: :turbo_stream, data: { turbo_stream: true }, class: "edit-icon-button" %>
+      </div>
+      <p class="app-description">
+        <%= @category.description %>
+      </p>
+    </div>
+    <aside aria-label="Relational analysis tools" class="app-header-panel category-relational-panel">
+      <div class="app-panel-title">Relational analysis</div>
+      <div class="case-subtext category-cypher-row confirmable">
+        <span class="category-cypher-label">Cypher:</span>
+        <a href="#" id="copy-source" class="cypher-link"><%= @theme.graph_query[:query] %></a>
+        <span id="confirmation" class="hidden">Copied!</span>
+        <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
+      </div>
+    </aside>
+  </section>
+<% end %>

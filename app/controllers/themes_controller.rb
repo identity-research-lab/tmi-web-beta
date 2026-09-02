@@ -15,12 +15,25 @@ class ThemesController < ApplicationController
     redirect_to @theme
   end
 
+  def edit
+    @category = Category.find(params[:id])
+    render turbo_stream: turbo_stream.replace("category-header", partial: "/categories/form", locals: { project: @project, category: @category})
+  end
+  
   def show
     @theme = Theme.find(params[:id])
-    @theme_categories = @theme.categories
-    @all_categories = Category.all
-    @memos = @theme.memos.order(created_at: :desc)
-    @memo = Memo.new(kind: "theme", referrent_id: @theme.id)
+    
+    respond_to do |format|
+      format.html do
+        @theme_categories = @theme.categories
+        @all_categories = Category.all
+        @memos = @theme.memos.order(created_at: :desc)
+        @memo = Memo.new(kind: "theme", referrent_id: @theme.id)
+      end
+      format.turbo_stream do
+        render turbo_stream.replace("theme-header", partial: "/themes/show", locals: { project: @project, theme: @theme })
+      end
+    end
   end
 
   def destroy
@@ -45,6 +58,13 @@ class ThemesController < ApplicationController
           format.turbo_stream do
             render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories, pane: "attached" })
           end
+        end
+      end
+    elseif theme_params[:name]
+      @theme.update_attributes(name: theme_params[:name], description: theme_params[:description])
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("theme-header", partial: "/themes/show", locals: { theme: @theme, project: @project })
         end
       end
     end

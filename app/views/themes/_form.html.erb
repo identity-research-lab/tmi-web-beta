@@ -1,0 +1,34 @@
+<%= turbo_frame_tag "theme-header" do %>
+  <section class="app-header app-header--detail">
+    <div class="app-header-copy">
+      <%= form_with model: theme, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "edit-category-form", aria: { label: "Edit this project theme" } do |f| %>
+      
+        <div>
+          <div>
+            <%= f.label :name, "Theme name", class: "app-label category-create-label", for: "new-category-name" %>
+            <%= f.text_field :name, class: "app-input category-create-input", placeholder: "Enter a name for this theme", autocomplete: "off", required: true, aria: { describedby: "new-category-name-help new-category-name-error" } %>
+        
+            <p class="form-help" id="new-category-name-help">Required. Use a concise name that distinguishes this theme from related concepts.</p>
+            <p class="form-error" data-error-for="new-category-name" hidden id="new-category-name-error">Enter a theme name.</p>
+          </div>
+        
+          <div style="margin-top: 2rem;">
+            <%= f.label :description, "Description", class: "app-label category-create-label", for: "new-category-memo" %>
+            <%= f.text_area :description, class: "category-create-textarea", placeholder: "Describe the theme and how it relates to your research question.", aria: { describedby: "new-category-memo-help" } %>
+        
+            <p class="form-help" id="new-category-memo-help">
+              Optional. Explain the theme’s analytical purpose and the kinds of categories it may organize.
+            </p>
+          </div>
+        </div>
+        
+        <div class="category-edit-footer">
+          <%= f.submit "Save changes", class: "button apply small category-create-button" %>
+          <%= link_to "Cancel", theme, data: { turbo_stream: true }, class: "button small" %>
+          <%= button_to("Delete theme", theme_path(theme), method: :delete, form: { target: "_top" }, onclick: "return confirm('Permanently delete this theme?')", class: "button small delete") %>
+        </div>
+      <% end %>
+      
+    </div>
+  </section>
+<% end %>

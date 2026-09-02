@@ -2,6 +2,7 @@
 
 pin "application"
 pin "@hotwired/turbo-rails", to: "turbo.min.js"
+pin "assigning", to: "assigning.js"
 pin "code_metrics", to: "code_metrics.js"
 pin "coding", to: "coding.js"
 pin "copy_to_clipboard", to: "copy_to_clipboard.js"

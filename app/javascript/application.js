@@ -10,6 +10,7 @@ import { handleModeSelect } from "code_metrics"
 import { setMode } from "code_metrics"
 import { sortCodes } from "code_metrics"
 import { handleCodingForms } from "coding"
+import { handleAssignments } from "assigning"
 import { highlightSearchTerm } from "searching"
 import { handleSearchFilters } from "searching"
 import { handleLiveSearch } from "searching"
@@ -32,6 +33,7 @@ document.addEventListener("turbo:load", () => {
   handleSearchFilters()
   handleSearchSort()
   handleSearchPagination()
+  handleAssignments()
 })
 
 window.copyToClipboard = copyToClipboard
@@ -44,3 +46,4 @@ window.handleSearchSort = handleSearchSort
 window.handleSearchPagination = handleSearchPagination
 window.fireFilters = fireFilters
 window.setMode = setMode
+window.handleAssignments = handleAssignments

@@ -18,6 +18,7 @@
   --color-gray-100: #eeeeee;
   --color-gray-250: #dfe2e3;
   --color-gray-350: #cfcfcf;
+  --color-gray-500: #777777;
   --color-gray-700: #555;
   --color-gray-900: #222;
 
@@ -56,6 +57,10 @@
   --button-apply-hover: var(--color-olive-900);
   --button-apply-active: var(--color-black);
   --button-apply-text: var(--color-white);
+  --button-delete-background: var(--color-red-800);
+  --button-delete-hover: var(--color-red-500);
+  --button-delete-active: var(--color-black);
+  --button-delete-text: var(--color-white);
   --link-text: var(--text-primary);
   --status-pending-surface: var(--color-olive-050);
   --status-pending-border: var(--color-olive-400);
@@ -273,6 +278,16 @@ p {
 .code-data-table thead th {
   font-size: var(--font-size-label-compact);
   text-transform: uppercase;
+}
+
+.case-table a,
+.response-table a {
+  text-decoration: underline;
+}
+
+.case-table a:hover,
+.response-table a:hover {
+  font-weight: var(--font-weight-medium);
 }
 
 .toolbar-control span {
@@ -542,6 +557,23 @@ summary:focus-visible {
   background: var(--button-apply-active);
 }
 
+.button.delete {
+  border-color: var(--button-delete-background);
+  background: var(--button-delete-background);
+  color: var(--button-delete-text);
+}
+
+.button.delete:not(:disabled):hover {
+  border-color: var(--button-delete-hover);
+  background: var(--button-delete-hover);
+}
+
+.button.delete:not(:disabled):active {
+  border-color: var(--button-delete-active);
+  background: var(--button-delete-active);
+}
+
+
 .button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
@@ -560,6 +592,11 @@ summary:focus-visible {
 
 #copy-to-clipboard {
   text-decoration: none;
+}
+
+.icon-checkmark {
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 .delete-icon-button {
@@ -660,7 +697,7 @@ summary:focus-visible {
   position: relative;
 }
 
-#confirmation {
+.confirmation {
   height: 1.5rem;
   margin: 0 -0.25rem 0 0.1em;
 }
@@ -1836,11 +1873,13 @@ button[aria-busy="true"] {
 
 /* Record rows and links */
 
-.case-row {
+.case-row,
+.response-row {
   transition: background 0.2s ease;
 }
 
-.case-row:hover {
+.case-row:hover,
+.response-row:hover {
   background: var(--surface-soft);
 }
 
@@ -1923,6 +1962,10 @@ button[aria-busy="true"] {
   background: var(--surface-soft);
   font-size: var(--font-size-label);
   line-height: var(--line-height-heading-compact);
+}
+
+.tag-entry {
+  border-color: var(--color-gray-350);
 }
 
 .tag.dark {

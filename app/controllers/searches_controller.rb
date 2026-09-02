@@ -12,9 +12,9 @@ class SearchesController < ApplicationController
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace("search-results", partial: "/searches/results", locals: { search: @search })
-          format.html do
-            render :index
-          end
+        end
+        format.html do
+          render :index
         end
       end
     elsif search_params[:context] == "theme-details"

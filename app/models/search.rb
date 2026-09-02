@@ -29,7 +29,7 @@ class Search
 
   # one-dimensional
   def paged_results
-    results.values.flatten[self.offset..(self.offset + self.per_page - 1)]
+    results.values.flatten[self.offset..(self.offset + self.per_page - 1)] || []
   end
 
   def total_results
@@ -45,11 +45,9 @@ class Search
 
   def code_results
     return @code_results if @code_results
-
-    return [] unless self.query.present?
     if self.sort_key == "frequency"
       @code_results ||= Code.as(:c).query.match("(c)-[]-(sr:SurveyResponse)").with("c, COUNT(sr) AS ct").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c, ct").order("ct #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
-    elsif self.query == "*"
+    elsif self.query == "*" || self.query.empty?
       @code_results ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
     else
       @code_results ||= Code.as(:c).query.match("(c)-[]-(:SurveyResponse)").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}

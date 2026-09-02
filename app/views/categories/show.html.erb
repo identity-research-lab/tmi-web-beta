@@ -1,30 +1,8 @@
 <%- title "Categories" %>
 <%- active_nav "categories" %>
 
-<section class="app-header app-header--detail">
-  <div class="app-header-copy">
-    <div class="app-label">
-    <%= @project.name %> · <span class="app-label-dense">Category Development</span>
-    </div>
-    <h1 class="app-title"><%= @category.name %></h1>
-    <p class="app-description">
-      Review and revise this analytical category, manage its attached project codes, and document how the concept is developing across the data set.
-    </p>
-  </div>
-  <aside aria-label="Relational analysis tools" class="app-header-panel category-relational-panel">
-    <div class="app-panel-title">Relational analysis</div>
-    <button class="button small secondary dashboard-template-button category-graph-button" type="button" disabled>
-      Open category graph
-    </button>
-    <div class="case-subtext category-cypher-row confirmable">
-      <span class="category-cypher-label">Cypher:</span>
-      <a href="#" id="copy-source" class="cypher-link"><%= @category.graph_query[:query] %></a>
-      <span id="confirmation" class="hidden">Copied!</span>
-      <button id="copy-to-clipboard" class="copy-query-button" aria-label="Copy Cypher query" onclick="copyToClipboard('copy-source')" />
-    </div>
-  </aside>
-</section>
-
+<%= render partial: "categories/show", locals: { project: @project, category: @category } %>
+ 
 <nav aria-label="Category workspace sections" class="category-page-links">
   <span class="category-page-links-label">On this page</span>
   <a href="#assigned-codes">Review assigned codes</a>
@@ -70,7 +48,6 @@
         <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-attached" type="checkbox" />Not assigned to this category</label>
         <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-high-freq" type="checkbox" checked />High frequency (15+)</label>
         <label class="toolbar-control category-library-checkbox search-filter"><input aria-controls="category-list" id="filter-low-freq" type="checkbox" checked/>Low frequency (1-7)</label>
-        <!--button aria-controls="available-codes-table" class="button secondary small" id="clear-browser-filters" type="button">Clear search</button-->
       <% end %>
     </div>
     <p class="visually-hidden" id="occurrences-help">Occurrences are the number of times a code has been applied across the project.</p>

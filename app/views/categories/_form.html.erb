@@ -1,0 +1,34 @@
+<%= turbo_frame_tag "category-header" do %>
+  <section class="app-header app-header--detail">
+    <div class="app-header-copy">
+      <%= form_with model: category, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "edit-category-form", aria: { label: "Edit this project category" } do |f| %>
+      
+        <div>
+          <div>
+            <%= f.label :name, "Category name", class: "app-label category-create-label", for: "new-category-name" %>
+            <%= f.text_field :name, id: "new-category-name", class: "app-input category-create-input", placeholder: "Enter a category name", autocomplete: "off", required: true, aria: { describedby: "new-category-name-help new-category-name-error" } %>
+        
+            <p class="form-help" id="new-category-name-help">Required. Use a concise analytical name that distinguishes this category from related concepts.</p>
+            <p class="form-error" data-error-for="new-category-name" hidden id="new-category-name-error">Enter a category name.</p>
+          </div>
+        
+          <div style="margin-top: 2rem;">
+            <%= f.label :description, "Description", class: "app-label category-create-label", for: "new-category-memo" %>
+            <%= f.text_area :description, id: "new-category-memo", class: "category-create-textarea", placeholder: "Describe the category and the kinds of codes it may organize.", aria: { describedby: "new-category-memo-help" } %>
+        
+            <p class="form-help" id="new-category-memo-help">
+              Optional. Explain the category’s analytical purpose and the kinds of codes it may organize.
+            </p>
+          </div>
+        </div>
+        
+        <div class="category-edit-footer">
+          <%= f.submit "Save changes", class: "button apply small category-create-button" %>
+          <%= link_to "Cancel", category, data: { turbo_stream: true }, class: "button small" %>
+          <%= button_to("Delete category", category_path(category), method: :delete, form: { target: "_top" }, onclick: "return confirm('Permanently delete this category?')", class: "button small delete") %>
+        </div>
+      <% end %>
+      
+    </div>
+  </section>
+<% end %>

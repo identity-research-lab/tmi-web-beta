@@ -51,7 +51,10 @@
       </div>
     </section>
 
+
     <section class="code-metrics-layout">
+      <% codes = persona.codes_histogram %>
+  
       <div class="code-metrics-main">
         <div id="code-frequencies" class="workspace-title-row">
           <div>
@@ -59,45 +62,50 @@
               Code Frequencies
             </h2>
             <p class="workspace-note">
-              Frequency indicates how often a researcher-applied code appears across responses to the selected survey item. Metrics do not determine interpretive significance.
+              <% if codes.any? %>
+                These codes are associated with this Persona. Frequency indicates how often each code appears across all Personas. Metrics do not determine interpretive significance.
+              <% else %>
+                This Persona has not yet been coded.
+              <% end %>
             </p>
           </div>
         </div>
 
-        <div class="frequency-toolbar">
-
-          <div class="frequency-toolbar-left">
+        <% if codes.any? %>
+          <div class="frequency-toolbar">
+  
+            <div class="frequency-toolbar-left">
+            </div>
+  
+            <div class="frequency-toolbar-right">
+              <a class="sortable sort-desc button small" data-sort-direction="asc" onclick="sortCodes(0)">
+                <span>Frequency</span>
+              </a>
+              <a class="sortable button small secondary" data-sort-direction="desc" onclick="sortCodes(1)">
+                <span>Alphabetical</span>
+              </a>
+            </div>
+  
           </div>
-
-          <div class="frequency-toolbar-right">
-            <a class="sortable sort-desc button small" data-sort-direction="asc" onclick="sortCodes(0)">
-              <span>Frequency</span>
-            </a>
-            <a class="sortable button small secondary" data-sort-direction="desc" onclick="sortCodes(1)">
-              <span>Alphabetical</span>
-            </a>
-          </div>
-
-        </div>
-
-        <div class="overview-card">
-          <div id="frequency-list" class="frequency-list">
-            <% codes = persona.codes_histogram %>
-            <% codes.each do |code, count| %>
-              <% total_codes = codes.sum{|c| c[1]} %>
-              <% width = count / total_codes.to_f * 100 %>
-              <div class="frequency-row" data-sort-alpha="<%= code.downcase %>" data-sort-frequency="<%= width %>">
-                <div class="frequency-label">
-                  <span><%= code %></span>
-                  <strong><%= count %></strong>
+  
+          <div class="overview-card">
+            <div id="frequency-list" class="frequency-list">
+              <% codes.each do |code, count| %>
+                <% total_codes = codes.sum{|c| c[1]} %>
+                <% width = count / total_codes.to_f * 100 %>
+                <div class="frequency-row" data-sort-alpha="<%= code.downcase %>" data-sort-frequency="<%= width %>">
+                  <div class="frequency-label">
+                    <span><%= code %></span>
+                    <strong><%= count %></strong>
+                  </div>
+                  <div class="frequency-bar-track">
+                    <div class="frequency-bar" style="width:<%= width %>%;"></div>
+                  </div>
                 </div>
-                <div class="frequency-bar-track">
-                  <div class="frequency-bar" style="width:<%= width %>%;"></div>
-                </div>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
 
       <div id="representative-excerpts" class="workspace-title-row overview-spaced">
         <div>

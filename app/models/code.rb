@@ -55,10 +55,6 @@ class Code
     @questions ||= self.survey_responses.as(:s).query.match("(s:SurveyResponse)-[]-(si:SurveyItem)").return("DISTINCT si.identifier AS identifier").order("identifier").map{|r| r[:identifier]}.map{|identifier| "Q#{identifier.to_s.rjust(3, "0")}"}
   end
   
-  def self.survey_item_histogram(survey_item)
-    survey_item.survey_responses.query_as(:s).match("(s)-[]-(c:Code)-[]-(sr:SurveyResponse)").return("c.name AS name, COUNT(DISTINCT sr) AS ct").order("ct").to_a.map{|r| [r[:name], r[:ct]]}.to_h
-  end
-
   private
 
   def sanitize

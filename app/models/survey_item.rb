@@ -64,8 +64,12 @@ class SurveyItem
     where(is_coded: false)
   end
 
+  def codes_histogram
+    self.survey_responses.query_as(:sr).match("(sr)-[]-(c:Code)").return("c.name AS name, COUNT(sr) AS ct").order("ct").to_a.map{|r| [r[:name], r[:ct]]}.to_h
+  end
+    
   def codes
-    self.survey_responses.as(:sr).query.match("(sr)-[]-(c:Code)").return(:c).pluck(:c)
+    self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return(:c).pluck(:c)
   end
   
   def survey_response_count
@@ -73,7 +77,7 @@ class SurveyItem
   end
   
   def code_count
-    @code_count ||= self.as(:si).query.match("(si)-[]-()-[]-(c:Code)").return("count(c)").to_a.map{|r| r[0]}.first
+    @code_count ||= self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return("count(c)").to_a.map{|r| r[0]}.first
   end
 
   def percentage_of_codes

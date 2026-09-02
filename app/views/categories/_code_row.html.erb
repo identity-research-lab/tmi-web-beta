@@ -9,7 +9,7 @@
     <div>Dimensions: <%= code.dimension_list.to_sentence %></div>
   </td>
   <td class="row-action-cell">
-    <%= form_with model: category, data: { turbo_stream: true } do |f| %>
+    <%= form_with model: category, class: "assign-form", data: { turbo_stream: true } do |f| %>
       <%= f.hidden_field :code, value: code.id %>
       <% if pane == "attached" && attached_codes.include?(code) %>
         <%= f.button name: "remove", class: "icon-button remove-code-button", aria: { label: "Remove #{code.name} from this category" } do %>
@@ -22,9 +22,9 @@
           </svg>
         <% end %>
       <% else %>
-        <%= f.button "+", name: "add", class: "icon-button assign-code-button", aria: { label: "Add #{code.name} to this category" } do %>
-          <span aria-hidden="true" class="assignment-action-icon">+</span><span class="visually-hidden assignment-action-label">Assign</span>
-        <% end %>
+        <% show_check = attached_codes.include?(code) %>
+        <%= image_tag "check-small.svg", data: { assignedid: code.id }, alt: "included in category", class: "icon-checkmark assigned-icon #{show_check ? '' : 'hidden'}" %></span>
+        <%= f.button "+", name: "add", data: { assignedid: code.id }, class: "icon-button assign-button assign-code-button #{show_check ? 'hidden' : ''}", aria: { label: "Add #{code.name} to this category" } %>
       <% end %>
     <% end %>
   </td>

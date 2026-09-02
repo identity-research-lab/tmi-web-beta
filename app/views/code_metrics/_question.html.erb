@@ -52,6 +52,7 @@
     </section>
 
     <section class="code-metrics-layout">
+      <% codes = survey_item.codes_histogram %>
       <div class="code-metrics-main">
         <div id="code-frequencies" class="workspace-title-row">
           <div>
@@ -59,7 +60,7 @@
               Code Frequencies
             </h2>
             <p class="workspace-note">
-              Frequency indicates how often a researcher-applied code appears across responses to the selected survey item. Metrics do not determine interpretive significance.
+              Frequency indicates how often a researcher-applied code appears across responses to this prompt. Metrics do not determine interpretive significance.
             </p>
           </div>
         </div>
@@ -82,7 +83,6 @@
 
         <div class="overview-card">
           <div id="frequency-list" class="frequency-list">
-            <% codes = Code.survey_item_histogram(survey_item) %>
             <% codes.each do |code, count| %>
               <% total_codes = codes.sum{|c| c[1]} %>
               <% width = count / total_codes.to_f * 100 %>

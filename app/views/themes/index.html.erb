@@ -68,7 +68,7 @@
     </div>
   </div>
 
- <%= form_with model: Theme.new, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-form", id: "create-theme-form", aria: { label: "Create a new project theme", describedby: "category-form-note" } do |f| %>
+ <%= form_with model: Theme.new, data: { turbo: false }, class: "category-create-grid", id: "create-theme-form", aria: { label: "Create a new project theme", describedby: "category-form-note" } do |f| %>
     <div class="category-create-fields">
       <div class="category-create-panel category-create-name">
         <label class="app-label category-create-label" for="new-theme-name">New theme name</label>

@@ -6,10 +6,10 @@
       </div>
       <h1 class="app-title"><%= @theme.name %></h1>
       <div style="width: 2rem; height: 2rem; float: right;">
-        <%= button_to " ", edit_category_path(category), method: :get, format: :turbo_stream, data: { turbo_stream: true }, class: "edit-icon-button" %>
+        <%= button_to " ", edit_theme_path(theme), method: :get, format: :turbo_stream, data: { turbo_stream: true }, class: "edit-icon-button" %>
       </div>
       <p class="app-description">
-        <%= @category.description %>
+        <%= @theme.description %>
       </p>
     </div>
     <aside aria-label="Relational analysis tools" class="app-header-panel category-relational-panel">

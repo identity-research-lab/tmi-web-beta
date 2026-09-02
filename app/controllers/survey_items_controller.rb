@@ -1,6 +1,8 @@
 class SurveyItemsController < ApplicationController
 
   def index
+#    @personas = Persona.as(:persona).query.optional_match('(persona)-[]-()-[]-(c:Code)').return('persona,count(c)').order('persona.identifier')
+
     @survey_items = SurveyItem.active.order(:identifier)
     @question_count = @survey_items.count
     @responses_count = SurveyResponse.count

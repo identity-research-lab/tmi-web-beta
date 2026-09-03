@@ -36,13 +36,13 @@
         <span class="visually-hidden">Search all project categories</span>
         <svg aria-hidden="true" viewbox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg>
 
-        <%= form_with model: Search.new(query: "", scope: "theme"), id: "search-form", data: {turbo: true} do |f| %>
-          <label class="search-field browser-search"><span class="visually-hidden">Search categories</span>
-            <%= f.text_field :query, id: "search-live", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search category names and descriptions" %>
+      <%= form_with model: Search.new(query: "", scope: "theme"), id: "search-form", data: {turbo: true} do |f| %>
+        <label class="search-field browser-search"><span class="visually-hidden">Search all project codes</span>
+            <%= f.text_field :query, id: "code-search-field", class: "app-input search-input", type: "search", autocomplete: "on", placeholder: "Search code names" %>
             <%= f.hidden_field :scope, multiple: true, value: "category" %>
             <%= f.hidden_field :context, value: "theme-details" %>
             <%= f.hidden_field :context_id, value: @theme.id %>
-            <%= f.hidden_field :limit, value: "1000" %>
+            <%= f.hidden_field :limit, value: "100" %>
             <%= f.hidden_field :per_page, value: "50" %>
             <%= f.hidden_field :offset, value: "0" %>
             <%= f.hidden_field :sort_key, value: "name" %>

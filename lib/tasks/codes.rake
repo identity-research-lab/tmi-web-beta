@@ -35,7 +35,7 @@ namespace :import do
     records.each do |id,codes|
       if persona = Persona.find_by(identifier: id)
         codes.each do |code_item|
-          if survey_response = persona.survey_responses.as(:sr).query.match("(sr)-[]-(si:SurveyItem)-[]-(d:Dimension)").where("d.name = $name").where("si.is_experience = true").params(name: code_item[:dimension].name).return(:sr).pluck(:sr).first
+          if survey_response = persona.survey_responses.as(:sr).query.match("(sr)-[]-(si:SurveyItem)-[]-(d:Dimension)").where("d.name = $name").where("si.is_identity = true").params(name: code_item[:dimension].name).return(:sr).pluck(:sr).first
             code = Code.find_or_create_by(name: code_item[:name])
             code_item[:dimension].codes << code
             code.survey_responses << survey_response

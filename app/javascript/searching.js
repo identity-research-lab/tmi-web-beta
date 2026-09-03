@@ -67,7 +67,6 @@ export function handleSearchPagination() {
   for (const pageButton of pageButtons) {
     pageButton.addEventListener("mousedown", (event) => {
   
-      console.log(1)
       const searchForm = document.getElementById("search-form")  
       if (!searchForm) return
       

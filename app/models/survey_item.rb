@@ -99,7 +99,7 @@ class SurveyItem
   def graph_query
     {
       explainer: "Access and explore this survey item (and all of its relationships) in the TMI-Graph app.",
-      query: "MATCH (si:SurveyItem)-[]-(n) WHERE si.csv_header=\"#{self.csv_header}\" RETURN p,n"
+      query: "MATCH (si:SurveyItem)-[r]-(n) WHERE si.csv_header=\"#{self.csv_header}\" RETURN p,r,n"
     }
   end
 

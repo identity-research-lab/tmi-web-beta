@@ -18,7 +18,7 @@ class Theme
   def graph_query
     {
       explainer: "Access and explore this theme (and all of its relationships) in the TMI-WEB graph.",
-      query: "MATCH (t:Theme)-[]-(n) WHERE t.name=\"#{self.name}\" RETURN t,n"
+      query: "MATCH (t:Theme)-[r]-(n) WHERE t.name=\"#{self.name}\" RETURN t,r,n"
     }
   end
 

@@ -1,4 +1,3 @@
-
 class SurveyItem
   include ActiveGraph::Node
 
@@ -71,13 +70,17 @@ class SurveyItem
   def codes
     self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return(:c).pluck(:c)
   end
+
+  def sorted_survey_responses
+    self.as(:s).query.match("(s)-[:HasItem]-(sr:SurveyResponse)-[:RespondsWith]-(p:Persona)").with("sr, p.identifier AS identifier").order("identifier").return(:sr).pluck(:sr)
+  end
   
   def survey_response_count
-    @survey_response_count ||= self.as(:si).query.match("(si)-[]-(sr:SurveyResponse)").return("count(sr)").to_a.map{|r| r[0]}.first
+    @survey_response_count ||= self.as(:si).query.match("(si)-[]-(sr:SurveyResponse)").return("count(sr) AS ct").pluck(:ct)
   end
   
   def code_count
-    @code_count ||= self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return("count(c)").to_a.map{|r| r[0]}.first
+    @code_count ||= self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return("count(c) AS ct").pluck(:ct)
   end
 
   def percentage_of_codes
@@ -99,7 +102,7 @@ class SurveyItem
   def graph_query
     {
       explainer: "Access and explore this survey item (and all of its relationships) in the TMI-Graph app.",
-      query: "MATCH (si:SurveyItem)-[r]-(n) WHERE si.csv_header=\"#{self.csv_header}\" RETURN p,r,n"
+      query: "MATCH (si:SurveyItem)-[r]-(n) WHERE si.csv_header=\"#{self.csv_header}\" RETURN si,r,n"
     }
   end
 

@@ -107,7 +107,7 @@
           </div>
         <% end %>
 
-      <div id="representative-excerpts" class="workspace-title-row overview-spaced">
+      <!-- <div id="representative-excerpts" class="workspace-title-row overview-spaced">
         <div>
           <h2 class="workspace-title">
             Representative Excerpts
@@ -117,23 +117,7 @@
           </p>
         </div>
       </div>
-
-      <div class="excerpt-list">
-        <% persona.survey_responses.limit(5).each do |survey_response| %>
-          <% next unless code = survey_response.codes.limit(5).to_a.sample %>
-          <article class="excerpt-card">
-            <div class="excerpt-meta">
-              <span class="tag dark"><%= code.name %></span>
-              <% persona = survey_response.persona %>
-              <span class="case-subtext"><%= link_to persona.formatted_identifier, persona, target: "_top" %></span>
-            </div>
-            <p class="excerpt-text">
-              "<%= survey_response.value %>"
-            </p>
-          </article>
-        <% end %>
-      </div>
-    </div>
+    </div> -->
 
     <aside class="code-metrics-sidebar" aria-label="Code metrics sidebar">
       <%= render partial: "memos/feed", locals: { memos: persona.memos.order(created_at: :desc), memo: Memo.new(kind: "persona", referrent_id: persona.id) } %>

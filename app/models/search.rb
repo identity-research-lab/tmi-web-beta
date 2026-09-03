@@ -37,10 +37,18 @@ class Search
   end
 
   def category_results
-    return [] unless self.query.present?
-    return [] unless self.scope.include?("all") || self.scope.include?("category")
-    @category_results ||= Category.all if self.query == "*"
-    @category_results ||= Category.as(:c).where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query)
+    return @category_results if @category_results
+    #   @category_results ||= Category.all if self.query == "*"
+    #   @category_results ||= Category.as(:c).where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query)
+    
+    if self.sort_key == "frequency"
+      @category_results ||= Category.as(:c).query.match("(c)").optional_match("(c)-[]-(cd:Code)").with("c, COUNT(cd) AS ct").where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query).return("DISTINCT c, ct").order("ct #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
+    elsif self.query == "*" || self.query.empty?
+      @category_results ||= Category.as(:c).query.match("(c)").return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
+    else
+      @category_results ||= Category.as(:c).query.match("(c)").where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query).return("DISTINCT c").order("c.#{self.sort_key} #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}
+    end
+
   end
 
   def code_results

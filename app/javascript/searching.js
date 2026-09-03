@@ -28,29 +28,41 @@ export function handleSearchPagination() {
   const backButton = document.getElementById("page-back")
   const nextButton = document.getElementById("page-next")
   const totalRecordsElem = document.getElementById("available-total-count")
+  const searchOffsetElem = document.getElementById("search_offset")
+  const perPageElem = document.getElementById("search_per_page")
+  var offsetValue = 0
+  var perPageValue = 0
+  
+  if (searchOffsetElem) { offsetValue = parseInt(searchOffsetElem.value) + 1 }
+  if (perPageElem) { perPageValue = parseInt(perPageElem.value) + 1 }
 
-  var startIndex = parseInt(document.getElementById("search_offset").value) + 1
-  var endIndex = startIndex + parseInt(document.getElementById("search_per_page").value) - 1
+  var startIndex = offsetValue
+  var endIndex = startIndex + perPageValue
+  
   var totalCount = 0
   if (totalRecordsElem) {
     totalCount = parseInt(totalRecordsElem.innerHTML)
   }
   
-  if (startIndex == 1) {
-    backButton.classList.add("hidden")
-  } else {
-    backButton.classList.remove("hidden")
+  if (backButton) {
+    if (startIndex == 1) {
+      backButton.classList.add("hidden")
+    } else {
+      backButton.classList.remove("hidden")
+    }
   }
   
-  if (endIndex > totalCount) { 
-    endIndex = totalCount 
-    nextButton.classList.add("hidden")
-  } else {
-    nextButton.classList.remove("hidden")
+  if (nextButton) {
+    if (endIndex > totalCount) { 
+      nextButton.classList.add("hidden")
+    } else {
+      nextButton.classList.remove("hidden")
+    }
   }
-  availableWindow.innerHTML = startIndex + "-" + endIndex
+  
+  if (endIndex > totalCount) { endIndex = totalCount }
 
-  
+  if (availableWindow) { availableWindow.innerHTML = startIndex + "-" + endIndex }
   
   for (const pageButton of pageButtons) {
     pageButton.addEventListener("mousedown", (event) => {
@@ -101,7 +113,7 @@ export function handleSearchSort() {
       
       const sortKey = document.getElementById("search_sort_key")
       if (!sortKey) return
-      
+
       const prevSortKey = sortKey.value
       sortKey.value = sortButton.dataset.key
       

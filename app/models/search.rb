@@ -37,6 +37,7 @@ class Search
   end
 
   def category_results
+    return [] unless self.scope.include? "category"
     return @category_results if @category_results
     #   @category_results ||= Category.all if self.query == "*"
     #   @category_results ||= Category.as(:c).where("toLower(c.name) CONTAINS toLower($text) OR toLower(c.description) CONTAINS toLower($text)", text: self.query)
@@ -52,6 +53,7 @@ class Search
   end
 
   def code_results
+    return [] unless self.scope.include? "code"
     return @code_results if @code_results
     if self.sort_key == "frequency"
       @code_results ||= Code.as(:c).query.match("(c)-[]-(sr:SurveyResponse)").with("c, COUNT(sr) AS ct").where("toLower(c.name) CONTAINS toLower($text)", text: self.query).return("DISTINCT c, ct").order("ct #{self.sort_dir}").limit(self.limit).map{|r| r[:c]}

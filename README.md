@@ -81,6 +81,7 @@ In Terminal, run the official Homebrew installer:
 | ------------------------------------------------------------------------------------------------- |
 | Install Homebrew Command:                                                                         |
 | `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` |
+
 It will walk you through installation and may ask for your Mac password. At the end, Homebrew usually prints commands under “Next steps” for adding brew to your PATH. Run those commands exactly as shown. Then verify.
 
 | Verify Homebrew Installation Command: | Meaning                                              |

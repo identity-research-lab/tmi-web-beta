@@ -1,244 +1,165 @@
 # TMI-Web
 
-TMI-Web is a social science research tool for managing, analyzing, coding, and visualizing qualitative survey data on identities. It presents identity and experience in a network graph, encouraging tactile exploration of intersectional identities and facets of privilege and marginalization.
+TMI-Web is a qualitatice social science system for managing, analyzing, coding, and visualizing data on intersectional identities. It presents identity and experience in a network graph, encouraging tactile exploration of intersections of privilege and marginalization.
 
 [![Hippocratic License HL3-CORE](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CORE&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/core.html)
 
+# Theoretical Grounding
+
+Westbrook, J.P., and Ehmke, C.A. (2026) Queer(ing) Epistemology by Design: TMI-WEB—A Relational Knowledge System for Intersectional Data Science and Affective Queries, in Simeone, L., Gray, C. M., Verhoeven, A., de Götzen, A., Bakırlıoğlu, Y., Zohar, H., Stead, M., and Buwert, P. (eds.), DRS2026: Edinburgh, 8–12 June, Edinburgh, United Kingdom. [https://doi.org/10.21606/drs.2026.483](https://doi.org/10.21606/drs.2026.483)
+
 <img width="2047" height="1081" alt="tmi-screenshot-app-and-graph" src="https://github.com/user-attachments/assets/0cd6ba80-6d33-4192-9077-d6bf038fc26a" />
 
-## High-level architecture
+# Installing TMI-WEB
 
-TMI-Web has three primary components: the web application, the survey response database, and the persona database.
+## STEP 1:  DOWNLOAD/INSTALL NEO4J DESKTOP
 
-![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-architecture.png)
+Neo4j Desktop is an application that manages the Neo4j database used by the TMI-WEB data analysis software system. 
 
-Survey data is exported from your survey platform as a comma-separated-value (CSV) file, then imported into TMI-Web using the browser interface. TMI-Web stores the survey response data in a relational database, and creates personas in a graph database as the survey data is analyzed.
+1. Go to the [Neo4j Desktop download page](https://neo4j.com/download) and click the blue download button.
+2. You will be asked to fill out a short form before downloading.
+3. When the download finishes, find the downloaded file. It will usually be in your computer’s Downloads folder.
+4. Open the downloaded file and follow the instructions on your screen to install Neo4j Desktop on your computer.
+5. When installation is complete, locate and open Neo4j Desktop.
 
-(To make sure that the web application is always responsive, certain long-running operations are carried out in the background, requiring a key-value store database that's used for a background job queue.)
+You’re done with this step 1: Neo4j Desktop opens successfully on your computer.
 
-## Setting up your local development environment
+## STEP 2: SETUP NEO4J DESKTOP 
 
-Instructions for installing and running TMI-Web locally are provided below.
+You do not need to know how to use Neo4j or work with databases to complete this step. 
 
-### Get to your command line
+ 1. Open Neo4j Desktop. ReviewApprove the licensing agreement and approve if you are comfortable. Continue.
+ 2. Click Create instance. Use name ‘tmi-web’ and password ‘password’. Click the Create button.
+ 3. Neo4j Desktop may offer to install AI tools, plugins, or other additional features. You do not need these for TMI-WEB. Skip or close these options.
+ 4. See your tmi-web instance in the main area. You will not be creating any databases. Neo4j automatically creates the databases we need. For future reference you may turn the tmi-instance on and off using what looks like a “play” button top right.
+ 5. Download project practice data using the link provided to you by the TMI research team, if you have requested one. 
+ 6. Stop the tmi-web instance using the “play” button. You will see STOPPED in gray. In the tmi-web instance, click Databases (2) to expand the list of databases. Find the database named neo4j. Click the three-dot menu (⋯) next to the neo4j database.
+ 7. Select the ‘Load database from file’ option in the menu.
+ 8. Find and select the TMI-WEB database file you recently downloaded to your computer.
 
-Depending on the operating system you use, there may be different ways for you to access your local command line. Understanding how to navigate the file system and run programs from the command line is essential, so you're encouraged to find tutorials if you need help getting started.
+You’re done with step 2. The database and data are ready to use. If you quit Neo4j Desktop, you may be asked whether you want to stop the running instance. It is okay to stop it. This does no harm.
 
-### Clone this repository
+## STEP 3: INSTALL TMI-WEB
 
-In your terminal, navigate to the folder you use to store your other code projects. Or, you can navigate to any convenient location in your home directory.
+TMI-WEB requires several tools to run. We’ll first check what is already installed on your computer and then install anything that is missing.
 
-Make a local copy of this repository by typing:
+### 3.1 Check for required tools
 
-    git clone git@github.com:identity-research-lab/tmi-web.git
+Development tools are supporting programs that allow your computer to install, build, and run software from source code. TMI-WEB uses some software packages that need these tools during installation. You do not need to know how to use the development tools yourself; they just need to be installed on your computer.
 
-Navigate to the `tmi-web` directory with:
+You may or may not already have the necessary development tools installed. The particular tools and installation process vary depending on your operating system.
 
-    cd tmi-web/
+- If using macOS: You may need to install Apple Developer Tools from the App Store
+- If using Windows: You may need to install additional development tools. 
+- If using Linux: Likely all set, but packages may be needed based on your distribution.
 
-The rest of the instructions below assume that you are in the root `tmi-web` directory.
+### 3.2 Check for required Ruby version
 
-### Install Ruby
+Ruby is a programming language. You may or may not have Ruby installed on your computer. TMI-WEB requires Ruby 4 or greater. Open a command-line application: 
 
-TMI-Web requires Ruby version 3.2.2 or higher. To check what version of Ruby your computer has installed, type:
+- If using macOS: Terminal. 
+- If using Windows: PowerShell or Windows Terminal. 
+- If using Linux: Terminal. 
 
-    ruby -v
+In your command-line application copy/paste or type the command then press Enter. To execute a command you will always press Enter.
 
-Upgrade your Ruby version as needed using the package manager of your choice. If you need help, refer to the Ruby installation guide at [https://www.ruby-lang.org/en/documentation/installation/](https://www.ruby-lang.org/en/documentation/installation/)
+| Check Ruby Version Command: | Meaning                                                                         |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| `ruby -v`                   | Check the version number of the Ruby environment, if Ruby is already installed. |
 
-### Install PostgreSQL
+If Ruby is installed, you will see its version number. If you see “command not found,” or the version is below 4.0, continue to Step 3.3. If the version is 4.0 or greater, you are all set and may skip installation and go to item 3.4.
 
-The first database to set up is the relational database, PostgreSQL. (This is the database that survey responses are stored in.)
+### 3.3 Install or Update Ruby
 
-You can install and run PostgreSQL using the instructions at [https://www.postgresql.org/download/](https://www.postgresql.org/download/)
+You can use a package manager or a direct Ruby installation method appropriate for your operating system. 
 
-### Install Neo4j
+If you are new to this and are using macOS, we recommend using [Homebrew](https://brew.sh/). Homebrew is a package manager that makes it easier to install and update software from Terminal. 
 
-The next database to set up is the graph database, Neo4j. (This is where interactive personas and identity and experience codes are stored.)
+In Terminal, run the official Homebrew installer:
 
-You can install Neo4j from [https://neo4j.com/product/neo4j-graph-database/](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
+|                                                                                                   |
+| ------------------------------------------------------------------------------------------------- |
+| Install Homebrew Command:                                                                         |
+| `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` |
+It will walk you through installation and may ask for your Mac password. At the end, Homebrew usually prints commands under “Next steps” for adding brew to your PATH. Run those commands exactly as shown. Then verify.
 
-Once installed, open the Neo4j native application and use the interface to create an empty database called `tmi_graph`. You will need to keep the Neo4j application open and the `tmi_graph` database started while running the Rails application locally.
+| Verify Homebrew Installation Command: | Meaning                                              |
+| ------------------------------------- | ---------------------------------------------------- |
+| `brew --version`                      | Ask the Homebrew application for its version number. |
 
-### Install Redis
+If that prints something like Homebrew 5.x.x, you're set. Then you can install Ruby.
 
-The final database to install is Redis. (Redis is used by TMI-Web as a queue for background jobs.) You can find instructions at [https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
+| Install Ruby Command: | Meaning                                                                |
+| --------------------- | ---------------------------------------------------------------------- |
+| `brew install ruby`   | Ask the Homebrew application to install the Ruby programming language. |
 
-### Install the Rails application
+Now we are ready to install TMI-WEB! Here are the commands (you may be prompted for your computer password. This is OK).
 
-TMI-Web is built on the Ruby on Rails web application framework. It also uses a number of specialized Ruby libraries called gems. To install everything that the web application needs, make sure that you're in the `tmi-web` directory that you cloned from Github. Then type:
+| Install TMI-WEB Commands                                              | Meaning                                                                              |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `git clone https://github.com/identity-research-lab/tmi-web-beta.git` | Download a copy of the TMI-WEB application source code for the first time.           |
+| `cd tmi-web-beta`                                                     | Open the new "tmi-web-beta" folder.                                                  |
+| bundle install                                                        | Update necessary tools/files.                                                        |
+| `cp .env.example .env`                                                | Make a copy of the hidden configuration file ".env.example" and name the copy ".env" |
 
-    bundle
+You’re done with step 3. TMI-WEB is installed on your computer. TMI-WEB is a local application running on your computer. It is not running in the cloud. Your project and all its data is stored locally on your computer. You do not need an internet connection to use TMI-WEB.
 
-If you get any errors, you may need to do some searching on the web to fix your installation problems. Read the error message carefully to see which Ruby gem is having trouble being installed, and search for that along with the name and version of your operating system.
+## STEP 4: LAUNCH THE TMI-WEB APPLICATION
 
-Take heart! If everything goes smoothly, you're all set. And if something went wrong, diagnosing the installation will be the hardest part, and it's all smooth going from there.
+Every time you want to use TMI-WEB you must follow these steps in order.
 
-### Prepare the PostgreSQL database
+1. Launch your Neo4j desktop and start the tmi-web instance. Hit the ‘start instance’ play button on your tmi-web instance. After a moment you should see RUNNING in green.
+2. Open your command-line application again and enter the following commands: 
 
-From the root `tmi-web` directory, run the following commands:
+| Start TMI-WEB Commands | Meaning                              |
+| ---------------------- | ------------------------------------ |
+| `cd tmi-web-beta`      | Open the "tmi-web-beta" folder       |
+| `bin/rails server`     | Start the TMI-WEB server application |
+3. Launch your favorite web browser and enter this url: [http://localhost:3000](http://localhost:3000/)
 
-    rake db:drop
-    rake db:create
-    rake db:migrate
+You’re done with this Step 4: You are running TMI-WEB successfully on your computer!
 
-If you get an error, check that postgresql is running on your system.
+Note that the first time loading your data a page may be slow and take a minute to generate all content. The system is building its search indexes. 
 
-### Prepare the Neo4j database
+## STEP 5: HOW TO HANDLE A CRASH
 
-From the root directory of `tmi-web`, type:
+Software is imperfect and sometimes things go wrong. 
 
-    rake neo4j:migrate
+If TMI-WEB freezes, doesn't respond, or shows you an error that starting from the home page doesn't fix, you may need to recover from a crash. 
 
-If you get an error, make sure that Neo4j is running and that the `tmi_graph` database is started.
+First ensure that you have followed all of the steps in Step 4. Double-check that the Neo4j Desktop application is open and the database instance is running.
 
-### Set environment variables
+Next, try restarting your browser. If this doesn't help, you may need to force the TMI-WEB software to restart manually, following these steps:
 
-Before you start the application for the first time, there are some global environment variables that you need to set. Rails will look for them in a file named `.env` in the root `tmi-web` directory.
+1. Return to your command-line application where TMI-WEB is running.
+2. Press Control-c one or more times to stop the application. If this doesn't work, you may need to quit your Terminal application and restart TMI-WEB using the instructions in 4.2.
+3. If Control-c stopped the application, you can start it again using `bin/rails server`
+4. If this command returns an error like "A server is already running (pid: 81183, file: /Users/jesswestbrook/tmi-web-beta/tmp/pids/server.pid)", type the following command: 
 
-*IMPORTANT!* This file will contain your sensitive API keys, so you want to keep it secure. Do not commit the `.env` file to a source code repository, even a private one.
+| Clean Up TMI-WEB Crash Commands | Meaning                                |
+| ------------------------------- | -------------------------------------- |
+| `rm tmp/pids/server.pid`        | Delete the crashed server's temp file. |
 
-To create your local `.env` file, make a copy of `.env.example`. (This filename starts with a "." so it will be hidden by default. Use `ls -a` in your terminal to list all files in the directory, including invisible ones.) To make a copy of the example file, type:
+5.  Then try starting it again with `bin/rails server`.
 
-    cp .env.example .env
+If the problem persists, you should check to see if the TMI-WEB software has been updated with a bug fix. Follow the instructions in STEP 6 to upgrade your software to the latest version.
 
-Now, when you open the `.env` file in your text editor, you'll see a list of key/value pairs that need filling in. These are configuration options including database credentials, customizations, and the API keys that TMI-Web needs to communicate with third-party services. Follow the instructions provided in the file to register for the appropriate API keys.
+You’re done: You have recovered from a TMI-WEB crash successfully! Sorry for the fuss.
 
-### Run the test suite
+## STEP 6: UPDATING THE SOFTWARE
 
-    rspec --format documentation spec/
+When a TMI-WEB application update is available, you will follow these steps to upgrade your software.
+1. Open your command-line application and enter the following commands: 
 
-To always run rspec with the documentation flag:
+| Update TMI-WEB Commands | Meaning                        |
+| ----------------------- | ------------------------------ |
+| `cd tmi-web-beta`       | Open the "tmi-web-beta" folder |
+| `git pull`              | Download the source code       |
+| `bundle update`         | Update other necessary tools   |
+2) You should be able to start the updated TMI-WEB system as you normally would.
 
-    echo "--format documentation" > .rspec
+You’re done: You have updated TMI-WEB successfully on your computer!
 
-### Start the background job runner
+# References
 
-From the root directory of tmi-web, launch Sidekiq by typing:
-
-    bundle exec sidekiq
-
-You will see the log files for Sidekiq scroll into view. Sidekiq will continue running in the background until you terminate it with `control-c`.
-
-### Start the application
-
-To start TMI-web, type
-
-    bin/rails server
-
-You should see the output logs from the application begin to scroll into view. The application will continue running in that terminal shell until you interrupt the process (with `control-c`) or otherwise terminate the application. Shutting down the application can be safely done at any time.
-
-Now that the application has been started, visit [http://localhost:3000](http://localhost:3000) in your web browser.
-
-### Import sample data
-
-In your browser, use the `Upload` navigation link. Click on the file selector, and navigate to the "data" directory inside the TMI-Web project directory. Select the file named `sample_data.csv` and click the `Upload and Merge` button. This creates 100 survey response records with random text.
-
-Since TMI-Web is designed to merge sets of survey responses, note that you will need to completely reset your database before importing real survey responses. Refer to [Prepare the PostgreSQL database](#prepare-the-PostgreSQL-database) above for instructions.
-
-### What to do if the application doesn't start
-
-If you forgot to open the Neo4j application and start the `tmi_graph` database, the Rails application will hang as it tries to connect, and time out after 60 seconds. You'll always need to keep Neo4j running in the background while you're using TMI-Web in your local environment.
-
-You may get an error that has to do with database migrations. This means that your local database is missing updates and changes to the database structure since the last time you ran the application.
-
-To update the Postgresql database, from the root directory of `tmi-web` type:
-
-    rake db:migrate
-
-To update the Neo4j database, type:
-
-    rake neo4j:migrate
-
-## The code
-
-### Reading the code
-
-If you're new to Ruby, but know how to program in another language, there's a great guide to applying what you already know to Ruby at https://www.ruby-lang.org/en/documentation/ruby-from-other-languages/.
-
-The code in TMI-Web is thoroughly commented, and the test suite is not only functional but acts as further documentation. The code has been written to be as simple and readable as possible, sometimes at the expense of elegance or performance.
-
-### Read the docs
-
-You can explore code documentation in your browser by typing:
-
-    open doc/index.html
-
-## Common tasks
-
-### Clear the Sidekiq (background job) queue
-
-Launch the local interactive Rails console:
-
-    bin/rails console
-
-At the prompt, type:
-
-    Sidekiq.redis(&:flushdb)
-
-To exit the console:
-
-    exit
-
-### Back up production PostgresSQL database
-
-Navigate in your terminal to the `db` directory and run these commands:
-
-    heroku pg:backups:capture --app tmi-web
-    heroku pg:backups:download --app tmi-web
-
-### Load PostgresSQL database backup into local db
-
-Navigate in your terminal to root directory of the project and type
-
-    pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d tmi_web_development db/latest.dump
-
-### Restore production PostgresSQL database to last db capture
-
-    heroku pg:backups:restore --app tmi-web
-
-### Update the Neo4j database schema
-
-    rake neo4j:migrate
-
-### Generate a sample data comma-separated-value (CSV) file for upload
-
-    rake export:sample_data
-
-or
-
-    rake 'export:sample_data'
-
-### Generate code documentation
-
-    rdoc -op doc
-
-## Graph data model
-
-There are four types of nodes in the graph database. They all center on the `Persona`. Each pair of nodes is connected by a uniquely labeled edge.
-
-![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-data-model.png)
-
-### Persona
-A `Persona` is a representation or data avatar of someone who completed the survey.
-
-### Category
-A `Category` is a label applied to a group of related Codes within a provided context. For example, a category may refer to a subset of the codes related to "age".
-
-Categories are machine-derived. As such, they are influenced by biases in external training data. Careful human discernment of categories is required to identify and address these biases.
-
-### Code
-A `Code` is a label applied to a group of related responses within a provided context. For example, a Code like "self-reflects" may be be applied to one or more responses to the Age Experience question.
-
-Since codes are contextual, they are not unique. If "self-reflects" is coded for both Gender Experience and Age Experience, there will be two distinct Codes, each with the appropriate context.
-
-### Identity
-An `Identity` is a word or phrase used by a survey participant to self-describe. Identities have associated contexts.
-
-### Keyword
-Keywords are the nouns extracted from a 'corpus' consisting of the exact text of certain freeform response fields. The extraction is performed using AI assistance, so results are non-determinate and must be assessed for bias by the researchers.
-
-## Reference links
-
-* [https://console.neo4j.io](https://console.neo4j.io)
-* [https://platform.openai.com](https://console.neo4j.io)
+* []

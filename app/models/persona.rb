@@ -48,8 +48,8 @@ class Persona
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query
     {
-      explainer: "Access and explore this case (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
-      query: "MATCH (p:Persona)-[]-(n) WHERE p.identifier=\"#{self.identifier}\" RETURN p,n"
+      explainer: "Access and explore this persona (and all of their relationships) in the TMI-Graph app.",
+      query: "MATCH (p:Persona)-[r]-(n) WHERE p.identifier=\"#{self.identifier}\" RETURN p,r,n"
     }
   end
 
@@ -75,11 +75,11 @@ class Persona
 
    # Calculates the permanent URL of the Case, which is stored as a property on the associated Persona.
   def permalink
-    if Rails.env == "development"
-#      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: "localhost", port: 3000, id: self.id)
-    else
-#      Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
-    end
+  #   if Rails.env == "development"
+  #     Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: "localhost", port: 3000, id: self.id)
+  #   else
+  #     Rails.application.routes.url_helpers.url_for(controller: "personas", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
+  #   end
   end
 
 end

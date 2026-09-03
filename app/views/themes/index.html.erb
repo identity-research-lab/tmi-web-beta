@@ -72,7 +72,7 @@
     <div class="category-create-fields">
       <div class="category-create-panel category-create-name">
         <label class="app-label category-create-label" for="new-theme-name">New theme name</label>
-        <%= f.text_field :name, id: "new-theme-name", class: "app-input category-create-input", placeholder: "Enter a theme name", aria: { describedby: "new-category-name-help new-category-name-error" } %>
+        <%= f.text_field :name, id: "new-theme-name", class: "app-input category-create-input", placeholder: "Enter a theme name", required: true, aria: { describedby: "new-category-name-help new-category-name-error" } %>
         <p class="form-help" id="new-theme-name-help">Required. Use a concise interpretive name that distinguishes this theme from related findings.</p>
       </div>
       <div class="category-create-panel category-create-description">

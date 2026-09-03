@@ -12,7 +12,7 @@ class SurveyItemsController < ApplicationController
 
   def show
     @survey_item = SurveyItem.find(params[:id])
-    @survey_responses = @survey_item.survey_responses.sort{|a,b| a.persona.formatted_identifier <=> b.persona.formatted_identifier}
+    @survey_responses = @survey_item.sorted_survey_responses
     @memos = @survey_item.memos.order(created_at: :desc)
     @memo = Memo.new(kind: "survey_item", referrent_id: @survey_item.id)
     @coded_experiences_count = @survey_item.code_count

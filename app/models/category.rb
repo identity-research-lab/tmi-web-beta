@@ -33,7 +33,7 @@ class Category
   def graph_query
     {
       explainer: "Access and explore this category (and all of its relationships) in the TMI-WEB graph.",
-      query: "MATCH (c:Category)-[]-(n) WHERE c.name=\"#{self.name}\" RETURN c,n"
+      query: "MATCH (c:Category)-[r]-(n) WHERE c.name=\"#{self.name}\" RETURN c,r,n"
     }
   end
   

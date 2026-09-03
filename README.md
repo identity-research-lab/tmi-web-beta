@@ -8,7 +8,7 @@ TMI-Web is a qualitatice social science system for managing, analyzing, coding, 
 
 Westbrook, J.P., and Ehmke, C.A. (2026) Queer(ing) Epistemology by Design: TMI-WEB—A Relational Knowledge System for Intersectional Data Science and Affective Queries, in Simeone, L., Gray, C. M., Verhoeven, A., de Götzen, A., Bakırlıoğlu, Y., Zohar, H., Stead, M., and Buwert, P. (eds.), DRS2026: Edinburgh, 8–12 June, Edinburgh, United Kingdom. [https://doi.org/10.21606/drs.2026.483](https://doi.org/10.21606/drs.2026.483)
 
-<img width="2047" height="1081" alt="tmi-screenshot-app-and-graph" src="https://github.com/user-attachments/assets/0cd6ba80-6d33-4192-9077-d6bf038fc26a" />
+<img width="1024" height="583" alt="tmi-graph" src="https://github.com/user-attachments/assets/0cd6ba80-6d33-4192-9077-d6bf038fc26a" />
 
 # Installing TMI-WEB
 

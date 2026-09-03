@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "theme-categories-#{pane}" do %>
 
-  <% table_id = pane == "attached" ? "assigned-categories-table" : "available-categories-table" %>
+  <% table_id = pane == "attached" ? "assigned-codes-table" : "available-codes-table" %>
   <div aria-label="Scrollable assigned codes table" class="data-table-window assigned-table-window" role="region" tabindex="0">
     <table class="code-data-table" id="<%= table_id %>">
       <% if categories.any? %>
@@ -8,12 +8,12 @@
           <thead>
             <tr>
               <% if pane == "attached" %>
-                <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-categories-table', 0);">
+                <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-codes-table', 0);">
                   <span class="sort-header">
                     <button class="<%= sort_class %>" data-key="name" type="button">Category name</button>
                   </span>
                 </th>
-                <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-categories-table', 1);">
+                <th scope="col" class="sortable" data-sort-direction="desc" onclick="sortTable('assigned-codes-table', 1);">
                   <span class="sort-header">
                     <button class="<%= sort_class %>" data-key="frequency" type="button">Codes</button>
                   </span>
@@ -21,8 +21,16 @@
                 <th scope="col">Description</th>
                 <th scope="col"><span class="visually-hidden">Add or remove category assignment</span></th>
               <% else %>
-                <th scope="col"><button class="sort-button is-sorted" data-key="name" data-table="assigned-codes-table" type="button" >Category name</button></th>
-                <th scope="col"><button class="sort-button" data-key="frequency" data-table="assigned-codes-table" type="button">Codes <span aria-hidden="true">↕</span></button></th>
+                <th scope="col" class="sortable" data-sort-direction="desc">
+                    <span class="sort-header">
+                      <button class="<%= sort_class %>" data-key="name" type="button" >Category name</button>
+                    </span>
+                </th>
+                <th scope="col" class="sortable" data-sort-direction="desc">
+                    <span class="sort-header">
+                      <button class="<%= sort_class %>" data-key="frequency" type="button" >Codes</button>
+                    </span>
+                </th>
                 <th scope="col">Description</th>
                 <th scope="col"><span class="visually-hidden">Add or remove category assignment</span></th>
               <% end %>

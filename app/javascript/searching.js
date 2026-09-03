@@ -113,7 +113,7 @@ export function handleSearchSort() {
       
       const sortKey = document.getElementById("search_sort_key")
       if (!sortKey) return
-      
+
       const prevSortKey = sortKey.value
       sortKey.value = sortButton.dataset.key
       

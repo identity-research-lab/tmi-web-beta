@@ -19,7 +19,7 @@
           </svg>
         <% end %>
       <% else %>
-        <%= show_check = attached_categories.include?(category) %>
+        <% show_check = attached_categories.include?(category) %>
         <%= image_tag "check-small.svg", data: { assignedid: category.id }, alt: "included in category", class: "icon-checkmark assigned-icon #{show_check ? '' : 'hidden'}" %></span>
         <%= f.button "+", name: "add", data: { assignedid: category.id }, class: "icon-button assign-button assign-code-button #{show_check ? 'hidden' : ''}", aria: { label: "Add #{category.name} to this theme" } %>
       <% end %>

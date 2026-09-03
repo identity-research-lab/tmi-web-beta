@@ -99,7 +99,7 @@ Now we are ready to install TMI-WEB! Here are the commands (you may be prompted 
 | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | `git clone https://github.com/identity-research-lab/tmi-web-beta.git` | Download a copy of the TMI-WEB application source code for the first time.           |
 | `cd tmi-web-beta`                                                     | Open the new "tmi-web-beta" folder.                                                  |
-| bundle install                                                        | Update necessary tools/files.                                                        |
+| `bundle install`                                                        | Update necessary tools/files.                                                        |
 | `cp .env.example .env`                                                | Make a copy of the hidden configuration file ".env.example" and name the copy ".env" |
 
 You’re done with step 3. TMI-WEB is installed on your computer. TMI-WEB is a local application running on your computer. It is not running in the cloud. Your project and all its data is stored locally on your computer. You do not need an internet connection to use TMI-WEB.

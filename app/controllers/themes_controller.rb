@@ -1,7 +1,7 @@
 class ThemesController < ApplicationController
 
   def index
-    @themes = Theme.all
+    @themes = Theme.all.order(:name)
     @categories_count = Category.count
     @assigned_category_count = Category.assigned.count
     @unassigned_category_count = Category.unassigned.count
@@ -25,8 +25,8 @@ class ThemesController < ApplicationController
     
     respond_to do |format|
       format.html do
-        @theme_categories = @theme.categories
-        @all_categories = Category.all
+        @theme_categories = @theme.categories.order(:name)
+        @all_categories = Category.all.order(:name)
         @memos = @theme.memos.order(created_at: :desc)
         @memo = Memo.new(kind: "theme", referrent_id: @theme.id)
       end

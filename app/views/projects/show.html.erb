@@ -1,41 +1,7 @@
 <%- title "Project Dashboard" %>
 <%- active_nav "dashboard" %>
 
-<section class="app-header app-header--project">
-
-  <div class="app-header-copy">
-    <div class="app-label">Project Dashboard</div>
-    <h1 class="app-title" id="dashboard-project-name"><%= @project.name %></h1>
-    
-    <p class="app-description">
-      <%= @project.description %>
-    </p>
-    
-    <dl class="dashboard-project-meta">
-      <div><dt>Researcher</dt><dd id="dashboard-project-attribution"><%= @researcher.name %></dd></div>
-      <div><dt>Organization</dt><dd><%= @researcher.affiliation %></dd></div>
-    </dl>
-    
-  </div>
-
-  <div>
-    <aside class="app-header-panel" aria-label="Project status summary">
-      <div class="app-panel-title">Project Status</div>
-      <div class="dashboard-readiness-state" data-dashboard-states="setup">
-        <span class="status-pill"><%= @project.status %></span>
-        
-        <% if @project.status == "Setup required" %>
-          <p>Project data and the analysis schema must be configured before coding can begin.</p>
-          <%= link_to "Manage project data", edit_project_path(@project), class: "button" %>
-        <% elsif @project.status == "Ready for analysis" %>
-          <p>Project data is configured. Choose a coding pathway to begin analysis.</p>
-        <% else %>
-        <% end %>
-      </div>
-    </aside>
-  </div>
-
-</section>
+<%= render partial: "projects/show", locals: { project: @project, researcher: @researcher } %>
 
 <section class="app-section">
   <h2 class="section-label">

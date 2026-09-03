@@ -74,9 +74,6 @@ export function sortCodes(index) {
     const numB = Number(valueB)
     const isNumericSort = !Number.isNaN(numA) && !Number.isNaN(numB)
 
-    console.log(valueA)
-    console.log(isNumericSort)
-
     if (isNumericSort) {
       if (sortDirection == "desc") {
         return numB - numA

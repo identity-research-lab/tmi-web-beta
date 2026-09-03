@@ -76,11 +76,11 @@ class SurveyItem
   end
   
   def survey_response_count
-    @survey_response_count ||= self.as(:si).query.match("(si)-[]-(sr:SurveyResponse)").return("count(sr) AS ct").pluck(:ct)
+    @survey_response_count ||= self.as(:si).query.match("(si)-[]-(sr:SurveyResponse)").return("count(sr) AS ct").first[:ct]
   end
   
   def code_count
-    @code_count ||= self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return("count(c) AS ct").pluck(:ct)
+    @code_count ||= self.as(:si).query.match("(si)-[]-(:SurveyResponse)-[]-(c:Code)").return("count(c) AS ct").first[:ct]
   end
 
   def percentage_of_codes

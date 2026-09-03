@@ -50,7 +50,7 @@ class ThemesController < ApplicationController
       category.themes.delete(@theme)
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories, pane: "attached" })
+          render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories.order(:name), attached_categories: @theme.categories.order(:name), pane: "attached" })
         end
       end
     end
@@ -58,7 +58,7 @@ class ThemesController < ApplicationController
       category.themes << @theme unless category.themes.include? @theme
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories, attached_categories: @theme.categories, pane: "attached" })
+          render turbo_stream: turbo_stream.replace("theme-categories-attached", partial: "/themes/categories", locals: { theme: @theme, categories: @theme.categories.order(:name), attached_categories: @theme.categories.order(:name), pane: "attached" })
         end
       end
     end

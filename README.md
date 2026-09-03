@@ -160,7 +160,3 @@ When a TMI-WEB application update is available, you will follow these steps to u
 2) You should be able to start the updated TMI-WEB system as you normally would.
 
 You’re done: You have updated TMI-WEB successfully on your computer!
-
-# References
-
-* []

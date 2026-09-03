@@ -1,0 +1,47 @@
+<%= turbo_frame_tag "project-header" do %>
+  <section class="app-header app-header--detail">
+    <div class="app-header-copy">
+      <%= form_with model: project, format: :turbo_stream, data: { turbo_stream: true }, class: "category-create-grid", id: "edit-category-form", aria: { label: "Edit this project" } do |f| %>
+      
+        <div>
+          <div>
+            <%= f.label :name, "Project name", class: "app-label category-create-label", for: "new-project-name" %>
+            <%= f.text_field :name, id: "new-project-name", class: "app-input category-create-input", placeholder: "Enter a name for your project", autocomplete: "off", required: true, aria: { describedby: "new-project-name-help new-project-name-error" } %>
+        
+            <p class="form-help" id="new-project-name-help">Required.</p>
+            <p class="form-error" data-error-for="new-project-name" hidden id="new-project-name-error">Enter a project name.</p>
+          </div>
+        
+          <div style="margin-top: 2rem;">
+            <%= f.label :description, "Description", class: "app-label category-create-label", for: "new-project-memo" %>
+            <%= f.text_area :description, id: "new-project-memo", class: "category-create-textarea", placeholder: "Describe the project.", aria: { describedby: "new-project-memo-help" } %>
+        
+            <p class="form-help" id="new-project-memo-help">
+              Optional. Explain the category’s analytical purpose and the kinds of codes it may organize.
+            </p>
+          </div>
+          <div>
+            <%= f.label :researcher_name, "Researcher name", class: "app-label category-create-label", for: "new-researcher-name" %>
+            <%= f.text_field :researcher_name, id: "new-researcher-name", class: "app-input category-create-input", value: researcher.name, placeholder: "Enter your name", autocomplete: "off", required: true, aria: { describedby: "new-researcher-name-help new-researcher-name-error" } %>
+          
+            <p class="form-help" id="new-researcher-name-help">Required.</p>
+            <p class="form-error" data-error-for="new-researcher-name" hidden id="new-researcher-name-error">Enter a researcher name.</p>
+          </div>
+          <div>
+            <%= f.label :researcher_affiliation, "Affiliation", class: "app-label category-create-label", for: "new-researcher-name" %>
+            <%= f.text_field :researcher_affiliation, id: "new-researcher-affiliation", class: "app-input category-create-input", value: researcher.affiliation, placeholder: "Enter your affiliation", autocomplete: "off", required: false, aria: { describedby: "new-researcher-affiliation-help new-researcher-affiliation-error" } %>
+          
+            <p class="form-help" id="new-researcher-affiliation-help">Required.</p>
+            <p class="form-error" data-error-for="new-researcher-affiliation" hidden id="new-researcher-affiliation-error">Enter a researcher affiliation.</p>
+          </div>
+        </div>
+        
+        <div class="category-edit-footer">
+          <%= f.submit "Save changes", class: "button apply small category-create-button" %>
+          <%= link_to "Cancel", project, data: { turbo_stream: true }, class: "button small" %>
+        </div>
+      <% end %>
+      
+    </div>
+  </section>
+<% end %>

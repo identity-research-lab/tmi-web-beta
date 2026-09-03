@@ -20,32 +20,6 @@
   </aside>
 </section>
 
-<section class="project-data-overview" aria-label="Manage project data overview">
-  <div class="project-data-overview-item">
-    <%= image_tag "noun-check-4798340.svg", alt: "", class: "project-data-overview-icon", aria: { hidden: "true"} %>
-    <div class="project-data-overview-text">
-      <span class="project-data-overview-label">Project Data</span>
-      <strong>Add or replace the project CSV file.</strong>
-    </div>
-  </div>
-  
-  <div class="project-data-overview-item">
-    <%= image_tag "noun-check-4798340.svg", alt: "", class: "project-data-overview-icon", aria: { hidden: "true"} %>
-    <div class="project-data-overview-text">
-      <span class="project-data-overview-label">Analysis Schema</span>
-      <strong>Customize how project fields are labeled and analyzed.</strong>
-    </div>
-  </div>
-  
-  <div class="project-data-overview-item">
-    <%= image_tag "noun-check-4798340.svg", alt: "", class: "project-data-overview-icon", aria: { hidden: "true"} %>
-    <div class="project-data-overview-text">
-      <span class="project-data-overview-label">Apply Changes</span>
-      <strong>Commit any pending data or schema updates to the project.</strong>
-    </div>
-  </div>
-</section>
-
 <section class="app-section project-data-section">
   <%= render partial: "survey_responses/apply", locals: { project: @project } %> 
 </section>

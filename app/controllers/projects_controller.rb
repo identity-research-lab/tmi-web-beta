@@ -1,23 +1,37 @@
 class ProjectsController < ApplicationController
 
   def show
-    @case_count = Persona.count
-    @uncoded_case_count = Persona.uncoded.count
-    @in_progress_case_count = Persona.in_progress.count
-    @completed_case_count = Persona.completed.count
-    @survey_item_count = SurveyItem.count
-    @survey_response_count = SurveyResponse.count
-    @survey_response_coded_count = SurveyResponse.coded.count
-    @code_count = Code.applied.count
-    @category_count = Category.count
-    @theme_count = Theme.count
-    @memo_count = Memo.count
-    @memos = Array.new(Memo.all.order(updated_at: :desc).limit(4))
-    @recent_events = Event.all.order(created_at: :desc).limit(4)
+    respond_to do |format|
+      format.html do
+        @case_count = Persona.count
+        @uncoded_case_count = Persona.uncoded.count
+        @in_progress_case_count = Persona.in_progress.count
+        @completed_case_count = Persona.completed.count
+        @survey_item_count = SurveyItem.count
+        @survey_response_count = SurveyResponse.count
+        @survey_response_coded_count = SurveyResponse.coded.count
+        @code_count = Code.applied.count
+        @category_count = Category.count
+        @theme_count = Theme.count
+        @memo_count = Memo.count
+        @memos = Array.new(Memo.all.order(updated_at: :desc).limit(4))
+        @recent_events = Event.all.order(created_at: :desc).limit(4)
+      end
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("project-header", partial: "/projects/show", locals: { project: @project, researcher: @researcher})
+      end
+    end
   end
-
+  
   def edit
-    @dimensions_for_select = Dimension.all.order(:name)
+    respond_to do |format|
+      format.html do 
+        @dimensions_for_select = Dimension.all.order(:name)
+      end
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("project-header", partial: "/projects/form", locals: { project: @project, researcher: @researcher})
+      end
+    end
   end
 
   def create
@@ -40,6 +54,15 @@ class ProjectsController < ApplicationController
       @project.create_survey_responses_from_csv
     elsif project_params[:refresh_in_progress].present?
       @project.update!(refresh_in_progress: false)
+    elsif project_params[:name].present?
+      @project.update_attributes(name: project_params[:name], description: project_params[:description])
+      @researcher.update_attributes(name: project_params[:researcher_name], affiliation: project_params[:researcher_affiliation])
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("project-header", partial: "/projects/show", locals: { project: @project, researcher: @researcher })
+          return
+        end
+      end
     else
       @project.update!(project_params)
     end
@@ -49,7 +72,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :description, :researcher, :csv_data, :refresh_started_at, :refresh_in_progress, :has_pending_changes)
+    params.require(:project).permit(:name, :description, :researcher, :researcher_name, :researcher_affiliation, :csv_data, :refresh_started_at, :refresh_in_progress, :has_pending_changes)
   end
 
 end
